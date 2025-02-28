@@ -1,0 +1,35 @@
+.slidebar-container {
+  position: relative;
+  width: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.dashes {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100%;
+  box-sizing: border-box;
+  gap: 1px;
+}
+
+.dash {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 10px;
+  line-height: 0.5;
+  font-weight: 400;
+}
+
+.dash-label {
+  font-weight: bold;
+}
+
+.thumb {
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: var(--clr-accent);
+  border-radius: 50%;
+}
