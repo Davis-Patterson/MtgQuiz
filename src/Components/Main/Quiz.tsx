@@ -1,4 +1,3 @@
-// src/Components/Main/Quiz.tsx
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import UserScore from 'Components/Main/UserScore';
