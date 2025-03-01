@@ -1,0 +1,110 @@
+.card-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  perspective: 1000px;
+  height: 450px;
+  width: 300px;
+}
+
+.flip-button {
+  position: absolute;
+  top: 15px;
+  right: -30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: var(--clr-icon);
+  stroke: var(--clr-icon);
+  font-size: 1.2em;
+  transition: all 0.4s ease;
+}
+.flip-button:hover {
+  transform: rotate(180deg);
+}
+
+.flip-icon {
+  width: 25px;
+  height: 25px;
+  fill: var(--clr-icon);
+}
+.flip-icon:hover {
+  color: var(--clr-accent-blue);
+  fill: var(--clr-accent-blue);
+}
+.flip-icon:active {
+  color: var(--clr-accent-blue);
+  fill: var(--clr-accent-blue);
+  transform: translateY(2px) scale(95%);
+}
+
+.card-image-front,
+.card-image-back {
+  width: 300px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.6s ease;
+  cursor: pointer;
+  position: absolute;
+  backface-visibility: hidden;
+  transform-origin: bottom center;
+}
+
+.card-image-front {
+  transform: rotate(0deg);
+  z-index: 2;
+}
+
+.card-image-back {
+  transform: rotate(5deg) translateX(2px);
+  z-index: 1;
+  filter: brightness(0.9);
+}
+
+.card-image-front.flipped {
+  transform: rotate(-5deg) translateX(-20px);
+  z-index: 1;
+  filter: brightness(0.9);
+}
+
+.card-image-back.flipped {
+  transform: rotate(0deg);
+  z-index: 2;
+}
+
+.card-display:hover .card-image-front:not(.flipped),
+.card-display:hover .card-image-back:not(.flipped) {
+  transform: rotate(var(--hover-rotate, 0deg))
+    translateX(var(--hover-translate, 0px));
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-display:hover .card-image-back:not(.flipped) {
+  --hover-rotate: 8deg;
+  --hover-translate: 5px;
+}
+
+.card-display:hover .card-image-front.flipped {
+  --hover-rotate: -8deg;
+  --hover-translate: -10px;
+}
+
+.card-name {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 2em;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--clr-light);
+  width: 100%;
+  text-align: center;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

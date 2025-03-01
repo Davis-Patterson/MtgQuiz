@@ -27,41 +27,6 @@
   margin: 0px 0px 10px 0px;
 }
 
-.card-display {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card-image {
-  width: 300px;
-  height: auto;
-  display: block;
-  border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-.card-name {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 2em;
-  line-height: 1;
-  font-weight: 400;
-  color: var(--clr-light);
-  width: 100%;
-  text-align: center;
-  line-clamp: 1;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .card-info {
   padding: 10px;
 }
@@ -212,32 +177,4 @@
   line-height: 1;
   color: var(--clr-light);
   margin: 0px 0px 2px 0px;
-}
-
-.flip-button {
-  position: absolute;
-  top: 0px;
-  right: -45px;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  color: var(--clr-text);
-  fill: var(--clr-text);
-  font-size: 1.2em;
-  transition: all 0.2s ease;
-  scale: 180%;
-}
-
-.flip-button:hover {
-  color: var(--clr-accent);
-  fill: var(--clr-accent);
-  transform: rotate(180deg);
-}
-
-.card-display {
-  position: relative;
 }

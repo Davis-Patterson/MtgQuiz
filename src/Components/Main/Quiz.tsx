@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import UserScore from 'Components/Main/UserScore';
+import CardDisplay from 'Components/Main/CardDisplay';
 import SlideBar from 'Components/Main/SlideBar';
 import Postgame from 'Components/Main/Postgame';
 import 'Styles/Main/Quiz.css';
@@ -27,11 +28,9 @@ const Quiz: React.FC = () => {
     setStarted,
     setCanScroll,
     setIsLoading,
-    setFullscreenImage,
   } = context;
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isFlipped, setIsFlipped] = useState(false);
 
   const startGame = () => {
     const validCards = cardData.filter(
@@ -53,10 +52,6 @@ const Quiz: React.FC = () => {
       startGame();
     }
   }, [started]);
-
-  useEffect(() => {
-    setIsFlipped(false);
-  }, [currentIndex]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,8 +101,6 @@ const Quiz: React.FC = () => {
     return <Postgame />;
   }
 
-  const currentCard = selectedCards[currentIndex];
-
   return (
     <>
       <div className='page-container'>
@@ -118,42 +111,7 @@ const Quiz: React.FC = () => {
             <p className='card-count'>
               Card {currentIndex + 1} of {selectedCards.length}
             </p>
-            <div className='card-display'>
-              {currentCard.card.back && (
-                <div
-                  className='flip-button'
-                  onClick={() => setIsFlipped(!isFlipped)}
-                  aria-label='Flip card'
-                >
-                  ↻
-                </div>
-              )}
-              <img
-                src={
-                  isFlipped && currentCard.card.back
-                    ? currentCard.card.back.imgs.normal
-                    : currentCard.card.front.imgs.normal
-                }
-                alt={
-                  isFlipped && currentCard.card.back
-                    ? currentCard.card.back.name
-                    : currentCard.card.front.name
-                }
-                onClick={() =>
-                  setFullscreenImage(
-                    isFlipped && currentCard.card.back
-                      ? currentCard.card.back.imgs.large
-                      : currentCard.card.front.imgs.large
-                  )
-                }
-                className='card-image'
-              />
-              <p className='card-name'>
-                {isFlipped && currentCard.card.back
-                  ? currentCard.card.back.name
-                  : currentCard.card.front.name}
-              </p>
-            </div>
+            <CardDisplay />
             {isSubmitted ? (
               <>
                 <div className='breakdown'>
