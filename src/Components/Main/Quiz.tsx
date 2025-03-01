@@ -20,6 +20,7 @@ const Quiz: React.FC = () => {
     setUserGuess,
     scores,
     setScores,
+    setRevealedRanks,
     finished,
     setFinished,
     started,
@@ -62,6 +63,14 @@ const Quiz: React.FC = () => {
     const diff = Math.abs(cardRank - userGuess);
 
     setScores([...scores, { cardRank, guess: userGuess, diff }]);
+    setRevealedRanks((prev) => [
+      ...prev,
+      {
+        rank: cardRank,
+        name: currentCard.card.front.name,
+        imageUrl: currentCard.card.front.imgs.normal,
+      },
+    ]);
     setIsSubmitted(true);
     setCanScroll(false);
   };
@@ -132,7 +141,7 @@ const Quiz: React.FC = () => {
                       <div className='scores-score-container'>
                         <p className='score-text-score-label'>Score:</p>
                         <div className='score-text-score-container'>
-                          {scores[scores.length - 1].diff === 0 && (
+                          {scores[scores.length - 1].diff > 0 && (
                             <p className='score-text-plus'>+</p>
                           )}
                           <p className='score-text-score'>

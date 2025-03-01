@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import PinIcon from 'Svgs/PinIcon';
+import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Main/SlideBar.css';
 
 const SlideBar: React.FC = () => {
@@ -8,7 +9,7 @@ const SlideBar: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { userGuess, setUserGuess, canScroll } = context;
+  const { userGuess, setUserGuess, revealedRanks, canScroll } = context;
 
   const [dragging, setDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -53,25 +54,65 @@ const SlideBar: React.FC = () => {
       onClick={handleClickContainer}
     >
       <div className='dashes'>
-        {dashes.map((num) => (
-          <div
-            key={num}
-            className='dash-container'
-            style={{ bottom: `${num}%` }}
-          >
-            <svg className='dash-svg' width='30' height='10'>
-              <line
-                x1='10'
-                x2={num === userGuess ? '30' : '20'}
-                y1='5'
-                y2='5'
-                stroke='var(--clr-light)'
-                strokeWidth={num % 10 === 0 ? 2 : num === userGuess ? 2 : 1}
-              />
-            </svg>
-            {num % 10 === 0 && <span className='dash-label'>{num}</span>}
-          </div>
-        ))}
+        {dashes.map((num) => {
+          const revealedCard = revealedRanks.find((r) => r.rank === num);
+          const isRevealed = !!revealedCard;
+
+          return (
+            <div
+              key={num}
+              className='dash-container'
+              style={{ bottom: `${num}%` }}
+            >
+              <svg
+                className={`dash-svg ${isRevealed ? 'revealed-dash' : ''}`}
+                width='30'
+                height='10'
+              >
+                {isRevealed ? (
+                  <Tooltip
+                    title={
+                      <>
+                        <img
+                          src={revealedCard.imageUrl}
+                          alt='Revealed card'
+                          className='tooltip-image'
+                        />
+                        <p className='tooltip-text'>{revealedCard.name}</p>
+                        <p className='tooltip-text'>
+                          Rank: {revealedCard.rank}
+                        </p>
+                      </>
+                    }
+                    enterDelay={200}
+                    leaveDelay={200}
+                    placement='right'
+                  >
+                    <line
+                      x1='10'
+                      x2={num === userGuess ? '30' : '20'}
+                      y1='5'
+                      y2='5'
+                      strokeWidth={
+                        num % 10 === 0 ? 2 : num === userGuess ? 2 : 1
+                      }
+                    />
+                  </Tooltip>
+                ) : (
+                  <line
+                    x1='10'
+                    x2={num === userGuess ? '30' : '20'}
+                    y1='5'
+                    y2='5'
+                    stroke='var(--clr-light)'
+                    strokeWidth={num % 10 === 0 ? 2 : num === userGuess ? 2 : 1}
+                  />
+                )}
+              </svg>
+              {num % 10 === 0 && <span className='dash-label'>{num}</span>}
+            </div>
+          );
+        })}
       </div>
       <svg
         className={canScroll ? 'thumb' : 'thumb-inactive'}

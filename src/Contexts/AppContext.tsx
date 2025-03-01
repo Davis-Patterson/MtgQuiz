@@ -28,6 +28,12 @@ interface ScoreDetail {
   diff: number;
 }
 
+interface RevealedCard {
+  rank: number;
+  name: string;
+  imageUrl: string;
+}
+
 interface AppContextType {
   cardData: Card[];
   setCardData: React.Dispatch<React.SetStateAction<Card[]>>;
@@ -40,6 +46,8 @@ interface AppContextType {
   setUserGuess: React.Dispatch<React.SetStateAction<number>>;
   scores: ScoreDetail[];
   setScores: React.Dispatch<React.SetStateAction<ScoreDetail[]>>;
+  revealedRanks: RevealedCard[];
+  setRevealedRanks: React.Dispatch<React.SetStateAction<RevealedCard[]>>;
 
   started: boolean;
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -65,6 +73,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userGuess, setUserGuess] = useState(0);
   const [scores, setScores] = useState<ScoreDetail[]>([]);
+  const [revealedRanks, setRevealedRanks] = useState<RevealedCard[]>([]);
 
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -86,6 +95,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setUserGuess,
         scores,
         setScores,
+        revealedRanks,
+        setRevealedRanks,
 
         started,
         setStarted,

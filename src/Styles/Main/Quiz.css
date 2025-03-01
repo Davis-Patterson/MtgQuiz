@@ -42,7 +42,8 @@
   width: 300px;
   height: auto;
   display: block;
-  border-radius: 15px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-name {
@@ -169,6 +170,7 @@
   font-weight: 400;
   line-height: 1;
   color: var(--clr-light);
+  margin: 0px 0px 4px 0px;
 }
 
 .score-text-score-container {
