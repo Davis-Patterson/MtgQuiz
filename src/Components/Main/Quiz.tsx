@@ -1,6 +1,7 @@
 // src/Components/Main/Quiz.tsx
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
+import UserScore from 'Components/Main/UserScore';
 import SlideBar from 'Components/Main/SlideBar';
 import Postgame from 'Components/Main/Postgame';
 import 'Styles/Main/Quiz.css';
@@ -95,6 +96,7 @@ const Quiz: React.FC = () => {
   return (
     <>
       <div className='page-container'>
+        <UserScore />
         <div className='quiz-container'>
           <SlideBar />
           <div className='quiz-content'>
