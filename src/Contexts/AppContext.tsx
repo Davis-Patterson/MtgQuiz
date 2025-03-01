@@ -36,8 +36,8 @@ interface AppContextType {
 
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
-  userGuess: string;
-  setUserGuess: React.Dispatch<React.SetStateAction<string>>;
+  userGuess: number;
+  setUserGuess: React.Dispatch<React.SetStateAction<number>>;
   scores: ScoreDetail[];
   setScores: React.Dispatch<React.SetStateAction<ScoreDetail[]>>;
 
@@ -45,6 +45,9 @@ interface AppContextType {
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
   finished: boolean;
   setFinished: React.Dispatch<React.SetStateAction<boolean>>;
+  canScroll: boolean;
+  setCanScroll: React.Dispatch<React.SetStateAction<boolean>>;
+
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -60,11 +63,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [userGuess, setUserGuess] = useState('');
+  const [userGuess, setUserGuess] = useState(0);
   const [scores, setScores] = useState<ScoreDetail[]>([]);
 
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [canScroll, setCanScroll] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -87,6 +91,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setStarted,
         finished,
         setFinished,
+        canScroll,
+        setCanScroll,
+
         isLoading,
         setIsLoading,
       }}

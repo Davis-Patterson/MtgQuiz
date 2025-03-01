@@ -16,6 +16,17 @@
   width: calc(100% - 50px);
 }
 
+.card-count {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.2em;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--clr-light);
+  width: 100%;
+  text-align: center;
+  margin: 0px 0px 10px 0px;
+}
+
 .card-display {
   display: flex;
   justify-content: center;
@@ -32,6 +43,21 @@
   height: auto;
   display: block;
   border-radius: 15px;
+}
+
+.card-name {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 2em;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--clr-light);
+  width: 100%;
+  text-align: center;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-info {
@@ -63,10 +89,109 @@
   justify-content: center;
   align-items: center;
   padding: 12px 0px 10px 0px;
-  margin: 10px 0px 5px 0px;
+  margin: 5px 0px 5px 0px;
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2em;
   line-height: 1;
   font-weight: 400;
   color: var(--clr-light);
+}
+
+.breakdown {
+  width: 100%;
+  max-width: 325px;
+  border: 1px solid var(--clr-icon);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0px 10px 0px;
+  margin: 5px 0px 5px 0px;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1em;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--clr-light);
+}
+
+.scores-breakdown-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.scores-guess-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 65%;
+  gap: 5px;
+}
+
+.scores-guess-text-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.scores-score-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  border-left: 1px solid var(--clr-divider);
+}
+
+.score-text-label {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+}
+
+.score-text {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.5em;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+}
+
+.score-text-score-label {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.8em;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+}
+
+.score-text-score-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0px 5px 0px 0px;
+}
+
+.score-text-score {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 3em;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+}
+.score-text-plus {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.6em;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 0px 0px 2px 0px;
 }

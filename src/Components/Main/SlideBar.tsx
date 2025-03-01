@@ -1,6 +1,6 @@
-// src/Components/Utils/SlideBar.tsx
 import React, { useContext, useRef, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
+import PinIcon from 'Svgs/PinIcon';
 import 'Styles/Main/SlideBar.css';
 
 const SlideBar: React.FC = () => {
@@ -8,23 +8,14 @@ const SlideBar: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { userGuess, setUserGuess } = context;
+  const { userGuess, setUserGuess, canScroll } = context;
 
   const [dragging, setDragging] = useState(false);
-
-  // Convert userGuess from string to number, default to 0 if empty
-  const guessValue = parseInt(userGuess || '0', 10);
-
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Generate dashes 0..100
   const dashes = Array.from({ length: 101 }, (_, i) => i);
 
-  // Convert guessValue to a fraction for the thumb position
-  const fraction = guessValue / 100;
-  const thumbBottom = fraction * 100;
-
   const handlePointerDown = (e: React.PointerEvent) => {
+    if (!canScroll) return;
     setDragging(true);
     (e.target as Element).setPointerCapture(e.pointerId);
   };
@@ -35,51 +26,73 @@ const SlideBar: React.FC = () => {
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!dragging || !containerRef.current) return;
+    if (!canScroll || !dragging || !containerRef.current) return;
     updateGuessFromPointer(e.clientY);
   };
 
   const handleClickContainer = (e: React.MouseEvent) => {
-    if (dragging || !containerRef.current) return;
+    if (!canScroll || dragging || !containerRef.current) return;
     updateGuessFromPointer(e.clientY);
   };
 
   const updateGuessFromPointer = (clientY: number) => {
     if (!containerRef.current) return;
-
     const rect = containerRef.current.getBoundingClientRect();
-    const containerHeight = rect.height;
-
     const offsetY = clientY - rect.top;
-    const clamped = Math.max(0, Math.min(containerHeight, offsetY));
-
-    // Compute the fraction from the top, then invert it so that 0 is at the bottom.
-    const fraction = clamped / containerHeight;
-    const newGuess = Math.round((1 - fraction) * 100);
-
-    setUserGuess(String(newGuess));
+    const percentage = (1 - offsetY / rect.height) * 100;
+    const newGuess = Math.max(0, Math.min(100, Math.round(percentage)));
+    setUserGuess(newGuess);
   };
 
   return (
     <div
-      className='slidebar-container'
+      className={
+        canScroll ? 'slidebar-container' : 'slidebar-container-inactive'
+      }
       ref={containerRef}
       onClick={handleClickContainer}
     >
       <div className='dashes'>
         {dashes.map((num) => (
-          <div key={num} className='dash'>
-            {num % 10 === 0 ? <span className='dash-label'>{num}</span> : '-'}
+          <div
+            key={num}
+            className='dash-container'
+            style={{ bottom: `${num}%` }}
+          >
+            <svg className='dash-svg' width='30' height='10'>
+              <line
+                x1='10'
+                x2={num === userGuess ? '30' : '20'}
+                y1='5'
+                y2='5'
+                stroke='var(--clr-light)'
+                strokeWidth={num % 10 === 0 ? 2 : num === userGuess ? 2 : 1}
+              />
+            </svg>
+            {num % 10 === 0 && <span className='dash-label'>{num}</span>}
           </div>
         ))}
       </div>
-      <div
-        className='thumb'
-        style={{ bottom: `${thumbBottom}%` }}
+      <svg
+        className={canScroll ? 'thumb' : 'thumb-inactive'}
+        style={{ bottom: `${userGuess}%` }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-      />
+        width='24'
+        height='24'
+        viewBox='0 0 24 24'
+      >
+        <PinIcon
+          className={
+            !canScroll
+              ? 'pin-icon-inactive'
+              : userGuess === 0
+              ? 'pin-icon-zero'
+              : 'pin-icon-orange'
+          }
+        />
+      </svg>
     </div>
   );
 };

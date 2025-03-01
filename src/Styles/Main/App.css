@@ -15,15 +15,16 @@
   color: var(--clr-light);
 }
 
-.submit-button,
+.guess-button,
+.next-button,
 .inactive-button {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 0.9em;
+  font-size: 1.1em;
   line-height: 1;
   font-weight: 400;
   height: 40px;
   width: 100%;
-  max-width: 360px;
+  max-width: 325px;
   padding: 0.75rem;
   border: none;
   transition: all 0.15s ease-in-out;
@@ -32,8 +33,14 @@
   align-items: center;
   text-align: center;
 }
-.submit-button {
-  background-color: var(--clr-text-blue);
+.guess-button {
+  background-color: var(--clr-accent-orange);
+  color: var(--clr-light);
+  cursor: pointer;
+  opacity: 1;
+}
+.next-button {
+  background-color: var(--clr-accent-blue);
   color: var(--clr-light);
   cursor: pointer;
   opacity: 1;
@@ -42,10 +49,13 @@
   background-color: var(--clr-break);
   color: var(--clr-light);
   cursor: default;
-  opacity: 0.6;
+  opacity: 0.4;
 }
-.submit-button:hover {
-  background-color: var(--clr-text-blue-hover);
+.guess-button:hover {
+  background-color: var(--clr-accent-orange-hover);
+}
+.next-button:hover {
+  background-color: var(--clr-accent-blue-hover);
 }
 .inactive-button:hover {
   background-color: var(--clr-divider);

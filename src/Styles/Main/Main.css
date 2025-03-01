@@ -52,8 +52,10 @@
   --clr-text-blue: #213472;
   --clr-text-blue-hover: #1c2b5f;
   --clr-text-grey: #414141;
-  --clr-accent: #0077cc;
-  --clr-accent-hover: #00528d;
+  --clr-accent-blue: #0077cc;
+  --clr-accent-blue-hover: #0093fc;
+  --clr-accent-orange: #c98301;
+  --clr-accent-orange-hover: #ffa600;
   --clr-title-flair: #f3c535;
   --clr-error: #ff0000;
   --clr-error2: #fa2a2a;
@@ -128,11 +130,11 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: var(--clr-accent);
+  border-color: var(--clr-accent-blue);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto var(--clr-accent-dark);
+  outline: 4px auto var(--clr-accent-blue-dark);
 }
 
 html {
