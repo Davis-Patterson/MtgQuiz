@@ -2,6 +2,7 @@ import { useContext, lazy, Suspense } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { Routes, Route } from 'react-router-dom';
 import Home from 'Components/Main/Home';
+import FullScreen from 'Components/Main/FullScreen';
 import Loading from 'Components/Utils/Loading';
 import 'Styles/Main/App.css';
 
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       {isLoading && <Loading />}
+      <FullScreen />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route

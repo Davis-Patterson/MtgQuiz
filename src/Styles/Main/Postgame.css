@@ -1,0 +1,199 @@
+.quiz-results {
+  width: 100%;
+  padding: 20px 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.results-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 0px 35px 0px;
+  padding: 0px 0px 25px 0px;
+  border-bottom: 1px solid var(--clr-divider);
+  width: 100%;
+}
+
+.results-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 80px 0px 0px;
+}
+
+.results-score-label {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.4em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 0px 0px 6px 0px;
+}
+
+.results-score {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 5em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  border: 1px solid var(--clr-divider);
+  padding: 9px 8px 0px 8px;
+}
+
+.results-logo-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.results-salt-logo {
+  width: 150px;
+}
+
+.results-content {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.results-content-header {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.8em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+}
+
+.results-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  max-width: 330px;
+  padding: 0px 0px 15px 0px;
+  margin: 0px 0px 10px 0px;
+  border-bottom: 1px solid var(--clr-divider);
+}
+
+.results-image-container {
+  display: flex;
+}
+
+.results-card-image {
+  width: 100px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.results-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.results-card-name {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.1em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: left;
+  margin: 0px 0px 35px 0px;
+  width: 220px;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+}
+
+.results-score-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.results-guess-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  width: 70%;
+}
+
+.results-text-label {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1em;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: left;
+  width: 100%;
+  margin: 4px 0px 0px 0px;
+}
+
+.results-score-text-label {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.9em;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: left;
+  width: 100%;
+  margin: 0px 0px 2px 0px;
+}
+
+.results-score-plus-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.results-score-plus {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.1em;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: left;
+}
+
+.results-score-text {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.6em;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: left;
+  width: 100%;
+}
+
+.results-score-score-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 10px;
+  width: 30%;
+}

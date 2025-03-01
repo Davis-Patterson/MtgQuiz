@@ -46,95 +46,107 @@ const SlideBar: React.FC = () => {
   };
 
   return (
-    <div
-      className={
-        canScroll ? 'slidebar-container' : 'slidebar-container-inactive'
-      }
-      ref={containerRef}
-      onClick={handleClickContainer}
-    >
-      <div className='dashes'>
-        {dashes.map((num) => {
-          const revealedCard = revealedRanks.find((r) => r.rank === num);
-          const isRevealed = !!revealedCard;
-
-          return (
-            <div
-              key={num}
-              className='dash-container'
-              style={{ bottom: `${num}%` }}
-            >
-              <svg
-                className={`dash-svg ${isRevealed ? 'revealed-dash' : ''}`}
-                width='30'
-                height='10'
-              >
-                {isRevealed ? (
-                  <Tooltip
-                    title={
-                      <>
-                        <img
-                          src={revealedCard.imageUrl}
-                          alt='Revealed card'
-                          className='tooltip-image'
-                        />
-                        <p className='tooltip-text'>{revealedCard.name}</p>
-                        <p className='tooltip-text'>
-                          Rank: {revealedCard.rank}
-                        </p>
-                      </>
-                    }
-                    enterDelay={200}
-                    leaveDelay={200}
-                    placement='right'
-                  >
-                    <line
-                      x1='10'
-                      x2={num === userGuess ? '30' : '20'}
-                      y1='5'
-                      y2='5'
-                      strokeWidth={
-                        num % 10 === 0 ? 2 : num === userGuess ? 2 : 1
-                      }
-                    />
-                  </Tooltip>
-                ) : (
-                  <line
-                    x1='10'
-                    x2={num === userGuess ? '30' : '20'}
-                    y1='5'
-                    y2='5'
-                    stroke='var(--clr-light)'
-                    strokeWidth={num % 10 === 0 ? 2 : num === userGuess ? 2 : 1}
-                  />
-                )}
-              </svg>
-              {num % 10 === 0 && <span className='dash-label'>{num}</span>}
-            </div>
-          );
-        })}
-      </div>
-      <svg
-        className={canScroll ? 'thumb' : 'thumb-inactive'}
-        style={{ bottom: `${userGuess}%` }}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        width='24'
-        height='24'
-        viewBox='0 0 24 24'
-      >
-        <PinIcon
+    <>
+      <div className='slidebar-container'>
+        <p className={canScroll ? 'slidebar-label' : 'slidebar-label-inactive'}>
+          Least Salty
+        </p>
+        <div
           className={
-            !canScroll
-              ? 'pin-icon-inactive'
-              : userGuess === 0
-              ? 'pin-icon-zero'
-              : 'pin-icon-orange'
+            canScroll ? 'slidebar-content' : 'slidebar-content-inactive'
           }
-        />
-      </svg>
-    </div>
+          ref={containerRef}
+          onClick={handleClickContainer}
+        >
+          <div className='dashes'>
+            {dashes.map((num) => {
+              const revealedCard = revealedRanks.find((r) => r.rank === num);
+              const isRevealed = !!revealedCard;
+
+              return (
+                <div
+                  key={num}
+                  className='dash-container'
+                  style={{ bottom: `${num}%` }}
+                >
+                  <svg
+                    className={`dash-svg ${isRevealed ? 'revealed-dash' : ''}`}
+                    width='30'
+                    height='10'
+                  >
+                    {isRevealed ? (
+                      <Tooltip
+                        title={
+                          <>
+                            <img
+                              src={revealedCard.imageUrl}
+                              alt='Revealed card'
+                              className='tooltip-image'
+                            />
+                            <p className='tooltip-text'>{revealedCard.name}</p>
+                            <p className='tooltip-text'>
+                              Rank: {revealedCard.rank}
+                            </p>
+                          </>
+                        }
+                        enterDelay={200}
+                        leaveDelay={200}
+                        placement='right'
+                      >
+                        <line
+                          x1='10'
+                          x2={num === userGuess ? '30' : '20'}
+                          y1='5'
+                          y2='5'
+                          strokeWidth={
+                            num % 10 === 0 ? 2 : num === userGuess ? 2 : 1
+                          }
+                        />
+                      </Tooltip>
+                    ) : (
+                      <line
+                        x1='10'
+                        x2={num === userGuess ? '30' : '20'}
+                        y1='5'
+                        y2='5'
+                        stroke='var(--clr-light)'
+                        strokeWidth={
+                          num % 10 === 0 ? 2 : num === userGuess ? 2 : 1
+                        }
+                      />
+                    )}
+                  </svg>
+                  {num % 10 === 0 && <span className='dash-label'>{num}</span>}
+                </div>
+              );
+            })}
+          </div>
+          <svg
+            className={canScroll ? 'thumb' : 'thumb-inactive'}
+            style={{ bottom: `${userGuess}%` }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
+          >
+            <PinIcon
+              className={
+                !canScroll
+                  ? 'pin-icon-inactive'
+                  : userGuess === 0
+                  ? 'pin-icon-zero'
+                  : 'pin-icon-orange'
+              }
+            />
+          </svg>
+        </div>
+        <p className={canScroll ? 'slidebar-label' : 'slidebar-label-inactive'}>
+          Most Salty
+        </p>
+      </div>
+    </>
   );
 };
 

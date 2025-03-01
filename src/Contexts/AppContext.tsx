@@ -58,6 +58,8 @@ interface AppContextType {
 
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  fullscreenImage: string | null;
+  setFullscreenImage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -80,6 +82,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [canScroll, setCanScroll] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
 
   return (
     <AppContext.Provider
@@ -107,6 +110,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         isLoading,
         setIsLoading,
+        fullscreenImage,
+        setFullscreenImage,
       }}
     >
       {children}

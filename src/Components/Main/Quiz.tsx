@@ -27,6 +27,7 @@ const Quiz: React.FC = () => {
     setStarted,
     setCanScroll,
     setIsLoading,
+    setFullscreenImage,
   } = context;
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -41,6 +42,7 @@ const Quiz: React.FC = () => {
     setCurrentIndex(0);
     setUserGuess(0);
     setScores([]);
+    setRevealedRanks([]);
     setFinished(false);
     setStarted(true);
   };
@@ -96,7 +98,7 @@ const Quiz: React.FC = () => {
   }
 
   if (finished) {
-    return <Postgame scores={scores} selectedCards={selectedCards} />;
+    return <Postgame />;
   }
 
   const currentCard = selectedCards[currentIndex];
@@ -115,6 +117,9 @@ const Quiz: React.FC = () => {
               <img
                 src={currentCard.card.front.imgs.normal}
                 alt={currentCard.card.front.name}
+                onClick={() =>
+                  setFullscreenImage(currentCard.card.front.imgs.large)
+                }
                 className='card-image'
               />
               <p className='card-name'>{currentCard.card.front.name}</p>
@@ -161,7 +166,20 @@ const Quiz: React.FC = () => {
             ) : (
               <>
                 <form onSubmit={handleSubmit} className='quiz-form'>
-                  <div className='user-guess'>{userGuess}</div>
+                  <input
+                    type='number'
+                    className='user-guess'
+                    value={userGuess}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 0;
+                      const clampedValue = Math.min(100, Math.max(0, value));
+                      setUserGuess(clampedValue);
+                    }}
+                    min='0'
+                    max='100'
+                    onFocus={(e) => e.target.select()}
+                    inputMode='numeric'
+                  />
                   <button
                     type='submit'
                     className={

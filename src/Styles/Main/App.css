@@ -52,12 +52,15 @@
 }
 .guess-button:hover {
   background-color: var(--clr-accent-orange-hover);
+  color: var(--clr-light);
 }
 .next-button:hover {
   background-color: var(--clr-accent-blue-hover);
+  color: var(--clr-light);
 }
 .inactive-button:hover {
   background-color: var(--clr-divider);
+  color: var(--clr-light);
 }
 
 .linear-progress {
