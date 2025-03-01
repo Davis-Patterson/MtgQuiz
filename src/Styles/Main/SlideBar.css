@@ -34,6 +34,7 @@
   position: absolute;
   left: 0;
   margin: 0px 0px 0px 15px;
+  height: 14px;
 }
 
 .dash-label {
@@ -107,6 +108,7 @@
 }
 .revealed-dash:hover line {
   stroke: var(--clr-accent-blue-hover);
+  stroke-width: 4;
 }
 
 .tooltip-text {

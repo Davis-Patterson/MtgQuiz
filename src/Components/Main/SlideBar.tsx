@@ -98,9 +98,9 @@ const SlideBar: React.FC = () => {
                           x2={num === userGuess ? '30' : '20'}
                           y1='5'
                           y2='5'
-                          strokeWidth={
-                            num % 10 === 0 ? 2 : num === userGuess ? 2 : 1
-                          }
+                          stroke='var(--clr-accent)'
+                          strokeWidth={3}
+                          strokeLinecap='round'
                         />
                       </Tooltip>
                     ) : (
