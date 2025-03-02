@@ -71,8 +71,6 @@ const SlideBar: React.FC = () => {
                 >
                   <svg
                     className={`dash-svg ${isRevealed ? 'revealed-dash' : ''}`}
-                    width='30'
-                    height='10'
                   >
                     {isRevealed ? (
                       <Tooltip
@@ -99,7 +97,7 @@ const SlideBar: React.FC = () => {
                           y1='5'
                           y2='5'
                           stroke='var(--clr-accent)'
-                          strokeWidth={3}
+                          strokeWidth={8}
                           strokeLinecap='round'
                         />
                       </Tooltip>

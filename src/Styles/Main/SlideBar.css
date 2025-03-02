@@ -108,7 +108,7 @@
 }
 .revealed-dash:hover line {
   stroke: var(--clr-accent-blue-hover);
-  stroke-width: 4;
+  stroke-width: 10;
 }
 
 .tooltip-text {

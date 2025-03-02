@@ -40,7 +40,7 @@
 .card-salt {
   font-size: 0.9em;
   margin: 0;
-  color: #666;
+  color: var(--clr-divider);
 }
 
 .quiz-form {
@@ -58,7 +58,7 @@
   align-items: center;
   text-align: center;
   padding: 12px 0px 10px 0px;
-  margin: 5px 0px 5px 0px;
+  margin: 31px 0px 5px 0px;
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2em;
   line-height: 1;
