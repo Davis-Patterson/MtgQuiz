@@ -27,7 +27,7 @@ const Quiz: React.FC = () => {
     started,
     setStarted,
     setCanScroll,
-    setIsLoading,
+    setShouldFlip,
   } = context;
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -83,13 +83,13 @@ const Quiz: React.FC = () => {
     setCanScroll(true);
 
     if (currentIndex < selectedCards.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      setIsLoading(true);
+      setShouldFlip(true);
       setTimeout(() => {
-        setIsLoading(false);
-        setFinished(true);
+        setShouldFlip(false);
+        setCurrentIndex(currentIndex + 1);
       }, 300);
+    } else {
+      setFinished(true);
     }
   };
 

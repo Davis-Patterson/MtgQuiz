@@ -1,3 +1,82 @@
+@keyframes cardEnter {
+  from {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes flipFace {
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(-360deg);
+  }
+}
+
+@keyframes unflipFaceStart {
+  0% {
+    transform: rotateY(-360deg);
+  }
+  100% {
+    transform: rotateY(0);
+  }
+}
+@keyframes unflipFaceEnd {
+  0% {
+    transform: rotateY(-180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes flipTransition {
+  from {
+    transform: rotateY(0);
+  }
+  to {
+    transform: rotateY(-180deg);
+  }
+}
+
+.flip-container {
+  position: relative;
+  height: 450px;
+  width: 300px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.flip-container.animate-in {
+  animation: cardEnter 0.6s ease-out;
+}
+.flip-container.unflip-end {
+  animation: unflipFaceEnd 0.6s ease-in-out forwards;
+}
+.flip-container.animate-in {
+  animation: cardEnter 0.6s ease-out;
+}
+
+.flip-container.flip-face {
+  animation: flipFace 0.6s ease-in-out forwards;
+}
+
+.flip-container.unflip-face {
+  animation: unflipFaceStart 0.6s ease-in-out forwards;
+}
+
+.flip-container.flip-transition {
+  animation: flipTransition 0.6s ease-in-out forwards;
+}
+
 .card-display {
   display: flex;
   justify-content: center;
@@ -5,13 +84,11 @@
   flex-direction: column;
   position: relative;
   perspective: 1000px;
-  height: 450px;
-  width: 300px;
 }
 
 .flip-button {
   position: absolute;
-  top: 15px;
+  top: -15px;
   right: -30px;
   display: flex;
   align-items: center;
@@ -21,9 +98,12 @@
   color: var(--clr-icon);
   stroke: var(--clr-icon);
   font-size: 1.2em;
-  transition: all 0.4s ease;
+  transition: all 0.2s ease;
 }
 .flip-button:hover {
+  transform: translateY(-2px) scale(105%);
+}
+.flip-button:active {
   transform: rotate(180deg);
 }
 
@@ -39,7 +119,12 @@
 .flip-icon:active {
   color: var(--clr-accent-blue);
   fill: var(--clr-accent-blue);
-  transform: translateY(2px) scale(95%);
+}
+
+.flip-container {
+  position: relative;
+  height: 450px;
+  width: 300px;
 }
 
 .card-image-front,
@@ -53,6 +138,7 @@
   position: absolute;
   backface-visibility: hidden;
   transform-origin: bottom center;
+  transform-style: preserve-3d;
 }
 
 .card-image-front {

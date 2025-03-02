@@ -8,13 +8,38 @@ const CardDisplay: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { selectedCards, currentIndex, setFullscreenImage } = context;
+  const { selectedCards, currentIndex, shouldFlip, setFullscreenImage } =
+    context;
 
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [activeFace, setActiveFace] = useState<string>('front');
+  const [flipDirection, setFlipDirection] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsFlipped(false);
+    setActiveFace('front');
   }, [currentIndex]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFlipDirection(null);
+    }, 300);
+  }, [flipDirection, setFlipDirection]);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const timer = setTimeout(() => {
+      setIsMounted(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [currentIndex]);
+
+  const handleFlip = () => {
+    setFlipDirection(activeFace === 'front' ? 'flip' : 'unflip');
+    setActiveFace((prev) => (prev === 'front' ? 'back' : 'front'));
+    setTimeout(() => {
+      setFlipDirection(null);
+    }, 600);
+  };
 
   const currentCard = selectedCards[currentIndex];
 
@@ -22,39 +47,60 @@ const CardDisplay: React.FC = () => {
     <>
       <div className='card-display'>
         {currentCard.card.back && (
-          <>
-            <img
-              src={currentCard.card.back.imgs.normal}
-              alt={currentCard.card.back.name}
-              className={`card-image-back ${isFlipped ? 'flipped' : ''}`}
-              onClick={() =>
-                isFlipped && currentCard.card.back
-                  ? setFullscreenImage(currentCard.card.back.imgs.large)
-                  : setIsFlipped(!isFlipped)
-              }
-            />
-            <div
-              className='flip-button'
-              onClick={() => setIsFlipped(!isFlipped)}
-              aria-label='Flip card'
-            >
-              <FlipIcon className='flip-icon' />
-            </div>
-          </>
+          <div
+            className='flip-button'
+            onClick={() => handleFlip()}
+            aria-label='Flip card'
+          >
+            <FlipIcon className='flip-icon' />
+          </div>
         )}
-        <img
-          src={currentCard.card.front.imgs.normal}
-          alt={currentCard.card.front.name}
-          onClick={() =>
-            isFlipped && currentCard.card.back
-              ? setIsFlipped(!isFlipped)
-              : setFullscreenImage(currentCard.card.front.imgs.large)
-          }
-          className={`card-image-front ${isFlipped ? 'flipped' : ''}`}
-        />
+        <div
+          className={`flip-container 
+            ${isMounted ? 'animate-in' : ''}
+            ${shouldFlip ? 'flip-transition' : ''}
+            ${
+              flipDirection === 'flip'
+                ? 'flip-face'
+                : flipDirection === 'unflip'
+                ? 'unflip-face'
+                : ''
+            }
+            ${flipDirection === 'unflip' ? 'unflip-end' : ''}
+            `}
+        >
+          {currentCard.card.back && (
+            <>
+              <img
+                src={currentCard.card.back.imgs.normal}
+                alt={currentCard.card.back.name}
+                className={`card-image-back ${
+                  activeFace === 'back' ? 'flipped' : ''
+                }`}
+                onClick={() =>
+                  activeFace === 'back' && currentCard.card.back
+                    ? setFullscreenImage(currentCard.card.back.imgs.large)
+                    : handleFlip()
+                }
+              />
+            </>
+          )}
+          <img
+            src={currentCard.card.front.imgs.normal}
+            alt={currentCard.card.front.name}
+            onClick={() =>
+              activeFace === 'back' && currentCard.card.back
+                ? handleFlip()
+                : setFullscreenImage(currentCard.card.front.imgs.large)
+            }
+            className={`card-image-front ${
+              activeFace === 'back' ? 'flipped' : ''
+            }`}
+          />
+        </div>
       </div>
       <p className='card-name'>
-        {isFlipped && currentCard.card.back
+        {activeFace === 'back' && currentCard.card.back
           ? currentCard.card.back.name
           : currentCard.card.front.name}
       </p>

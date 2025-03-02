@@ -56,8 +56,8 @@ interface AppContextType {
   canScroll: boolean;
   setCanScroll: React.Dispatch<React.SetStateAction<boolean>>;
 
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  shouldFlip: boolean;
+  setShouldFlip: React.Dispatch<React.SetStateAction<boolean>>;
   fullscreenImage: string | null;
   setFullscreenImage: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -81,7 +81,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [finished, setFinished] = useState(false);
   const [canScroll, setCanScroll] = useState(true);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [shouldFlip, setShouldFlip] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
 
   return (
@@ -108,8 +108,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         canScroll,
         setCanScroll,
 
-        isLoading,
-        setIsLoading,
+        shouldFlip,
+        setShouldFlip,
         fullscreenImage,
         setFullscreenImage,
       }}
