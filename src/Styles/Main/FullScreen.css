@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--clr-screen);
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
@@ -25,7 +25,7 @@
   max-width: 100%;
   max-height: 80vh;
   object-fit: contain;
-  border-radius: 25px;
+  border-radius: 28px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
