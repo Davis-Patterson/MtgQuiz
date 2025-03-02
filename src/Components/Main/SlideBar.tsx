@@ -1,8 +1,10 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import PinIcon from 'Svgs/PinIcon';
+import PointIcon from 'Svgs/PointIcon';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Main/SlideBar.css';
+import UserScore from './UserScore';
 
 const SlideBar: React.FC = () => {
   const context = useContext(AppContext);
@@ -12,6 +14,8 @@ const SlideBar: React.FC = () => {
   const { userGuess, setUserGuess, revealedRanks, canScroll } = context;
 
   const [dragging, setDragging] = useState(false);
+  const [showPointerHint, setShowPointerHint] = useState(true);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const dashes = Array.from({ length: 101 }, (_, i) => i);
 
@@ -44,6 +48,14 @@ const SlideBar: React.FC = () => {
     const newGuess = Math.max(0, Math.min(100, Math.round(percentage)));
     setUserGuess(newGuess);
   };
+
+  useEffect(() => {
+    if (userGuess > 0) {
+      setShowPointerHint(false);
+    } else {
+      return;
+    }
+  }, [userGuess]);
 
   return (
     <>
@@ -143,6 +155,7 @@ const SlideBar: React.FC = () => {
         <p className={canScroll ? 'slidebar-label' : 'slidebar-label-inactive'}>
           Most Salty
         </p>
+        {showPointerHint && <PointIcon className='point-icon' />}
       </div>
     </>
   );
