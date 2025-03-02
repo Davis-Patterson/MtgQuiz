@@ -1,0 +1,26 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0px 0px 180px 0px;
+}
+
+.not-found-header-text {
+  font-family: 'Beleren Bold', sans-serif;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  margin: 0px 0px 25px 0px;
+}
+
+.not-found-header-subtext {
+  font-family: 'Beleren Bold', sans-serif;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  margin: 0px 0px 5px 0px;
+}

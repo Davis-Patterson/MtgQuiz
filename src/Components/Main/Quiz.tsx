@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
-import UserScore from 'Components/Main/UserScore';
-import CardDisplay from 'Components/Main/CardDisplay';
-import SlideBar from 'Components/Main/SlideBar';
-import Postgame from 'Components/Main/Postgame';
+import { useNavigate } from 'react-router-dom';
+import UserScore from 'Components/Utils/UserScore';
+import CardDisplay from 'Components/Utils/CardDisplay';
+import SlideBar from 'Components/Utils/SlideBar';
 import 'Styles/Main/Quiz.css';
 
 const Quiz: React.FC = () => {
@@ -32,6 +32,8 @@ const Quiz: React.FC = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const navigate = useNavigate();
+
   const startGame = () => {
     const validCards = cardData.filter(
       (card) => card.rank !== null && card.salt_score !== null
@@ -52,6 +54,12 @@ const Quiz: React.FC = () => {
       startGame();
     }
   }, [started]);
+
+  useEffect(() => {
+    if (finished) {
+      navigate('/results');
+    }
+  }, [finished]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,10 +103,6 @@ const Quiz: React.FC = () => {
 
   if (selectedCards.length === 0) {
     return <div>Loading quiz data...</div>;
-  }
-
-  if (finished) {
-    return <Postgame />;
   }
 
   return (

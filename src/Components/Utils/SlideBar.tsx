@@ -3,7 +3,7 @@ import { AppContext } from 'Contexts/AppContext';
 import PinIcon from 'Svgs/PinIcon';
 import PointIcon from 'Svgs/PointIcon';
 import Tooltip from '@mui/material/Tooltip';
-import 'Styles/Main/SlideBar.css';
+import 'Styles/Utils/SlideBar.css';
 
 const SlideBar: React.FC = () => {
   const context = useContext(AppContext);
@@ -19,7 +19,7 @@ const SlideBar: React.FC = () => {
   } = context;
 
   const [dragging, setDragging] = useState(false);
-  const [showPointerHint, setShowPointerHint] = useState(true);
+  const [showPointerHint, setShowPointerHint] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dashes = Array.from({ length: 101 }, (_, i) => i);
@@ -61,6 +61,12 @@ const SlideBar: React.FC = () => {
       return;
     }
   }, [userGuess]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowPointerHint(true);
+    }, 5000);
+  }, []);
 
   return (
     <>

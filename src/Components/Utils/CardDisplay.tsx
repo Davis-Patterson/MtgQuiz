@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import FlipIcon from 'Svgs/FlipIcon';
-import 'Styles/Main/CardDisplay.css';
+import 'Styles/Utils/CardDisplay.css';
 
 const CardDisplay: React.FC = () => {
   const context = useContext(AppContext);

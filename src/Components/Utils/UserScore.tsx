@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AppContext } from 'Contexts/AppContext';
-import 'Styles/Main/UserScore.css';
+import 'Styles/Utils/UserScore.css';
 
 const UserScore: React.FC = () => {
   const context = useContext(AppContext);

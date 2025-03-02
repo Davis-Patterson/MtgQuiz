@@ -47,9 +47,9 @@ const Home: React.FC = () => {
           <p className='home-text'>
             For each card, you must guess its ranking between 1 and 100. Your
             score for each card is the absolute difference between your guess
-            and the card's actual rank. The lower the score, the better.
+            and the card's actual rank.
           </p>
-          <p className='home-text'>Try to get as close to 0 as possible!</p>
+          <p className='home-text'>The lower the score, the better.</p>
           <div className='button-gap' />
           <Link
             to='/salt'

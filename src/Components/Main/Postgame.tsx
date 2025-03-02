@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from 'Contexts/AppContext';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
 import 'Styles/Main/Postgame.css';
 
@@ -15,9 +15,29 @@ const Postgame: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { selectedCards, scores, setfullScreenImage } = context;
+  const { selectedCards, scores, finished, setfullScreenImage } = context;
+
+  const navigate = useNavigate();
 
   const totalScore = scores.reduce((sum, score) => sum + score.diff, 0);
+
+  useEffect(() => {
+    if (!finished) {
+      const timer = setTimeout(() => {
+        navigate('/');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [finished]);
+
+  if (!finished) {
+    return (
+      <div className='results-error'>
+        <h2>No active game session found</h2>
+        <p>Redirecting to homepage...</p>
+      </div>
+    );
+  }
 
   return (
     <section className='page-containers'>
