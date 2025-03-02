@@ -133,9 +133,10 @@
 }
 
 .MuiTooltip-tooltip {
-  background: var(--clr-background) !important;
-  border: 2px solid var(--clr-divider) !important;
+  background: var(--clr-screen) !important;
+  border: 2px solid var(--clr-dark) !important;
   border-radius: 8px !important;
+  backdrop-filter: blur(4px);
   padding: 8px !important;
 }
 
