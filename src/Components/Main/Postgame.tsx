@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { useNavigate, Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
+import html2canvas from 'html2canvas';
 import 'Styles/Main/Postgame.css';
 
 export interface ScoreDetail {
@@ -19,13 +20,35 @@ const Postgame: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const resultsRef = useRef<HTMLDivElement>(null);
+
   const totalScore = scores.reduce((sum, score) => sum + score.diff, 0);
+
+  const handleDownload = async () => {
+    if (!resultsRef.current) return;
+
+    try {
+      const canvas = await html2canvas(resultsRef.current, {
+        scale: 2,
+        useCORS: true,
+      });
+      const image = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = 'quiz-results.png';
+      link.href = image;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error generating image:', error);
+    }
+  };
 
   useEffect(() => {
     if (!finished) {
       const timer = setTimeout(() => {
         navigate('/');
-      }, 3000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [finished]);
@@ -41,15 +64,29 @@ const Postgame: React.FC = () => {
 
   return (
     <section className='page-containers'>
-      <div className='quiz-results'>
+      <div className='quiz-results' ref={resultsRef}>
         <header className='results-header'>
-          <div className='results-title-container'>
-            <p className='results-score-label'>Final Score:</p>
-            <p className='results-score'>{totalScore}</p>
+          <div className='results-header-top'>
+            <div className='results-title-container'>
+              <p className='results-score-label'>Final Score:</p>
+              <p className='results-score'>{totalScore}</p>
+            </div>
+            <Link to='/' className='results-logo-img'>
+              <img
+                src={SaltLogo}
+                alt='salt logo'
+                className='results-salt-logo'
+              />
+            </Link>
           </div>
-          <Link to='/' className='results-logo-img'>
-            <img src={SaltLogo} alt='salt logo' className='results-salt-logo' />
-          </Link>
+          <div className='results-header-bottom'>
+            <div onClick={() => handleDownload()} className='next-button'>
+              Download
+            </div>
+            <Link to='/' className='guess-button'>
+              Home
+            </Link>
+          </div>
         </header>
         <div className='results-content'>
           {scores.map((score, index) => {
