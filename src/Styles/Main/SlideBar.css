@@ -164,6 +164,22 @@
   }
 }
 
+@keyframes trail {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  40% {
+    opacity: 0.4;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.5);
+  }
+}
+
 .point-icon {
   width: 65px;
   fill: var(--clr-icon);
@@ -172,4 +188,15 @@
   right: -150px;
   animation: pointerSwipe 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: bottom center;
+}
+
+.point-icon::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--clr-icon);
+  border-radius: 50%;
+  opacity: 0;
+  animation: trail 2s infinite;
 }
