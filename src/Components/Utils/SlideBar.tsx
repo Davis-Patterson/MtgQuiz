@@ -20,6 +20,7 @@ const SlideBar: React.FC = () => {
 
   const [dragging, setDragging] = useState(false);
   const [showPointerHint, setShowPointerHint] = useState(false);
+  const [hasGuessed, setHasGuessed] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dashes = Array.from({ length: 101 }, (_, i) => i);
@@ -57,6 +58,7 @@ const SlideBar: React.FC = () => {
   useEffect(() => {
     if (userGuess > 0) {
       setShowPointerHint(false);
+      setHasGuessed(true);
     } else {
       return;
     }
@@ -64,7 +66,9 @@ const SlideBar: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setShowPointerHint(true);
+      if (hasGuessed) {
+        setShowPointerHint(true);
+      }
     }, 5000);
   }, []);
 
