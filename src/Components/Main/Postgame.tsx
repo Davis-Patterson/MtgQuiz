@@ -15,7 +15,7 @@ const Postgame: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { selectedCards, scores, setFullscreenImage } = context;
+  const { selectedCards, scores, setfullScreenImage } = context;
 
   const totalScore = scores.reduce((sum, score) => sum + score.diff, 0);
 
@@ -43,7 +43,7 @@ const Postgame: React.FC = () => {
                     style={{ width: '100px' }}
                     className='results-card-image'
                     onClick={() =>
-                      setFullscreenImage(card.card.front.imgs.large)
+                      setfullScreenImage(card.card.front.imgs.large)
                     }
                   />
                 </div>

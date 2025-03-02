@@ -15,11 +15,11 @@ function App() {
 
   return (
     <>
-      <FullScreen />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/salt' element={<Quiz />} />
       </Routes>
+      <FullScreen />
     </>
   );
 }

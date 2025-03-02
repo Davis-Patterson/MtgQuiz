@@ -10,7 +10,13 @@ const SlideBar: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { userGuess, setUserGuess, revealedRanks, canScroll } = context;
+  const {
+    userGuess,
+    setUserGuess,
+    revealedRanks,
+    canScroll,
+    setfullScreenImage,
+  } = context;
 
   const [dragging, setDragging] = useState(false);
   const [showPointerHint, setShowPointerHint] = useState(true);
@@ -85,12 +91,21 @@ const SlideBar: React.FC = () => {
                   >
                     {isRevealed ? (
                       <Tooltip
+                        style={{ zIndex: 50 }}
+                        slotProps={{
+                          popper: {
+                            style: { zIndex: 50 + '!important' },
+                          },
+                        }}
                         title={
                           <>
                             <img
                               src={revealedCard.imageUrl}
                               alt='Revealed card'
                               className='tooltip-image'
+                              onClick={() =>
+                                setfullScreenImage(revealedCard.imageUrl)
+                              }
                             />
                             <p className='tooltip-text'>{revealedCard.name}</p>
                             <p className='tooltip-text'>
