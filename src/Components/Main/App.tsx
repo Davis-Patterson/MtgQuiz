@@ -1,34 +1,24 @@
-import { useContext, lazy, Suspense } from 'react';
+import { useContext } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { Routes, Route } from 'react-router-dom';
 import Home from 'Components/Main/Home';
 import FullScreen from 'Components/Main/FullScreen';
-import Loading from 'Components/Utils/Loading';
+import Quiz from 'Components/Main/Quiz';
 import 'Styles/Main/App.css';
-
-const Quiz = lazy(() => import('Components/Main/Quiz'));
 
 function App() {
   const context = useContext(AppContext);
   if (!context) {
     throw new Error('No Context available');
   }
-  const { isLoading } = context;
+  const {} = context;
 
   return (
     <>
-      {isLoading && <Loading />}
       <FullScreen />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route
-          path='/salt'
-          element={
-            <Suspense fallback={<Loading />}>
-              <Quiz />
-            </Suspense>
-          }
-        />
+        <Route path='/salt' element={<Quiz />} />
       </Routes>
     </>
   );
