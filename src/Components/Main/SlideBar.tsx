@@ -4,7 +4,6 @@ import PinIcon from 'Svgs/PinIcon';
 import PointIcon from 'Svgs/PointIcon';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Main/SlideBar.css';
-import UserScore from './UserScore';
 
 const SlideBar: React.FC = () => {
   const context = useContext(AppContext);
