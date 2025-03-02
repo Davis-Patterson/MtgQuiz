@@ -1,3 +1,42 @@
+@keyframes pointerSwipe {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(-40px) translateY(-12px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(-40px) translateY(-300px);
+    opacity: 0;
+  }
+  75%,
+  100% {
+    transform: translateX(-40px) translateY(-300px);
+    opacity: 0;
+  }
+}
+
+@keyframes trail {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  40% {
+    opacity: 0.4;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.5);
+  }
+}
+
 .slidebar-container {
   height: 100%;
   display: flex;
@@ -139,45 +178,6 @@
 
 .pointer-container {
   pointer-events: none;
-}
-
-@keyframes pointerSwipe {
-  0% {
-    opacity: 0;
-  }
-  5% {
-    transform: translateX(0) translateY(0);
-    opacity: 1;
-  }
-  25% {
-    transform: translateX(-40px) translateY(-12px);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translateX(-40px) translateY(-300px);
-    opacity: 0;
-  }
-  75%,
-  100% {
-    transform: translateX(-40px) translateY(-300px);
-    opacity: 0;
-  }
-}
-
-@keyframes trail {
-  0%,
-  100% {
-    opacity: 0;
-  }
-  10%,
-  40% {
-    opacity: 0.4;
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.5);
-  }
 }
 
 .point-icon {
