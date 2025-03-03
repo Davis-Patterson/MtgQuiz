@@ -23,7 +23,7 @@ const SlideBar: React.FC = () => {
   const [hasGuessed, setHasGuessed] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dashes = Array.from({ length: 101 }, (_, i) => i);
 
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -62,6 +62,7 @@ const SlideBar: React.FC = () => {
       setHasGuessed(true);
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     }
   }, [userGuess]);
@@ -72,12 +73,13 @@ const SlideBar: React.FC = () => {
         if (!hasGuessed) {
           setShowPointerHint(true);
         }
-      }, 5000);
+      }, 3000);
     }
 
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     };
   }, [hasGuessed]);
