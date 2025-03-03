@@ -16,6 +16,7 @@ const Home: React.FC = () => {
     setScores,
     setRevealedRanks,
     setStarted,
+    setCanScroll,
   } = context;
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
     setUserGuess(0);
     setScores([]);
     setRevealedRanks([]);
+    setCanScroll(true);
   };
 
   useEffect(() => {

@@ -85,8 +85,9 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(8px);
+  filter: blur(10px);
   z-index: -12;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .background-overlay {
@@ -97,19 +98,19 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
+  z-index: 2;
 }
 
 .blue-glow {
   filter: drop-shadow(0 0 2em #64c6ffaa);
-  transition: all 0.15s ease-in-out;
+  transition: filter 0.15s ease-in-out;
 }
 .blue-glow:hover {
   filter: drop-shadow(0 0 2em #32b3fdaa);
 }
 .orange-glow {
   filter: drop-shadow(0 0 2em #ffbc64aa);
-  transition: all 0.15s ease-in-out;
+  transition: filter 0.15s ease-in-out;
 }
 .orange-glow:hover {
   filter: drop-shadow(0 0 2em #ffa52faa);

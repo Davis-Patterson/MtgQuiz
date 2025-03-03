@@ -51,7 +51,7 @@
   width: 60px;
   height: 100%;
   max-height: calc(100% - 100px);
-  z-index: 5;
+  z-index: 10;
 }
 .slidebar-content-inactive {
   opacity: 0.4;

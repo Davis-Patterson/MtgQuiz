@@ -143,24 +143,24 @@
 
 .card-image-front {
   transform: rotate(0deg);
-  z-index: 2;
+  z-index: 7;
 }
 
 .card-image-back {
   transform: rotate(5deg) translateX(2px);
-  z-index: 1;
+  z-index: 6;
   filter: brightness(0.9);
 }
 
 .card-image-front.flipped {
   transform: rotate(-5deg) translateX(-20px);
-  z-index: 1;
+  z-index: 6;
   filter: brightness(0.9);
 }
 
 .card-image-back.flipped {
   transform: rotate(0deg);
-  z-index: 2;
+  z-index: 7;
 }
 
 .card-display:hover .card-image-front:not(.flipped),

@@ -5,6 +5,7 @@
 }
 
 .quiz-results {
+  position: relative;
   width: 100%;
   padding: 20px 45px;
   display: flex;
@@ -14,6 +15,7 @@
   color: var(--clr-light) !important;
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact;
+  z-index: 7;
 }
 
 .results-score-label,

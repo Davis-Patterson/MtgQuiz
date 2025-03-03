@@ -30,8 +30,12 @@ const Quiz: React.FC = () => {
     setShouldFlip,
   } = context;
 
-  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+  const [currentBackground, setCurrentBackground] = useState<string | null>(
+    null
+  );
+  const [nextBackground, setNextBackground] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const navigate = useNavigate();
 
@@ -63,12 +67,29 @@ const Quiz: React.FC = () => {
   }, [finished]);
 
   useEffect(() => {
-    if (cardData && cardData.length > 0) {
-      const randomIndex = Math.floor(Math.random() * cardData.length);
-      const artCropUrl = cardData[randomIndex].card.front.imgs.art_crop;
-      setBackgroundImage(artCropUrl);
+    if (selectedCards.length > 0 && currentIndex >= 0) {
+      const currentCard = selectedCards[currentIndex];
+      const artCropUrl = currentCard.card.front.imgs.art_crop;
+
+      if (!currentBackground) {
+        setCurrentBackground(artCropUrl);
+      } else {
+        setNextBackground(artCropUrl);
+        setIsTransitioning(true);
+      }
     }
-  }, [cardData]);
+  }, [currentIndex, selectedCards]);
+
+  useEffect(() => {
+    if (isTransitioning) {
+      const timer = setTimeout(() => {
+        setCurrentBackground(nextBackground);
+        setNextBackground(null);
+        setIsTransitioning(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning, nextBackground]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,15 +138,23 @@ const Quiz: React.FC = () => {
   return (
     <>
       <div className='page-container'>
-        {backgroundImage && (
-          <>
+        <div className='background-container'>
+          {currentBackground && (
             <div
-              className='background-img'
-              style={{ backgroundImage: `url(${backgroundImage})` }}
+              className={`transition-background-img ${
+                isTransitioning ? 'fade-out' : 'active'
+              }`}
+              style={{ backgroundImage: `url(${currentBackground})` }}
             />
-            <div className='background-overlay' />
-          </>
-        )}
+          )}
+          {nextBackground && (
+            <div
+              className='transition-background-img fade-in'
+              style={{ backgroundImage: `url(${nextBackground})` }}
+            />
+          )}
+          <div className='background-overlay' />
+        </div>
         <UserScore />
         <div className='quiz-container'>
           <SlideBar />
@@ -165,7 +194,7 @@ const Quiz: React.FC = () => {
                     </div>
                   )}
                 </div>
-                <button onClick={handleNext} className='next-button'>
+                <button onClick={handleNext} className='next-button blue-glow'>
                   {currentIndex < selectedCards.length - 1
                     ? 'Next Card'
                     : 'View Results'}
@@ -191,7 +220,9 @@ const Quiz: React.FC = () => {
                   <button
                     type='submit'
                     className={
-                      userGuess === 0 ? 'inactive-button' : 'guess-button'
+                      userGuess === 0
+                        ? 'inactive-button'
+                        : 'guess-button orange-glow'
                     }
                     disabled={userGuess === 0}
                   >

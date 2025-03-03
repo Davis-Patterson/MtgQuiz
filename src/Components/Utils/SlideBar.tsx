@@ -23,6 +23,7 @@ const SlideBar: React.FC = () => {
   const [hasGuessed, setHasGuessed] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout>();
   const dashes = Array.from({ length: 101 }, (_, i) => i);
 
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -59,18 +60,27 @@ const SlideBar: React.FC = () => {
     if (userGuess > 0) {
       setShowPointerHint(false);
       setHasGuessed(true);
-    } else {
-      return;
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     }
   }, [userGuess]);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (!hasGuessed) {
-        setShowPointerHint(true);
+    if (!hasGuessed) {
+      timeoutRef.current = setTimeout(() => {
+        if (!hasGuessed) {
+          setShowPointerHint(true);
+        }
+      }, 5000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
-    }, 5000);
-  }, []);
+    };
+  }, [hasGuessed]);
 
   return (
     <>
@@ -156,7 +166,7 @@ const SlideBar: React.FC = () => {
             })}
           </div>
           <svg
-            className={canScroll ? 'thumb' : 'thumb-inactive'}
+            className={canScroll ? 'thumb orange-glow' : 'thumb-inactive'}
             style={{ bottom: `${userGuess}%` }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
@@ -179,7 +189,7 @@ const SlideBar: React.FC = () => {
         <p className={canScroll ? 'slidebar-label' : 'slidebar-label-inactive'}>
           Most Salty
         </p>
-        {showPointerHint && <PointIcon className='point-icon' />}
+        {showPointerHint && !hasGuessed && <PointIcon className='point-icon' />}
       </div>
     </>
   );
