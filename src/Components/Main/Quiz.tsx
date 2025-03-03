@@ -30,6 +30,7 @@ const Quiz: React.FC = () => {
     setShouldFlip,
   } = context;
 
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const navigate = useNavigate();
@@ -60,6 +61,14 @@ const Quiz: React.FC = () => {
       navigate('/results');
     }
   }, [finished]);
+
+  useEffect(() => {
+    if (cardData && cardData.length > 0) {
+      const randomIndex = Math.floor(Math.random() * cardData.length);
+      const artCropUrl = cardData[randomIndex].card.front.imgs.art_crop;
+      setBackgroundImage(artCropUrl);
+    }
+  }, [cardData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,6 +117,15 @@ const Quiz: React.FC = () => {
   return (
     <>
       <div className='page-container'>
+        {backgroundImage && (
+          <>
+            <div
+              className='background-img'
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+            />
+            <div className='background-overlay' />
+          </>
+        )}
         <UserScore />
         <div className='quiz-container'>
           <SlideBar />
@@ -138,9 +156,7 @@ const Quiz: React.FC = () => {
                       <div className='scores-score-container'>
                         <p className='score-text-score-label'>Score:</p>
                         <div className='score-text-score-container'>
-                          {scores[scores.length - 1].diff > 0 && (
-                            <p className='score-text-plus'>+</p>
-                          )}
+                          <p className='score-text-plus'>+</p>
                           <p className='score-text-score'>
                             {scores[scores.length - 1].diff}
                           </p>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { useNavigate, Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
@@ -16,12 +16,23 @@ const Postgame: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { selectedCards, scores, finished, setfullScreenImage } = context;
+  const {
+    cardData,
+    selectedCards,
+    setCurrentIndex,
+    setUserGuess,
+    scores,
+    setScores,
+    setRevealedRanks,
+    finished,
+    setFinished,
+    setfullScreenImage,
+  } = context;
+
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
 
   const navigate = useNavigate();
-
   const resultsRef = useRef<HTMLDivElement>(null);
-
   const totalScore = scores.reduce((sum, score) => sum + score.diff, 0);
 
   const handleDownload = async () => {
@@ -53,6 +64,14 @@ const Postgame: React.FC = () => {
     }
   }, [finished]);
 
+  useEffect(() => {
+    if (cardData && cardData.length > 0) {
+      const randomIndex = Math.floor(Math.random() * cardData.length);
+      const artCropUrl = cardData[randomIndex].card.front.imgs.art_crop;
+      setBackgroundImage(artCropUrl);
+    }
+  }, [cardData]);
+
   if (!finished) {
     return (
       <div className='results-error'>
@@ -62,8 +81,25 @@ const Postgame: React.FC = () => {
     );
   }
 
+  const handleHome = () => {
+    setCurrentIndex(0);
+    setUserGuess(0);
+    setScores([]);
+    setRevealedRanks([]);
+    setFinished(false);
+  };
+
   return (
-    <section className='page-containers'>
+    <section className='results-container'>
+      {backgroundImage && (
+        <>
+          <div
+            className='background-img'
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+          <div className='background-overlay' />
+        </>
+      )}
       <div className='quiz-results' ref={resultsRef}>
         <header className='results-header'>
           <div className='results-header-top'>
@@ -75,15 +111,22 @@ const Postgame: React.FC = () => {
               <img
                 src={SaltLogo}
                 alt='salt logo'
-                className='results-salt-logo'
+                className='results-salt-logo orange-glow'
               />
             </Link>
           </div>
           <div className='results-header-bottom'>
-            <div onClick={() => handleDownload()} className='next-button'>
+            <div
+              onClick={() => handleDownload()}
+              className='next-button blue-glow'
+            >
               Download
             </div>
-            <Link to='/' className='guess-button'>
+            <Link
+              to='/'
+              onClick={() => handleHome()}
+              className='guess-button orange-glow'
+            >
               Home
             </Link>
           </div>

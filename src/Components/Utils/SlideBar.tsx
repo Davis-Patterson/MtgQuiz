@@ -66,7 +66,7 @@ const SlideBar: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (hasGuessed) {
+      if (!hasGuessed) {
         setShowPointerHint(true);
       }
     }, 5000);

@@ -1,5 +1,7 @@
 .results-container {
-  background-color: var(--clr-background) !important;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .quiz-results {
@@ -93,7 +95,7 @@
   justify-content: center;
   width: 420px;
   gap: 5px;
-  transform: scale(80%);
+  transform: scale(75%);
 }
 
 .results-content {

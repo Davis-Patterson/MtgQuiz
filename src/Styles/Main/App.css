@@ -75,3 +75,42 @@
 .linear-progress {
   width: 100%;
 }
+
+.background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(8px);
+  z-index: -12;
+}
+
+.background-overlay {
+  background-color: var(--clr-overlay);
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -10;
+}
+
+.blue-glow {
+  filter: drop-shadow(0 0 2em #64c6ffaa);
+  transition: all 0.15s ease-in-out;
+}
+.blue-glow:hover {
+  filter: drop-shadow(0 0 2em #32b3fdaa);
+}
+.orange-glow {
+  filter: drop-shadow(0 0 2em #ffbc64aa);
+  transition: all 0.15s ease-in-out;
+}
+.orange-glow:hover {
+  filter: drop-shadow(0 0 2em #ffa52faa);
+}

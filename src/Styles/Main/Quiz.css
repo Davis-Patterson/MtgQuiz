@@ -52,7 +52,7 @@
 
 .user-guess {
   border: 1px solid var(--clr-icon);
-  background-color: var(--clr-background);
+  background-color: var(--clr-screen);
   display: flex;
   justify-content: center;
   align-items: center;
