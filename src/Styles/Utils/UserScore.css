@@ -3,14 +3,29 @@
   top: 20px;
   right: 20px;
   padding: 8px 16px;
-  border: 2px solid var(--clr-divider);
+  border: 1px solid var(--clr-divider);
   border-radius: 8px;
   background-color: var(--clr-screen);
   display: flex;
-  gap: 10px;
+  gap: 14px;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 15;
+}
+
+.user-score-score-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 3px 0px 0px 0px;
+}
+
+.user-score-home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--clr-divider);
 }
 
 .score-label {
@@ -24,6 +39,33 @@
   font-size: 18px;
   font-weight: bold;
   color: var(--clr-accent);
+}
+
+.home-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 2px 14px;
+}
+
+.home-icon,
+.back-arrow-icon {
+  width: 22px;
+  height: 22px;
+  fill: var(--clr-icon);
+  cursor: pointer;
+}
+.home-icon:hover {
+  fill: var(--clr-accent-blue-hover);
+}
+.home-icon:active {
+  fill: var(--clr-accent-blue);
+}
+.back-arrow-icon:hover {
+  fill: var(--clr-accent-orange-hover);
+}
+.back-arrow-icon:active {
+  fill: var(--clr-accent-orange);
 }
 
 @media screen and (max-width: 420px) {
