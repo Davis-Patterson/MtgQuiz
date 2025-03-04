@@ -4,6 +4,14 @@
   min-height: 100vh;
 }
 
+.no-results-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .quiz-results {
   position: relative;
   width: 100%;
@@ -277,4 +285,32 @@
   font-size: 1.1rem;
   opacity: 0.8;
   margin: 0px 0px 180px 0px;
+}
+
+.results-not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0px 0px 180px 0px;
+  z-index: 6;
+}
+
+.results-not-found-header-text {
+  font-family: 'Beleren Bold', sans-serif;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  margin: 0px 0px 25px 0px;
+}
+
+.results-not-found-header-subtext {
+  font-family: 'Beleren Bold', sans-serif;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  margin: 0px 0px 5px 0px;
 }

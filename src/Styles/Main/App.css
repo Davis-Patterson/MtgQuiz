@@ -102,16 +102,19 @@
 }
 
 .blue-glow {
-  filter: drop-shadow(0 0 2em #64c6ffaa);
-  transition: filter 0.15s ease-in-out;
+  filter: drop-shadow(0 0 1em #64c6ff88);
 }
 .blue-glow:hover {
-  filter: drop-shadow(0 0 2em #32b3fdaa);
-}
-.orange-glow {
-  filter: drop-shadow(0 0 2em #ffbc64aa);
+  filter: drop-shadow(0 0 1em #32b3fd88);
   transition: filter 0.15s ease-in-out;
 }
+.orange-glow {
+  filter: drop-shadow(0 0 1em #ffbc6488);
+}
 .orange-glow:hover {
-  filter: drop-shadow(0 0 2em #ffa52faa);
+  filter: drop-shadow(0 0 1em #ffa52f88);
+  transition: filter 0.15s ease-in-out;
+}
+.shadow-glow {
+  filter: drop-shadow(0 0 1em var(--clr-screen));
 }

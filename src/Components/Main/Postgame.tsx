@@ -59,7 +59,7 @@ const Postgame: React.FC = () => {
     if (!finished) {
       const timer = setTimeout(() => {
         navigate('/');
-      }, 1000);
+      }, 4000);
       return () => clearTimeout(timer);
     }
   }, [finished]);
@@ -74,10 +74,35 @@ const Postgame: React.FC = () => {
 
   if (!finished) {
     return (
-      <div className='results-error'>
-        <h2>No active game session found</h2>
-        <p>Redirecting to homepage...</p>
-      </div>
+      <>
+        <div className='page-container'>
+          {backgroundImage && (
+            <>
+              <div
+                className='background-img'
+                style={{ backgroundImage: `url(${backgroundImage})` }}
+              />
+              <div className='background-overlay' />
+            </>
+          )}
+          <div className='results-not-found shadow-glow'>
+            <div className='results-not-found-header'>
+              <div className='results-not-found-header-text-container'>
+                <h1 className='results-not-found-header-text'>404: No Data</h1>
+              </div>
+              <div className='results-not-found-header-subtext-container'>
+                <p className='results-not-found-header-subtext'>
+                  There was no game session found.
+                </p>
+                <p className='results-not-found-header-subtext'>
+                  Redirecting to homepage...
+                </p>
+              </div>
+            </div>
+            <div className='results-not-found-content-container'></div>
+          </div>
+        </div>
+      </>
     );
   }
 

@@ -60,8 +60,7 @@ const Home: React.FC = () => {
             <h1 className='home-title'>Welcome to the Salt Quiz!</h1>
             <p className='home-text'>
               In this game, you'll be shown 10 random Magic: The Gathering cards
-              from the 2024 community-generated "Top 100 Saltiest Cards" list
-              from{' '}
+              featured in the 2024 "Top 100 Saltiest Cards" list from{' '}
               <a
                 className='home-text-link'
                 href='https://edhrec.com/top/salt'
@@ -75,7 +74,7 @@ const Home: React.FC = () => {
             <p className='home-text'>
               For each card, you must guess its ranking between 1 and 100. Your
               score for each card is the absolute difference between your guess
-              and the card's actual rank.
+              and the actual rank.
             </p>
             <p className='home-text'>The lower the score, the better.</p>
             <div className='button-gap' />
@@ -84,7 +83,7 @@ const Home: React.FC = () => {
               className='guess-button orange-glow'
               onClick={() => handleStart()}
             >
-              Start Game
+              Start Quiz
             </Link>
           </div>
         </div>
