@@ -39,6 +39,8 @@ interface AppContextType {
   setCardData: React.Dispatch<React.SetStateAction<Card[]>>;
   selectedCards: Card[];
   setSelectedCards: React.Dispatch<React.SetStateAction<Card[]>>;
+  numberOfCards: number;
+  setNumberOfCards: React.Dispatch<React.SetStateAction<number>>;
 
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -71,6 +73,7 @@ interface AppProviderProps {
 export const AppProvider = ({ children }: AppProviderProps) => {
   const [cardData, setCardData] = useState<Card[]>(SaltData);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
+  const [numberOfCards, setNumberOfCards] = useState(0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userGuess, setUserGuess] = useState(0);
@@ -91,6 +94,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setCardData,
         selectedCards,
         setSelectedCards,
+        numberOfCards,
+        setNumberOfCards,
 
         currentIndex,
         setCurrentIndex,

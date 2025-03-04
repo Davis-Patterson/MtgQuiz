@@ -193,12 +193,15 @@ const Quiz: React.FC = () => {
                       </div>
                     </div>
                   )}
+                  <button
+                    onClick={handleNext}
+                    className='next-button blue-glow'
+                  >
+                    {currentIndex < selectedCards.length - 1
+                      ? 'Next Card'
+                      : 'View Results'}
+                  </button>
                 </div>
-                <button onClick={handleNext} className='next-button blue-glow'>
-                  {currentIndex < selectedCards.length - 1
-                    ? 'Next Card'
-                    : 'View Results'}
-                </button>
               </>
             ) : (
               <>
