@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { useNavigate, Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
-import html2canvas from 'html2canvas';
 import 'Styles/Main/Postgame.css';
 
 export interface ScoreDetail {
@@ -34,26 +33,6 @@ const Postgame: React.FC = () => {
   const navigate = useNavigate();
   const resultsRef = useRef<HTMLDivElement>(null);
   const totalScore = scores.reduce((sum, score) => sum + score.diff, 0);
-
-  const handleDownload = async () => {
-    if (!resultsRef.current) return;
-
-    try {
-      const canvas = await html2canvas(resultsRef.current, {
-        scale: 2,
-        useCORS: true,
-      });
-      const image = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = 'quiz-results.png';
-      link.href = image;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error('Error generating image:', error);
-    }
-  };
 
   useEffect(() => {
     if (!finished) {
@@ -141,12 +120,6 @@ const Postgame: React.FC = () => {
             </Link>
           </div>
           <div className='results-header-bottom'>
-            <div
-              onClick={() => handleDownload()}
-              className='next-button blue-glow'
-            >
-              Download
-            </div>
             <Link
               to='/'
               onClick={() => handleHome()}
@@ -179,10 +152,10 @@ const Postgame: React.FC = () => {
                   <div className='results-score-content'>
                     <div className='results-guess-content'>
                       <p className='results-text-label'>
-                        Your Guess: {score.guess}
+                        Card Rank: {score.cardRank}
                       </p>
                       <p className='results-text-label'>
-                        Card Rank: {score.cardRank}
+                        Your Guess: {score.guess}
                       </p>
                     </div>
                     <div className='results-score-score-container'>

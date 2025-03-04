@@ -55,7 +55,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: 0px 0px 15px 0px;
+  margin: 0px 0px 25px 0px;
 }
 
 .results-title-container {
@@ -63,7 +63,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 80px 0px 0px;
+  margin: 0px 55px 0px 0px;
 }
 
 .results-score-label {
@@ -105,7 +105,7 @@
   justify-content: center;
   width: 420px;
   gap: 5px;
-  transform: scale(75%);
+  transform: scale(95%);
 }
 
 .results-content {
