@@ -19,6 +19,7 @@
 .salt-logo {
   width: 150px;
   margin: 10px 0px 10px 0px;
+  transition: all 0.5s ease-in-out;
 }
 
 .home-title {
@@ -105,4 +106,19 @@
   line-height: 1;
   color: var(--clr-light);
   margin: 4px 0px 0px 2px;
+}
+
+@media screen and (max-height: 750px) {
+  .salt-logo {
+    width: 100px;
+  }
+  .home-content {
+    margin: 0px 0px 25px 0px;
+  }
+  .home-text {
+    margin: 2px 0px 2px 0px;
+  }
+  .button-gap {
+    height: 10px;
+  }
 }
