@@ -57,3 +57,52 @@
 .button-gap {
   height: 30px;
 }
+
+.home-x-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0px 0px 20px 0px;
+}
+
+.x-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid var(--clr-divider);
+  background-color: var(--clr-dark);
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+.x-container.unselected {
+  border: 1px solid var(--clr-divider);
+  background-color: var(--clr-dark);
+}
+.x-container.selected {
+  border: 1px solid var(--clr-accent-blue);
+  background-color: var(--clr-accent-blue);
+}
+.x-container:hover {
+  border: 1px solid var(--clr-accent-blue-hover);
+  background-color: var(--clr-accent-blue-hover);
+}
+.x-container.unselected {
+  opacity: 0.3;
+}
+
+.x-value {
+  margin: 2px 0px 0px 0px;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 4px 0px 0px 2px;
+}

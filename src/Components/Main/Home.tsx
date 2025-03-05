@@ -12,6 +12,8 @@ const Home: React.FC = () => {
   const {
     cardData,
     setCurrentIndex,
+    numberOfCards,
+    setNumberOfCards,
     setUserGuess,
     setScores,
     setRevealedRanks,
@@ -28,6 +30,14 @@ const Home: React.FC = () => {
     setScores([]);
     setRevealedRanks([]);
     setCanScroll(true);
+  };
+
+  const handleCardNumber = (value: number) => {
+    if (numberOfCards === value) {
+      setNumberOfCards(0);
+    } else {
+      setNumberOfCards(value);
+    }
   };
 
   useEffect(() => {
@@ -59,32 +69,87 @@ const Home: React.FC = () => {
             />
             <h1 className='home-title'>Welcome to the Salt Quiz!</h1>
             <p className='home-text'>
-              In this game, you'll be shown 10 random Magic: The Gathering cards
-              featured in the 2024 "Top 100 Saltiest Cards" list from{' '}
+              This quiz features Magic: The Gathering cards from the 2024{' '}
               <a
                 className='home-text-link'
                 href='https://edhrec.com/top/salt'
                 rel='noopener noreferrer'
                 target='_blank'
               >
-                EDHREC
-              </a>
-              .
+                Top 100 Saltiest Cards
+              </a>{' '}
+              list published by EDHREC.
             </p>
             <p className='home-text'>
-              For each card, you must guess its ranking between 1 and 100. Your
-              score for each card is the absolute difference between your guess
-              and the actual rank.
+              Out of X cards you will be shown 10 at random, where X is your
+              selected quiz range. For each card, you must guess its rank
+              between 1 and X. Your score for each card is the absolute
+              difference between your guess and the card's rank. A lower score
+              indicates greater accuracy.
             </p>
-            <p className='home-text'>The lower the score, the better.</p>
+            <p className='home-text'>Select a value for X to begin:</p>
             <div className='button-gap' />
-            <Link
-              to='/salt'
-              className='guess-button orange-glow'
-              onClick={() => handleStart()}
-            >
-              Start Quiz
-            </Link>
+            <div className='home-x-container'>
+              <div
+                className={`x-container ${
+                  numberOfCards === 0
+                    ? ''
+                    : numberOfCards === 25
+                    ? 'selected blue-glow'
+                    : 'unselected'
+                }`}
+                onClick={() => handleCardNumber(25)}
+              >
+                <p className='x-value'>25</p>
+              </div>
+              <div
+                className={`x-container ${
+                  numberOfCards === 0
+                    ? ''
+                    : numberOfCards === 50
+                    ? 'selected blue-glow'
+                    : 'unselected'
+                }`}
+                onClick={() => handleCardNumber(50)}
+              >
+                <p className='x-value'>50</p>
+              </div>
+              <div
+                className={`x-container ${
+                  numberOfCards === 0
+                    ? ''
+                    : numberOfCards === 75
+                    ? 'selected blue-glow'
+                    : 'unselected'
+                }`}
+                onClick={() => handleCardNumber(75)}
+              >
+                <p className='x-value'>75</p>
+              </div>
+              <div
+                className={`x-container ${
+                  numberOfCards === 0
+                    ? ''
+                    : numberOfCards === 100
+                    ? 'selected blue-glow'
+                    : 'unselected'
+                }`}
+                onClick={() => handleCardNumber(100)}
+              >
+                <p className='x-value'>100</p>
+              </div>
+            </div>
+            {numberOfCards === 0 ? (
+              <div className='inactive-button'>Start Quiz</div>
+            ) : (
+              <Link
+                to='/salt'
+                className='guess-button orange-glow'
+                onClick={() => handleStart()}
+              >
+                Start Quiz
+              </Link>
+            )}
           </div>
         </div>
       </main>

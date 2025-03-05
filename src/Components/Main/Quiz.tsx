@@ -15,6 +15,7 @@ const Quiz: React.FC = () => {
     cardData,
     selectedCards,
     setSelectedCards,
+    numberOfCards,
     currentIndex,
     setCurrentIndex,
     userGuess,
@@ -43,7 +44,8 @@ const Quiz: React.FC = () => {
     const validCards = cardData.filter(
       (card) => card.rank !== null && card.salt_score !== null
     );
-    const shuffled = [...validCards].sort(() => 0.5 - Math.random());
+    const topCards = validCards.slice(0, numberOfCards);
+    const shuffled = [...topCards].sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 10);
     setSelectedCards(selected);
     setCurrentIndex(0);
@@ -93,8 +95,8 @@ const Quiz: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
-      alert('Please enter a valid number between 1 and 100.');
+    if (isNaN(userGuess) || userGuess < 1 || userGuess > numberOfCards) {
+      alert(`Please enter a valid number between 1 and ${numberOfCards}.`);
       return;
     }
 

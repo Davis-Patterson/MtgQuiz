@@ -11,6 +11,7 @@ const SlideBar: React.FC = () => {
     throw new Error('No Context available');
   }
   const {
+    numberOfCards,
     userGuess,
     setUserGuess,
     revealedRanks,
@@ -24,7 +25,7 @@ const SlideBar: React.FC = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const dashes = Array.from({ length: 101 }, (_, i) => i);
+  const dashes = Array.from({ length: numberOfCards + 1 }, (_, i) => i);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!canScroll) return;
@@ -51,8 +52,11 @@ const SlideBar: React.FC = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const offsetY = clientY - rect.top;
-    const percentage = (1 - offsetY / rect.height) * 100;
-    const newGuess = Math.max(0, Math.min(100, Math.round(percentage)));
+    const percentage = (1 - offsetY / rect.height) * numberOfCards;
+    const newGuess = Math.max(
+      0,
+      Math.min(numberOfCards, Math.round(percentage))
+    );
     setUserGuess(newGuess);
   };
 
@@ -106,7 +110,7 @@ const SlideBar: React.FC = () => {
                 <div
                   key={num}
                   className='dash-container'
-                  style={{ bottom: `${num}%` }}
+                  style={{ bottom: `${(num / numberOfCards) * 100}%` }}
                 >
                   <svg
                     className={`dash-svg ${isRevealed ? 'revealed-dash' : ''}`}
@@ -157,19 +161,25 @@ const SlideBar: React.FC = () => {
                         y2='5'
                         stroke='var(--clr-light)'
                         strokeWidth={
-                          num % 10 === 0 ? 2 : num === userGuess ? 2 : 1
+                          num % (numberOfCards === 100 ? 10 : 5) === 0
+                            ? 2
+                            : num === userGuess
+                            ? 2
+                            : 1
                         }
                       />
                     )}
                   </svg>
-                  {num % 10 === 0 && <span className='dash-label'>{num}</span>}
+                  {num % (numberOfCards === 100 ? 10 : 5) === 0 && (
+                    <span className='dash-label'>{num}</span>
+                  )}
                 </div>
               );
             })}
           </div>
           <svg
             className={canScroll ? 'thumb orange-glow' : 'thumb-inactive'}
-            style={{ bottom: `${userGuess}%` }}
+            style={{ bottom: `${(userGuess / numberOfCards) * 100}%` }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
