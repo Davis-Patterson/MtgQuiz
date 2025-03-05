@@ -2,8 +2,9 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from 'Svgs/HomeIcon';
-import 'Styles/Utils/UserScore.css';
 import BackArrow from 'Svgs/BackArrow';
+import Tooltip from '@mui/material/Tooltip';
+import 'Styles/Utils/UserScore.css';
 
 const UserScore: React.FC = () => {
   const context = useContext(AppContext);
@@ -51,12 +52,34 @@ const UserScore: React.FC = () => {
       <div className='user-score-home-container'>
         <div className='home-icons'>
           {confirm ? (
-            <BackArrow
-              className='back-arrow-icon'
-              onClick={() => handleHome()}
-            />
+            <Tooltip
+              title={
+                <>
+                  <p className='tooltip-text'>Confirm</p>
+                </>
+              }
+              enterDelay={600}
+              leaveDelay={200}
+              placement='bottom'
+            >
+              <BackArrow
+                className='back-arrow-icon'
+                onClick={() => handleHome()}
+              />
+            </Tooltip>
           ) : (
-            <HomeIcon className='home-icon' onClick={() => handleConfirm()} />
+            <Tooltip
+              title={
+                <>
+                  <p className='tooltip-text'>Home</p>
+                </>
+              }
+              enterDelay={600}
+              leaveDelay={100}
+              placement='bottom'
+            >
+              <HomeIcon className='home-icon' onClick={() => handleConfirm()} />
+            </Tooltip>
           )}
         </div>
       </div>

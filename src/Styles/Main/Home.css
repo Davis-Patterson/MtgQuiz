@@ -73,7 +73,7 @@
   justify-content: center;
   padding: 8px 16px;
   border: 1px solid var(--clr-divider);
-  background-color: var(--clr-dark);
+  background-color: var(--clr-screen);
   border-radius: 50%;
   width: 58px;
   height: 58px;
@@ -82,7 +82,7 @@
 }
 .x-container.unselected {
   border: 1px solid var(--clr-divider);
-  background-color: var(--clr-dark);
+  background-color: var(--clr-transparent);
 }
 .x-container.selected {
   border: 1px solid var(--clr-accent-blue);
