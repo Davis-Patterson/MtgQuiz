@@ -16,7 +16,7 @@ const SlideBar: React.FC = () => {
     setUserGuess,
     revealedRanks,
     canScroll,
-    setfullScreenImage,
+    setFullScreenImage,
   } = context;
 
   const [dragging, setDragging] = useState(false);
@@ -130,7 +130,7 @@ const SlideBar: React.FC = () => {
                               alt='Revealed card'
                               className='tooltip-image'
                               onClick={() =>
-                                setfullScreenImage(revealedCard.imageUrl)
+                                setFullScreenImage(revealedCard.imageUrl)
                               }
                             />
                             <p className='tooltip-text'>{revealedCard.name}</p>

@@ -25,7 +25,7 @@ const Postgame: React.FC = () => {
     setRevealedRanks,
     finished,
     setFinished,
-    setfullScreenImage,
+    setFullScreenImage,
   } = context;
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
@@ -141,7 +141,7 @@ const Postgame: React.FC = () => {
                     style={{ width: '100px' }}
                     className='results-card-image'
                     onClick={() =>
-                      setfullScreenImage(card.card.front.imgs.large)
+                      setFullScreenImage(card.card.front.imgs.large)
                     }
                   />
                 </div>

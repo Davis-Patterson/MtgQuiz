@@ -61,7 +61,7 @@ interface AppContextType {
   shouldFlip: boolean;
   setShouldFlip: React.Dispatch<React.SetStateAction<boolean>>;
   fullScreenImage: string | null;
-  setfullScreenImage: React.Dispatch<React.SetStateAction<string | null>>;
+  setFullScreenImage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -85,7 +85,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [canScroll, setCanScroll] = useState(true);
 
   const [shouldFlip, setShouldFlip] = useState(false);
-  const [fullScreenImage, setfullScreenImage] = useState<string | null>(null);
+  const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
 
   return (
     <AppContext.Provider
@@ -116,7 +116,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         shouldFlip,
         setShouldFlip,
         fullScreenImage,
-        setfullScreenImage,
+        setFullScreenImage,
       }}
     >
       {children}

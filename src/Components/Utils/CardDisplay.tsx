@@ -8,7 +8,7 @@ const CardDisplay: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { selectedCards, currentIndex, shouldFlip, setfullScreenImage } =
+  const { selectedCards, currentIndex, shouldFlip, setFullScreenImage } =
     context;
 
   const [isMounted, setIsMounted] = useState(false);
@@ -79,7 +79,7 @@ const CardDisplay: React.FC = () => {
                 }`}
                 onClick={() =>
                   activeFace === 'back' && currentCard.card.back
-                    ? setfullScreenImage(currentCard.card.back.imgs.large)
+                    ? setFullScreenImage(currentCard.card.back.imgs.large)
                     : handleFlip()
                 }
               />
@@ -91,7 +91,7 @@ const CardDisplay: React.FC = () => {
             onClick={() =>
               activeFace === 'back' && currentCard.card.back
                 ? handleFlip()
-                : setfullScreenImage(currentCard.card.front.imgs.large)
+                : setFullScreenImage(currentCard.card.front.imgs.large)
             }
             className={`card-image-front ${
               activeFace === 'back' ? 'flipped' : ''

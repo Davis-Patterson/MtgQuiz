@@ -7,19 +7,19 @@ const FullScreen: React.FC = () => {
   if (!context) {
     throw new Error('No Context available');
   }
-  const { fullScreenImage, setfullScreenImage } = context;
+  const { fullScreenImage, setFullScreenImage } = context;
 
   if (!fullScreenImage) return null;
 
   return (
     <div
       className='fullscreen-overlay'
-      onClick={() => setfullScreenImage(null)}
+      onClick={() => setFullScreenImage(null)}
     >
       <div className='fullscreen-content'>
         <button
           className='close-button'
-          onClick={() => setfullScreenImage(null)}
+          onClick={() => setFullScreenImage(null)}
         >
           ×
         </button>
@@ -27,7 +27,7 @@ const FullScreen: React.FC = () => {
           src={fullScreenImage}
           alt='Fullscreen card'
           className='fullscreen-image'
-          onClick={() => setfullScreenImage(null)}
+          onClick={() => setFullScreenImage(null)}
         />
       </div>
     </div>
