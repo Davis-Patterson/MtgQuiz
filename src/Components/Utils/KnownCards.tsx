@@ -175,7 +175,7 @@ const KnownCards: React.FC = () => {
                       <p className='tooltip-text'>Clear selections</p>
                     </>
                   }
-                  enterDelay={800}
+                  enterDelay={400}
                   placement='right'
                 >
                   <EraserIcon

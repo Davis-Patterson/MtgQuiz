@@ -188,6 +188,9 @@ const Home: React.FC = () => {
                 title={
                   <>
                     <p className='tooltip-text'>
+                      Must select an option for X and
+                    </p>
+                    <p className='tooltip-text'>
                       Must have at least 10 cards for quiz
                     </p>
                   </>
