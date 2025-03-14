@@ -152,15 +152,41 @@
 .x-icon {
   position: absolute;
   top: 15px;
+  right: 15px;
   cursor: pointer;
   width: 15px;
   height: 15px;
-  right: 15px;
   fill: var(--clr-break);
   transition: all 0.15s ease-in-out;
 }
 .x-icon:hover {
   fill: var(--clr-dark);
+}
+
+.eraser-icon,
+.eraser-icon-disabled {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 22px;
+  height: 22px;
+  fill: var(--clr-break);
+  transition: all 0.15s ease-in-out;
+}
+.eraser-icon {
+  opacity: 1;
+  cursor: pointer;
+}
+.eraser-icon-disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.eraser-icon:hover {
+  fill: var(--clr-accent-blue);
+}
+.eraser-icon:active {
+  fill: var(--clr-accent-blue-hover);
+  transform: scale(95%);
 }
 
 .gear-icon {
@@ -186,4 +212,31 @@
 }
 .shadow-glow {
   filter: drop-shadow(0 0 1em var(--clr-screen));
+}
+
+.tooltip-text {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.1em;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: center;
+  width: 100%;
+}
+
+.tooltip-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.MuiTooltip-tooltip {
+  background: var(--clr-screen) !important;
+  border: 1px solid var(--clr-dark) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(4px);
+  padding: 8px !important;
+  z-index: 20 !important;
 }

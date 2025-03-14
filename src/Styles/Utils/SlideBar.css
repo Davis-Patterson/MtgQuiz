@@ -122,23 +122,6 @@
   scale: 110%;
 }
 
-.tooltip-image {
-  max-width: 200px;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-
-.MuiTooltip-tooltip {
-  background: var(--clr-screen) !important;
-  border: 2px solid var(--clr-dark) !important;
-  border-radius: 8px !important;
-  backdrop-filter: blur(4px);
-  padding: 8px !important;
-  z-index: 20 !important;
-}
-
 .revealed-dash {
   cursor: help;
 }
@@ -149,16 +132,6 @@
 .revealed-dash:hover line {
   stroke: var(--clr-accent-blue-hover);
   stroke-width: 10;
-}
-
-.tooltip-text {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 1.1em;
-  font-weight: 400;
-  line-height: 1;
-  color: var(--clr-light);
-  text-align: center;
-  width: 100%;
 }
 
 .slidebar-label,

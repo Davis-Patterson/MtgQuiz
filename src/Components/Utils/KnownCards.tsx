@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import XIcon from 'Svgs/XIcon';
+import EraserIcon from 'Svgs/EraserIcon';
 import LinearProgress from '@mui/material/LinearProgress';
+import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Utils/KnownCards.css';
 
 const KnownCards: React.FC = () => {
@@ -22,6 +24,7 @@ const KnownCards: React.FC = () => {
   const [renderContainer, setRenderContainer] = useState(false);
 
   const [knownCardsButtonActive, setKnownCardsButtonActive] = useState(false);
+  const [knownCardsEraserActive, setKnownCardsEraserActive] = useState(false);
   const [alreadySelectedRanks, setAlreadySelectedRanks] = useState<Set<number>>(
     new Set(selectedRanks)
   );
@@ -90,6 +93,12 @@ const KnownCards: React.FC = () => {
     setKnownCardsButtonActive(hasChanges() && hasEnoughCards);
   }, [toBeSelectedRanks, alreadySelectedRanks, numberOfCards]);
 
+  useEffect(() => {
+    const hasSelectedCards = toBeSelectedRanks.size > 0;
+
+    setKnownCardsEraserActive(hasSelectedCards);
+  }, [toBeSelectedRanks]);
+
   const handleRankSelection = (rank: number) => {
     if (rank > numberOfCards) return;
 
@@ -128,6 +137,15 @@ const KnownCards: React.FC = () => {
     }, 100);
   };
 
+  const handleErase = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (toBeSelectedRanks.size > 0) {
+      setToBeSelectedRanks(new Set());
+    }
+  };
+
   const handleClose = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
@@ -150,6 +168,28 @@ const KnownCards: React.FC = () => {
             }`}
           >
             <div className='portal-top-toggles'>
+              {knownCardsEraserActive ? (
+                <Tooltip
+                  title={
+                    <>
+                      <p className='tooltip-text'>Clear selections</p>
+                    </>
+                  }
+                  enterDelay={800}
+                  placement='right'
+                >
+                  <EraserIcon
+                    className={
+                      knownCardsEraserActive
+                        ? 'eraser-icon'
+                        : 'eraser-icon-disabled'
+                    }
+                    onClick={knownCardsEraserActive ? handleErase : undefined}
+                  />
+                </Tooltip>
+              ) : (
+                <EraserIcon className='eraser-icon-disabled' />
+              )}
               <XIcon className='x-icon' onClick={(e) => handleClose(e)} />
             </div>
             <header className='known-cards-header'>

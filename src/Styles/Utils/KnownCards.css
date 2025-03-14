@@ -173,7 +173,6 @@
 .known-cards-rank.unused {
   opacity: 0.4;
   pointer-events: none;
-  background-color: var(--clr-divider);
 }
 
 .known-cards-rank-value {
