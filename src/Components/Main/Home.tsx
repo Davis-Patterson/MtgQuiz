@@ -3,6 +3,7 @@ import { AppContext } from 'Contexts/AppContext';
 import { Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
 import GearIcon from 'Svgs/GearIcon';
+import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Main/Home.css';
 
 const Home: React.FC = () => {
@@ -24,6 +25,7 @@ const Home: React.FC = () => {
   } = context;
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+  const [enoughCards, setEnoughCards] = useState(false);
 
   const handleStart = () => {
     setStarted(false);
@@ -56,6 +58,18 @@ const Home: React.FC = () => {
       setBackgroundImage(artCropUrl);
     }
   }, [cardData]);
+
+  useEffect(() => {
+    if (numberOfCards > 0) {
+      const validSelected = Array.from(context.selectedRanks).filter(
+        (rank) => rank <= numberOfCards
+      ).length;
+      const availableCards = numberOfCards - validSelected;
+      setEnoughCards(availableCards >= 10);
+    } else {
+      setEnoughCards(false);
+    }
+  }, [numberOfCards, context.selectedRanks]);
 
   return (
     <>
@@ -169,8 +183,30 @@ const Home: React.FC = () => {
                 </p>
               </div>
             </div>
-            {numberOfCards === 0 ? (
-              <div className='inactive-button'>Start Quiz</div>
+            {numberOfCards === 0 || !enoughCards ? (
+              <Tooltip
+                title={
+                  <>
+                    <p className='tooltip-text'>
+                      Must have at least 10 cards for quiz
+                    </p>
+                  </>
+                }
+                enterDelay={600}
+                leaveDelay={200}
+                placement='top'
+              >
+                <div
+                  className='inactive-button'
+                  title={
+                    enoughCards
+                      ? ''
+                      : 'Need at least 10 available cards to start quiz'
+                  }
+                >
+                  Start Quiz
+                </div>
+              </Tooltip>
             ) : (
               <Link
                 to='/salt'
