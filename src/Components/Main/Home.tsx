@@ -69,7 +69,22 @@ const Home: React.FC = () => {
             />
             <h1 className='home-title'>Welcome to the Salt Quiz!</h1>
             <p className='home-text'>
-              This quiz features Magic: The Gathering cards from the 2024{' '}
+              SaltQuiz was inspired by the Magic: The Gathering (MTG) creator
+              CovertGoBlue and his series{' '}
+              <a
+                className='home-text-link'
+                href='https://youtube.com/playlist?list=PLKclisNxc8D86pLyZK8Ze87ThhbZKQWGA&si=8z_PwLxwj4hH6Ltj'
+                rel='noopener noreferrer'
+                target='_blank'
+              >
+                CovertGoSalt
+              </a>
+              , where he quizzes other creators on the 100 saltiest cards. His
+              series inspired the creation of this web app so that anyone can
+              try it out for themselves.
+            </p>
+            <p className='home-text'>
+              SaltQuiz features MTG cards from the 2024{' '}
               <a
                 className='home-text-link'
                 href='https://edhrec.com/top/salt'
@@ -78,14 +93,11 @@ const Home: React.FC = () => {
               >
                 Top 100 Saltiest Cards
               </a>{' '}
-              list published by EDHREC.
-            </p>
-            <p className='home-text'>
-              Out of X cards you will be shown 10 at random, where X is your
-              selected quiz range. For each card, you must guess its rank
-              between 1 and X. Your score for each card is the absolute
-              difference between your guess and the card's rank. A lower score
-              indicates greater accuracy.
+              list published by EDHREC. Out of X cards you will be shown 10 at
+              random, where X is your selected quiz range. For each card, you
+              must guess its rank between 1 and X. Your score for each card is
+              the absolute difference between your guess and the card's rank. A
+              lower score indicates greater accuracy.
             </p>
             <p className='home-text'>Select a value for X to begin:</p>
             <div className='button-gap' />
