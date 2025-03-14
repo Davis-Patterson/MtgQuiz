@@ -106,7 +106,8 @@ const Home: React.FC = () => {
               random, where X is your selected quiz range. For each card, you
               must guess its rank between 1 and X. Your score for each card is
               the absolute difference between your guess and the card's rank. A
-              lower score indicates greater accuracy.
+              lower score indicates greater accuracy. You can select cards that
+              you already know to remove them from the quiz.
             </p>
             <p className='home-text'>Select a value for X to begin:</p>
             <div className='button-gap' />
