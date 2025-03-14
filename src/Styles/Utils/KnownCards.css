@@ -1,0 +1,186 @@
+.known-cards-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(6px);
+  background-color: var(--clr-screen);
+  z-index: 20;
+  transition: opacity 0.5s ease-in-out;
+}
+.known-cards-overlay.fade-in {
+  animation: overlayFadeIn 0.3s forwards;
+}
+.known-cards-overlay.fade-out {
+  animation: overlayFadeOut 0.3s forwards;
+}
+
+.known-cards-container {
+  background-color: var(--clr-platinum);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  z-index: 1001;
+  transition: opacity 0.5s ease-in;
+  position: relative;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.known-cards-container.fade-in {
+  animation: containerFadeIn 0.3s forwards;
+}
+.known-cards-container.fade-out {
+  animation: containerFadeOut 0.3s forwards;
+}
+
+.portal-top-toggles {
+  width: 100%;
+  justify-content: space-between;
+  margin: 0px 0px 10px 0px;
+}
+
+.known-cards-header {
+  display: flex;
+  justify-content: center;
+  margin: 0px 0px 20px 0px;
+  width: 100%;
+  min-width: 299px;
+}
+
+.known-cards-header-text {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 2.5em;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--clr-text-blue);
+  cursor: default;
+}
+
+.known-cards-header-subtext {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.9em;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--clr-dark);
+  width: 100%;
+  text-align: center;
+  margin: 0px 0px 5px 0px;
+  cursor: default;
+}
+
+.known-cards-x-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0px 0px 20px 0px;
+}
+
+.known-cards-x-container,
+.known-cards-gear-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid var(--clr-divider);
+  background-color: var(--clr-screen);
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+.known-cards-x-container.unselected {
+  border: 1px solid var(--clr-divider);
+  background-color: var(--clr-screen);
+}
+.known-cards-x-container.selected {
+  border: 1px solid var(--clr-accent-blue);
+  background-color: var(--clr-accent-blue);
+}
+.known-cards-x-container:hover,
+.known-cards-gear-container:hover {
+  border: 1px solid var(--clr-accent-blue-hover);
+  background-color: var(--clr-accent-blue-hover);
+}
+.known-cards-gear-container:active {
+  border: 1px solid var(--clr-accent-blue);
+  background-color: var(--clr-accent-blue);
+  transform: scale(95%);
+}
+.known-cards-x-container.unselected {
+  opacity: 0.3;
+}
+
+.known-cards-x-value,
+.gear-value {
+  margin: 2px 0px 0px 0px;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 4px 0px 0px 2px;
+}
+
+.known-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  margin: 5px 0px 20px 0px;
+  padding: 0 10px;
+}
+
+.known-cards-rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--clr-divider);
+  background-color: var(--clr-divider);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.8em;
+  opacity: 1;
+}
+.known-cards-rank.unselected {
+  opacity: 1;
+}
+.known-cards-rank:hover {
+  border-color: var(--clr-accent-orange-hover);
+  background-color: var(--clr-accent-orange-hover);
+}
+.known-cards-rank.selected {
+  border-color: var(--clr-accent-orange);
+  background-color: var(--clr-accent-orange);
+  color: var(--clr-light);
+  opacity: 1;
+}
+.known-cards-rank.unused {
+  opacity: 0.4;
+  pointer-events: none;
+  background-color: var(--clr-divider);
+}
+
+.known-cards-rank-value {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  margin: 2px 0px 0px 0px;
+}

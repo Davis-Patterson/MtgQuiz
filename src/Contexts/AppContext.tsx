@@ -22,13 +22,13 @@ export interface Card {
   };
 }
 
-interface ScoreDetail {
+export interface ScoreDetail {
   cardRank: number;
   guess: number;
   diff: number;
 }
 
-interface RevealedCard {
+export interface RevealedCard {
   rank: number;
   name: string;
   imageUrl: string;
@@ -50,6 +50,8 @@ interface AppContextType {
   setScores: React.Dispatch<React.SetStateAction<ScoreDetail[]>>;
   revealedRanks: RevealedCard[];
   setRevealedRanks: React.Dispatch<React.SetStateAction<RevealedCard[]>>;
+  selectedRanks: Set<number>;
+  setSelectedRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
 
   started: boolean;
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,6 +59,8 @@ interface AppContextType {
   setFinished: React.Dispatch<React.SetStateAction<boolean>>;
   canScroll: boolean;
   setCanScroll: React.Dispatch<React.SetStateAction<boolean>>;
+  showKnownCards: boolean;
+  setShowKnownCards: React.Dispatch<React.SetStateAction<boolean>>;
 
   shouldFlip: boolean;
   setShouldFlip: React.Dispatch<React.SetStateAction<boolean>>;
@@ -73,18 +77,20 @@ interface AppProviderProps {
 export const AppProvider = ({ children }: AppProviderProps) => {
   const [cardData, setCardData] = useState<Card[]>(SaltData);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
-  const [numberOfCards, setNumberOfCards] = useState(0);
+  const [numberOfCards, setNumberOfCards] = useState<number>(0);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [userGuess, setUserGuess] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [userGuess, setUserGuess] = useState<number>(0);
   const [scores, setScores] = useState<ScoreDetail[]>([]);
   const [revealedRanks, setRevealedRanks] = useState<RevealedCard[]>([]);
+  const [selectedRanks, setSelectedRanks] = useState<Set<number>>(new Set());
 
-  const [started, setStarted] = useState(false);
-  const [finished, setFinished] = useState(false);
-  const [canScroll, setCanScroll] = useState(true);
+  const [started, setStarted] = useState<boolean>(false);
+  const [finished, setFinished] = useState<boolean>(false);
+  const [canScroll, setCanScroll] = useState<boolean>(true);
+  const [showKnownCards, setShowKnownCards] = useState<boolean>(false);
 
-  const [shouldFlip, setShouldFlip] = useState(false);
+  const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
 
   return (
@@ -105,6 +111,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setScores,
         revealedRanks,
         setRevealedRanks,
+        selectedRanks,
+        setSelectedRanks,
 
         started,
         setStarted,
@@ -112,6 +120,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setFinished,
         canScroll,
         setCanScroll,
+        showKnownCards,
+        setShowKnownCards,
 
         shouldFlip,
         setShouldFlip,

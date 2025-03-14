@@ -3,6 +3,7 @@ import { AppContext } from 'Contexts/AppContext';
 import { Routes, Route } from 'react-router-dom';
 import Home from 'Components/Main/Home';
 import FullScreen from 'Components/Main/FullScreen';
+import KnownCards from 'Components/Utils/KnownCards';
 import Quiz from 'Components/Main/Quiz';
 import Postgame from 'Components/Main/Postgame';
 import NotFound from 'Components/Tools/NotFound';
@@ -24,6 +25,7 @@ function App() {
         <Route path='*' element={<NotFound />} />
       </Routes>
       <FullScreen />
+      <KnownCards />
     </>
   );
 }

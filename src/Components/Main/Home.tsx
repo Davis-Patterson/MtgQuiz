@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
+import GearIcon from 'Svgs/GearIcon';
 import 'Styles/Main/Home.css';
 
 const Home: React.FC = () => {
@@ -18,6 +19,7 @@ const Home: React.FC = () => {
     setScores,
     setRevealedRanks,
     setStarted,
+    setShowKnownCards,
     setCanScroll,
   } = context;
 
@@ -38,6 +40,13 @@ const Home: React.FC = () => {
     } else {
       setNumberOfCards(value);
     }
+  };
+
+  const handleAdvanced = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setShowKnownCards(true);
   };
 
   useEffect(() => {
@@ -149,6 +158,14 @@ const Home: React.FC = () => {
                 onClick={() => handleCardNumber(100)}
               >
                 <p className='x-value'>100</p>
+              </div>
+              <div
+                className='gear-container'
+                onClick={(e) => handleAdvanced(e)}
+              >
+                <p className='gear-value'>
+                  <GearIcon className='gear-icon' />
+                </p>
               </div>
             </div>
             {numberOfCards === 0 ? (

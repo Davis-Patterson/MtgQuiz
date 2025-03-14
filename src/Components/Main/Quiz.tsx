@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from 'Contexts/AppContext';
+import { AppContext, RevealedCard } from 'Contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import UserScore from 'Components/Utils/UserScore';
 import CardDisplay from 'Components/Utils/CardDisplay';
@@ -23,6 +23,8 @@ const Quiz: React.FC = () => {
     scores,
     setScores,
     setRevealedRanks,
+    selectedRanks,
+    setSelectedRanks,
     finished,
     setFinished,
     started,
@@ -40,27 +42,49 @@ const Quiz: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const startGame = () => {
-    const validCards = cardData.filter(
-      (card) => card.rank !== null && card.salt_score !== null
-    );
-    const topCards = validCards.slice(0, numberOfCards);
-    const shuffled = [...topCards].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 10);
-    setSelectedCards(selected);
-    setCurrentIndex(0);
-    setUserGuess(0);
-    setScores([]);
-    setRevealedRanks([]);
-    setFinished(false);
-    setStarted(true);
-  };
-
   useEffect(() => {
     if (!started) {
-      startGame();
+      const validCards = cardData.filter(
+        (card) =>
+          card.rank !== null &&
+          card.salt_score !== null &&
+          !selectedRanks.has(card.rank) &&
+          card.rank <= numberOfCards
+      );
+
+      const initialRevealed = Array.from(selectedRanks)
+        .map((rank) => {
+          const card = cardData.find((c) => c.rank === rank);
+          return card
+            ? {
+                rank: card.rank,
+                name: card.card.front.name,
+                imageUrl: card.card.front.imgs.normal,
+              }
+            : null;
+        })
+        .filter(Boolean) as RevealedCard[];
+
+      const shuffled = [...validCards].sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 10);
+
+      setSelectedCards(selected);
+      setRevealedRanks(initialRevealed);
+      setCurrentIndex(0);
+      setUserGuess(0);
+      setScores([]);
+      setFinished(false);
+      setStarted(true);
     }
-  }, [started]);
+  }, [
+    started,
+    cardData,
+    numberOfCards,
+    selectedRanks,
+    setRevealedRanks,
+    setSelectedCards,
+    setStarted,
+  ]);
 
   useEffect(() => {
     if (finished) {
@@ -95,6 +119,7 @@ const Quiz: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (isNaN(userGuess) || userGuess < 1 || userGuess > numberOfCards) {
       alert(`Please enter a valid number between 1 and ${numberOfCards}.`);
       return;
@@ -129,6 +154,14 @@ const Quiz: React.FC = () => {
         setCurrentIndex(currentIndex + 1);
       }, 300);
     } else {
+      const quizRanks = new Set(selectedRanks);
+      selectedCards.forEach((card) => {
+        if (card.rank !== null) {
+          quizRanks.add(card.rank);
+        }
+      });
+      setSelectedRanks(quizRanks);
+
       setFinished(true);
     }
   };

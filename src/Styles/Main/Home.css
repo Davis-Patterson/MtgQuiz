@@ -64,11 +64,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   margin: 0px 0px 20px 0px;
 }
 
-.x-container {
+.x-container,
+.gear-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,15 +90,22 @@
   border: 1px solid var(--clr-accent-blue);
   background-color: var(--clr-accent-blue);
 }
-.x-container:hover {
+.x-container:hover,
+.gear-container:hover {
   border: 1px solid var(--clr-accent-blue-hover);
   background-color: var(--clr-accent-blue-hover);
+}
+.gear-container:active {
+  border: 1px solid var(--clr-accent-blue);
+  background-color: var(--clr-accent-blue);
+  transform: scale(95%);
 }
 .x-container.unselected {
   opacity: 0.3;
 }
 
-.x-value {
+.x-value,
+.gear-value {
   margin: 2px 0px 0px 0px;
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.5em;
