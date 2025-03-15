@@ -37,6 +37,7 @@ const Quiz: React.FC = () => {
     null
   );
   const [nextBackground, setNextBackground] = useState<string | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -117,6 +118,23 @@ const Quiz: React.FC = () => {
     }
   }, [isTransitioning, nextBackground]);
 
+  useEffect(() => {
+    if (cardData && cardData.length > 0) {
+      const randomIndex = Math.floor(Math.random() * cardData.length);
+      const artCropUrl = cardData[randomIndex].card.front.imgs.art_crop;
+      setBackgroundImage(artCropUrl);
+    }
+  }, [cardData]);
+
+  useEffect(() => {
+    if (selectedCards.length === 0) {
+      const timer = setTimeout(() => {
+        navigate('/');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedCards]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -167,7 +185,37 @@ const Quiz: React.FC = () => {
   };
 
   if (selectedCards.length === 0) {
-    return <div>Loading quiz data...</div>;
+    return (
+      <>
+        <div className='page-container'>
+          {backgroundImage && (
+            <>
+              <div
+                className='background-img'
+                style={{ backgroundImage: `url(${backgroundImage})` }}
+              />
+              <div className='background-overlay' />
+            </>
+          )}
+          <div className='not-found shadow-glow'>
+            <div className='quiz-not-found-header'>
+              <div className='quiz-not-found-header-text-container'>
+                <h1 className='quiz-not-found-header-text'>404: No Data</h1>
+              </div>
+              <div className='quiz-not-found-header-subtext-container'>
+                <p className='quiz-not-found-header-subtext'>
+                  We could not start the quiz, please try again.
+                </p>
+                <p className='quiz-not-found-header-subtext'>
+                  Redirecting to homepage...
+                </p>
+              </div>
+            </div>
+            <div className='quiz-not-found-content-container'></div>
+          </div>
+        </div>
+      </>
+    );
   }
 
   return (
