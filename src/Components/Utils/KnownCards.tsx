@@ -271,7 +271,7 @@ const KnownCards: React.FC = () => {
               {isLoading ? (
                 <LinearProgress className='linear-progress' color='inherit' />
               ) : (
-                'Add Known Cards'
+                'Save Settings'
               )}
             </button>
           </section>

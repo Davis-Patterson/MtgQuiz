@@ -189,13 +189,6 @@
   transform: scale(95%);
 }
 
-.gear-icon {
-  width: 30px;
-  height: 30px;
-  fill: var(--clr-light);
-  margin: 2px 0px 0px 0px;
-}
-
 .blue-glow {
   filter: drop-shadow(0 0 1em #64c6ff88);
 }
