@@ -43,6 +43,15 @@ const Quiz: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const shuffleCards = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
   useEffect(() => {
     if (!started) {
       const validCards = cardData.filter(
@@ -66,7 +75,7 @@ const Quiz: React.FC = () => {
         })
         .filter(Boolean) as RevealedCard[];
 
-      const shuffled = [...validCards].sort(() => 0.5 - Math.random());
+      const shuffled = shuffleCards(validCards);
       const selected = shuffled.slice(0, 10);
 
       setSelectedCards(selected);
