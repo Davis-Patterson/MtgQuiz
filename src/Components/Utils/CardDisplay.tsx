@@ -98,12 +98,12 @@ const CardDisplay: React.FC = () => {
             }`}
           />
         </div>
+        <p className='card-name'>
+          {activeFace === 'back' && currentCard.card.back
+            ? currentCard.card.back.name
+            : currentCard.card.front.name}
+        </p>
       </div>
-      <p className='card-name'>
-        {activeFace === 'back' && currentCard.card.back
-          ? currentCard.card.back.name
-          : currentCard.card.front.name}
-      </p>
     </>
   );
 };

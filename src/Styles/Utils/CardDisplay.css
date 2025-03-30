@@ -46,14 +46,28 @@
   }
 }
 
+.card-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  perspective: 1000px;
+  width: 300px;
+  height: auto;
+}
+
 .flip-container {
   position: relative;
-  height: 450px;
-  width: 300px;
+  height: 850px;
+  width: 100%;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   perspective: 1000px;
   transition: all 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .flip-container.animate-in {
@@ -78,19 +92,10 @@
   animation: flipTransition 0.6s ease-in-out forwards;
 }
 
-.card-display {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-  perspective: 1000px;
-}
-
 .flip-button {
   position: absolute;
-  top: -15px;
-  right: -30px;
+  top: -5px;
+  right: -170px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,8 +114,8 @@
 }
 
 .flip-icon {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   fill: var(--clr-icon);
   transition: all 0.5s ease-in-out;
 }
@@ -125,9 +130,9 @@
 
 .card-image-front,
 .card-image-back {
-  width: 300px;
+  width: 550px;
   height: auto;
-  border-radius: 18px;
+  border-radius: 32px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.6s ease;
   cursor: pointer;
@@ -189,6 +194,157 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 10px 0px 10px 0px;
+  transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 1110px) {
+  .flip-container {
+    position: relative;
+    height: 750px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .flip-container {
+    position: relative;
+    height: 680px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 440px;
+  }
+  .flip-button {
+    right: -110px;
+  }
+}
+
+@media screen and (max-height: 1200px) {
+  .flip-container {
+    position: relative;
+    height: 750px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 500px;
+  }
+}
+
+@media screen and (max-height: 1085px) {
+  .flip-container {
+    position: relative;
+    height: 680px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 440px;
+  }
+  .flip-button {
+    top: -5px;
+    right: -110px;
+  }
+}
+
+@media screen and (max-height: 1000px) {
+  .flip-container {
+    position: relative;
+    height: 620px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 400px;
+  }
+  .flip-button {
+    top: -5px;
+    right: -90px;
+  }
+}
+
+@media screen and (max-height: 910px) {
+  .flip-container {
+    position: relative;
+    height: 550px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 360px;
+  }
+  .flip-button {
+    top: -5px;
+    right: -60px;
+  }
+  .flip-icon {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media screen and (max-height: 910px) {
+  .flip-container {
+    position: relative;
+    height: 490px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 320px;
+  }
+}
+
+@media screen and (max-height: 770px) {
+  .flip-container {
+    position: relative;
+    height: 450px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 300px;
+  }
+  .card-name {
+    font-size: 1.6em;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .flip-container {
+    position: relative;
+    height: 620px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .flip-container {
+    position: relative;
+    height: 550px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 360px;
+  }
+  .flip-button {
+    right: -60px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .flip-container {
+    position: relative;
+    height: 450px;
+  }
+  .card-image-front,
+  .card-image-back {
+    width: 300px;
+  }
+  .flip-button {
+    right: -40px;
+  }
 }
 
 @media screen and (max-width: 470px) {
@@ -204,6 +360,9 @@
     width: 20px;
     height: 20px;
     fill: var(--clr-icon);
+  }
+  .flip-button {
+    right: -10px;
   }
 }
 

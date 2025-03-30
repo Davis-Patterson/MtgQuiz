@@ -199,16 +199,7 @@ const Home: React.FC = () => {
                 leaveDelay={200}
                 placement='top'
               >
-                <div
-                  className='inactive-button'
-                  title={
-                    enoughCards
-                      ? ''
-                      : 'Need at least 10 available cards to start quiz'
-                  }
-                >
-                  Start Quiz
-                </div>
+                <div className='inactive-button'>Start Quiz</div>
               </Tooltip>
             ) : (
               <Link
