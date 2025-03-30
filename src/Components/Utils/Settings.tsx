@@ -4,9 +4,10 @@ import XIcon from 'Svgs/XIcon';
 import EraserIcon from 'Svgs/EraserIcon';
 import LinearProgress from '@mui/material/LinearProgress';
 import Tooltip from '@mui/material/Tooltip';
-import 'Styles/Utils/KnownCards.css';
+import 'Styles/Utils/Settings.css';
+import DropdownIcon from 'Svgs/DropdownIcon';
 
-const KnownCards: React.FC = () => {
+const Settings: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) {
     throw new Error('No Context');
@@ -15,15 +16,15 @@ const KnownCards: React.FC = () => {
     cardData,
     numberOfCards,
     setNumberOfCards,
-    showKnownCards,
-    setShowKnownCards,
+    showSettings,
+    setShowSettings,
     selectedRanks,
     setSelectedRanks,
   } = appContext;
 
   const [renderContainer, setRenderContainer] = useState(false);
 
-  const [knownCardsButtonActive, setKnownCardsButtonActive] = useState(false);
+  const [settingsButtonActive, setSettingsButtonActive] = useState(false);
   const [knownCardsEraserActive, setKnownCardsEraserActive] = useState(false);
   const [alreadySelectedRanks, setAlreadySelectedRanks] = useState<Set<number>>(
     new Set(selectedRanks)
@@ -33,8 +34,9 @@ const KnownCards: React.FC = () => {
   );
 
   const [isLoading, setIsLoading] = useState(false);
+  const [showKnownCards, setShowKnownCards] = useState(false);
 
-  const knownCardsContainerRef = useRef<HTMLDivElement>(null);
+  const settingsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const newSet = new Set(selectedRanks);
@@ -51,7 +53,7 @@ const KnownCards: React.FC = () => {
   };
 
   useEffect(() => {
-    if (showKnownCards) {
+    if (showSettings) {
       setRenderContainer(true);
     } else {
       const timer = setTimeout(() => {
@@ -60,19 +62,19 @@ const KnownCards: React.FC = () => {
 
       return () => clearTimeout(timer);
     }
-  }, [showKnownCards]);
+  }, [showSettings]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        knownCardsContainerRef.current &&
-        !knownCardsContainerRef.current.contains(event.target as Node)
+        settingsContainerRef.current &&
+        !settingsContainerRef.current.contains(event.target as Node)
       ) {
-        setShowKnownCards(false);
+        setShowSettings(false);
       }
     };
 
-    if (showKnownCards) {
+    if (showSettings) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -81,7 +83,7 @@ const KnownCards: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showKnownCards, setShowKnownCards]);
+  }, [showSettings, setShowSettings]);
 
   useEffect(() => {
     const validSelected = Array.from(toBeSelectedRanks).filter(
@@ -90,7 +92,7 @@ const KnownCards: React.FC = () => {
     const availableCards = numberOfCards - validSelected;
     const hasEnoughCards = availableCards >= 10;
 
-    setKnownCardsButtonActive(hasChanges() && hasEnoughCards);
+    setSettingsButtonActive(hasChanges() && hasEnoughCards);
   }, [toBeSelectedRanks, alreadySelectedRanks, numberOfCards]);
 
   useEffect(() => {
@@ -122,7 +124,7 @@ const KnownCards: React.FC = () => {
   };
 
   const getRankClass = (rank: number) => {
-    const classes = ['known-cards-rank'];
+    const classes = ['settings-rank'];
     if (rank > numberOfCards) classes.push('unused');
     if (toBeSelectedRanks.has(rank)) classes.push('selected orange-glow');
     return classes.join(' ');
@@ -132,7 +134,7 @@ const KnownCards: React.FC = () => {
     setIsLoading(true);
     setSelectedRanks(toBeSelectedRanks);
     setTimeout(() => {
-      setShowKnownCards(false);
+      setShowSettings(false);
       setIsLoading(false);
     }, 100);
   };
@@ -150,21 +152,25 @@ const KnownCards: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
 
-    setShowKnownCards(false);
+    setShowSettings(false);
+  };
+
+  const handleShowKnownCards = () => {
+    setShowKnownCards(!showKnownCards);
   };
 
   return (
     <>
       {renderContainer && (
         <main
-          className={`known-cards-overlay ${
-            showKnownCards ? 'fade-in' : 'fade-out'
+          className={`settings-overlay ${
+            showSettings ? 'fade-in' : 'fade-out'
           }`}
         >
           <section
-            ref={knownCardsContainerRef}
-            className={`known-cards-container ${
-              showKnownCards ? 'fade-in' : 'fade-out'
+            ref={settingsContainerRef}
+            className={`settings-container ${
+              showSettings ? 'fade-in' : 'fade-out'
             }`}
           >
             <div className='portal-top-toggles'>
@@ -192,12 +198,12 @@ const KnownCards: React.FC = () => {
               )}
               <XIcon className='x-icon' onClick={(e) => handleClose(e)} />
             </div>
-            <header className='known-cards-header'>
-              <p className='known-cards-header-text'>Settings</p>
+            <header className='settings-header'>
+              <p className='settings-header-text'>Settings</p>
             </header>
-            <div className='known-cards-x-content'>
+            <div className='settings-x-content'>
               <div
-                className={`known-cards-x-container ${
+                className={`settings-x-container ${
                   numberOfCards === 0
                     ? ''
                     : numberOfCards === 25
@@ -206,10 +212,10 @@ const KnownCards: React.FC = () => {
                 }`}
                 onClick={() => handleCardNumber(25)}
               >
-                <p className='known-cards-x-value'>25</p>
+                <p className='settings-x-value'>25</p>
               </div>
               <div
-                className={`known-cards-x-container ${
+                className={`settings-x-container ${
                   numberOfCards === 0
                     ? ''
                     : numberOfCards === 50
@@ -218,10 +224,10 @@ const KnownCards: React.FC = () => {
                 }`}
                 onClick={() => handleCardNumber(50)}
               >
-                <p className='known-cards-x-value'>50</p>
+                <p className='settings-x-value'>50</p>
               </div>
               <div
-                className={`known-cards-x-container ${
+                className={`settings-x-container ${
                   numberOfCards === 0
                     ? ''
                     : numberOfCards === 75
@@ -230,10 +236,10 @@ const KnownCards: React.FC = () => {
                 }`}
                 onClick={() => handleCardNumber(75)}
               >
-                <p className='known-cards-x-value'>75</p>
+                <p className='settings-x-value'>75</p>
               </div>
               <div
-                className={`known-cards-x-container ${
+                className={`settings-x-container ${
                   numberOfCards === 0
                     ? ''
                     : numberOfCards === 100
@@ -242,30 +248,57 @@ const KnownCards: React.FC = () => {
                 }`}
                 onClick={() => handleCardNumber(100)}
               >
-                <p className='known-cards-x-value'>100</p>
+                <p className='settings-x-value'>100</p>
               </div>
             </div>
-            <p className='known-cards-header-subtext'>
-              Select the rankings for cards you already know:
-            </p>
 
-            <div className='known-cards-grid'>
-              {cardData.map((card) => (
-                <div
-                  key={card.rank}
-                  className={getRankClass(card.rank!)}
-                  onClick={() => handleRankSelection(card.rank!)}
-                >
-                  <span className='known-cards-rank-value'>{card.rank}</span>
+            <div className='settings-dropdown'>
+              <div
+                className='settings-dropdown-header'
+                onClick={() => handleShowKnownCards()}
+              >
+                <div className='settings-dropdown-header-text'>
+                  <p className='settings-header-subtext'>
+                    Select the rankings for cards you already know
+                  </p>
                 </div>
-              ))}
+                <div className='settings-header-dropdown-icon'>
+                  {showKnownCards ? (
+                    <DropdownIcon className='down-icon' />
+                  ) : (
+                    <DropdownIcon className='up-icon' />
+                  )}
+                </div>
+              </div>
+
+              <div
+                className='settings-dropdown-contents'
+                style={{
+                  height: showKnownCards ? 'auto' : '0px',
+                  border: showKnownCards
+                    ? '1px solid var(--clr-divider)'
+                    : 'none',
+                }}
+              >
+                <div className='settings-known-cards-grid'>
+                  {cardData.map((card) => (
+                    <div
+                      key={card.rank}
+                      className={getRankClass(card.rank!)}
+                      onClick={() => handleRankSelection(card.rank!)}
+                    >
+                      <span className='settings-rank-value'>{card.rank}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <button
               className={`${
-                knownCardsButtonActive ? 'guess-button' : 'inactive-button'
+                settingsButtonActive ? 'guess-button' : 'inactive-button'
               }`}
-              disabled={!knownCardsButtonActive}
+              disabled={!settingsButtonActive}
               onClick={() => handleSubmit()}
             >
               {isLoading ? (
@@ -281,4 +314,4 @@ const KnownCards: React.FC = () => {
   );
 };
 
-export default KnownCards;
+export default Settings;

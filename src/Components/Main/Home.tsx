@@ -20,7 +20,7 @@ const Home: React.FC = () => {
     setScores,
     setRevealedRanks,
     setStarted,
-    setShowKnownCards,
+    setShowSettings,
     setCanScroll,
   } = context;
 
@@ -48,7 +48,7 @@ const Home: React.FC = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    setShowKnownCards(true);
+    setShowSettings(true);
   };
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
               </a>
               , where he quizzes other creators on the 100 saltiest cards. His
               series inspired the creation of this web app so that anyone can
-              try it out for themselves.
+              try it out for themselves. Now featured in the latest episode!
             </p>
             <p className='home-text'>
               SaltQuiz features MTG cards from the 2024{' '}

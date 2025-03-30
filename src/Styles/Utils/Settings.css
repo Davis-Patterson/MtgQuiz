@@ -1,4 +1,4 @@
-.known-cards-overlay {
+.settings-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,14 +12,14 @@
   z-index: 20;
   transition: opacity 0.5s ease-in-out;
 }
-.known-cards-overlay.fade-in {
+.settings-overlay.fade-in {
   animation: overlayFadeIn 0.3s forwards;
 }
-.known-cards-overlay.fade-out {
+.settings-overlay.fade-out {
   animation: overlayFadeOut 0.3s forwards;
 }
 
-.known-cards-container {
+.settings-container {
   background-color: var(--clr-platinum);
   padding: 2rem;
   border-radius: 8px;
@@ -35,10 +35,10 @@
   justify-content: center;
   align-items: center;
 }
-.known-cards-container.fade-in {
+.settings-container.fade-in {
   animation: containerFadeIn 0.3s forwards;
 }
-.known-cards-container.fade-out {
+.settings-container.fade-out {
   animation: containerFadeOut 0.3s forwards;
 }
 
@@ -48,7 +48,7 @@
   margin: 0px 0px 10px 0px;
 }
 
-.known-cards-header {
+.settings-header {
   display: flex;
   justify-content: center;
   margin: 0px 0px 20px 0px;
@@ -56,7 +56,7 @@
   min-width: 299px;
 }
 
-.known-cards-header-text {
+.settings-header-text {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2.5em;
   line-height: 1;
@@ -65,19 +65,7 @@
   cursor: default;
 }
 
-.known-cards-header-subtext {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 0.9em;
-  line-height: 1;
-  font-weight: 300;
-  color: var(--clr-dark);
-  width: 100%;
-  text-align: center;
-  margin: 0px 0px 5px 0px;
-  cursor: default;
-}
-
-.known-cards-x-content {
+.settings-x-content {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -86,8 +74,7 @@
   margin: 0px 0px 20px 0px;
 }
 
-.known-cards-x-container,
-.known-cards-gear-container {
+.settings-x-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,30 +87,23 @@
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 }
-.known-cards-x-container.unselected {
+.settings-x-container.unselected {
   border: 1px solid var(--clr-divider);
   background-color: var(--clr-screen);
 }
-.known-cards-x-container.selected {
+.settings-x-container.selected {
   border: 1px solid var(--clr-accent-blue);
   background-color: var(--clr-accent-blue);
 }
-.known-cards-x-container:hover,
-.known-cards-gear-container:hover {
+.settings-x-container:hover {
   border: 1px solid var(--clr-accent-blue-hover);
   background-color: var(--clr-accent-blue-hover);
 }
-.known-cards-gear-container:active {
-  border: 1px solid var(--clr-accent-blue);
-  background-color: var(--clr-accent-blue);
-  transform: scale(95%);
-}
-.known-cards-x-container.unselected {
+.settings-x-container.unselected {
   opacity: 0.3;
 }
 
-.known-cards-x-value,
-.gear-value {
+.settings-x-value {
   margin: 2px 0px 0px 0px;
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.5em;
@@ -134,15 +114,97 @@
   margin: 4px 0px 0px 2px;
 }
 
-.known-cards-grid {
+.settings-dropdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 20px 0px;
+}
+
+.settings-dropdown-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 4px;
+  border: 1px solid var(--clr-divider);
+  border-radius: 8px;
+  margin: 0px 0px 0px 0px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  z-index: 5;
+  box-shadow: 0px 1px 5px #0000004b;
+}
+.settings-dropdown-header:hover {
+  background-color: var(--clr-screen-blue);
+}
+
+.settings-dropdown-header-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+}
+
+.settings-header-subtext {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.9em;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--clr-dark);
+  width: 100%;
+  text-align: left;
+}
+
+.settings-header-dropdown-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px 0px 5px;
+}
+
+.down-icon,
+.up-icon {
+  fill: var(--clr-icon);
+  width: 25px;
+  height: auto;
+  transition: all 0.15s ease-in-out;
+  opacity: 0.4;
+}
+.up-icon {
+  transform: scaleY(-1);
+}
+.settings-dropdown-header:hover .down-icon,
+.settings-dropdown-header:hover .up-icon {
+  opacity: 1;
+}
+
+.settings-dropdown-contents {
+  overflow: hidden;
+  transition: height 3s ease-in-out;
+  border: 1px solid var(--clr-divider);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  margin: -1px 0px 0px 0px;
+  box-shadow: 0px 1px 5px #0000004b;
+  clip-path: inset(0px -10px -10px -10px);
+  z-index: 2;
+}
+
+.settings-known-cards-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: 6px;
-  margin: 5px 0px 20px 0px;
+  margin: 10px 0px 10px 0px;
   padding: 0 10px;
 }
 
-.known-cards-rank {
+.settings-rank {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,25 +219,25 @@
   font-size: 0.8em;
   opacity: 1;
 }
-.known-cards-rank.unselected {
+.settings-rank.unselected {
   opacity: 1;
 }
-.known-cards-rank:hover {
+.settings-rank:hover {
   border-color: var(--clr-accent-orange-hover);
   background-color: var(--clr-accent-orange-hover);
 }
-.known-cards-rank.selected {
+.settings-rank.selected {
   border-color: var(--clr-accent-orange);
   background-color: var(--clr-accent-orange);
   color: var(--clr-light);
   opacity: 1;
 }
-.known-cards-rank.unused {
+.settings-rank.unused {
   opacity: 0.4;
   pointer-events: none;
 }
 
-.known-cards-rank-value {
+.settings-rank-value {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1em;
   margin: 0;

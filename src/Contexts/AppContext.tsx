@@ -59,8 +59,8 @@ interface AppContextType {
   setFinished: React.Dispatch<React.SetStateAction<boolean>>;
   canScroll: boolean;
   setCanScroll: React.Dispatch<React.SetStateAction<boolean>>;
-  showKnownCards: boolean;
-  setShowKnownCards: React.Dispatch<React.SetStateAction<boolean>>;
+  showSettings: boolean;
+  setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
 
   shouldFlip: boolean;
   setShouldFlip: React.Dispatch<React.SetStateAction<boolean>>;
@@ -88,7 +88,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [started, setStarted] = useState<boolean>(false);
   const [finished, setFinished] = useState<boolean>(false);
   const [canScroll, setCanScroll] = useState<boolean>(true);
-  const [showKnownCards, setShowKnownCards] = useState<boolean>(false);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
 
   const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
@@ -120,8 +120,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setFinished,
         canScroll,
         setCanScroll,
-        showKnownCards,
-        setShowKnownCards,
+        showSettings,
+        setShowSettings,
 
         shouldFlip,
         setShouldFlip,
