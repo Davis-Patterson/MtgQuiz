@@ -25,24 +25,29 @@
 
 .fullscreen-content {
   position: relative;
-  max-width: 90vw;
-  max-height: 95vh;
-  height: 100%;
-  width: 100%;
   padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.fullscreen-image {
-  max-width: 100%;
-  max-height: 100%;
-  height: 100%;
-  object-fit: contain;
+.image-wrapper {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
   border-radius: 42px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
   margin: 10px;
+}
+
+.fullscreen-image {
+  display: block;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .close-button {
@@ -61,20 +66,20 @@
   color: var(--clr-accent);
 }
 
-@media screen and (max-height: 900px) {
-  .fullscreen-image {
+@media screen and (max-height: 900px), (max-width: 650px) {
+  .image-wrapper {
     border-radius: 32px;
   }
 }
 
-@media screen and (max-height: 690px) {
-  .fullscreen-image {
+@media screen and (max-height: 690px), (max-width: 530px) {
+  .image-wrapper {
     border-radius: 22px;
   }
 }
 
-@media screen and (max-height: 500px) {
-  .fullscreen-image {
+@media screen and (max-height: 500px), (max-width: 400px) {
+  .image-wrapper {
     border-radius: 18px;
   }
 }

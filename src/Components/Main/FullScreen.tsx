@@ -23,12 +23,14 @@ const FullScreen: React.FC = () => {
         >
           ×
         </button>
-        <img
-          src={fullScreenImage}
-          alt='Fullscreen card'
-          className='fullscreen-image'
-          onClick={() => setFullScreenImage(null)}
-        />
+        <div className='image-wrapper'>
+          <img
+            src={fullScreenImage}
+            alt='Fullscreen card'
+            className='fullscreen-image'
+            onClick={() => setFullScreenImage(null)}
+          />
+        </div>
       </div>
     </div>
   );
