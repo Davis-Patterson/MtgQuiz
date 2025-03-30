@@ -76,13 +76,13 @@
 
 .card-count {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 2.2em;
+  font-size: 1.6em;
   line-height: 1;
   font-weight: 400;
   color: var(--clr-light);
   width: 100%;
   text-align: center;
-  margin: 0px 0px 25px 0px;
+  margin: 0px 0px 5px 0px;
   transition: all 0.3s ease-in-out;
 }
 
@@ -262,27 +262,40 @@
   margin: 0px 0px 5px 0px;
 }
 
-@media screen and (max-height: 1000px) {
-  .quiz-form {
+@media screen and (max-height: 1000px), (max-width: 600px) {
+  .quiz-form,
+  .breakdown {
     max-width: 300px;
   }
 }
 
 @media screen and (max-height: 850px) {
   .card-count {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
 }
 
 @media screen and (max-height: 770px) {
   .card-count {
-    font-size: 1.6em;
+    font-size: 1.4em;
   }
 }
 
-@media screen and (max-width: 700px) {
-  .quiz-form {
+@media screen and (max-height: 660px) {
+  .quiz-form,
+  .breakdown {
+    transform: scale(80%);
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .quiz-form,
+  .breakdown {
     max-width: 300px;
+  }
+  .card-count {
+    font-size: 1.2em;
+    margin: 0px 0px 0px 0px;
   }
 }
 
@@ -297,9 +310,6 @@
   .quiz-form,
   .breakdown {
     transform: scale(80%);
-  }
-  .card-count {
-    margin: 0px 0px 15px 0px;
   }
 }
 

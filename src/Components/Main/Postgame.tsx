@@ -120,13 +120,15 @@ const Postgame: React.FC = () => {
             </Link>
           </div>
           <div className='results-header-bottom'>
-            <Link
-              to='/'
-              onClick={() => handleHome()}
-              className='guess-button orange-glow'
-            >
-              Home
-            </Link>
+            <div className='results-button-container'>
+              <Link
+                to='/'
+                onClick={() => handleHome()}
+                className='guess-button orange-glow'
+              >
+                Home
+              </Link>
+            </div>
           </div>
         </header>
         <div className='results-content'>

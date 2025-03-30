@@ -183,33 +183,35 @@ const Home: React.FC = () => {
                 </p>
               </div>
             </div>
-            {numberOfCards === 0 || !enoughCards ? (
-              <Tooltip
-                title={
-                  <>
-                    <p className='tooltip-text'>
-                      Must select an option for X and
-                    </p>
-                    <p className='tooltip-text'>
-                      Must have at least 10 cards for quiz
-                    </p>
-                  </>
-                }
-                enterDelay={600}
-                leaveDelay={200}
-                placement='top'
-              >
-                <div className='inactive-button'>Start Quiz</div>
-              </Tooltip>
-            ) : (
-              <Link
-                to='/salt'
-                className='guess-button orange-glow'
-                onClick={() => handleStart()}
-              >
-                Start Quiz
-              </Link>
-            )}
+            <div className='home-button-container'>
+              {numberOfCards === 0 || !enoughCards ? (
+                <Tooltip
+                  title={
+                    <>
+                      <p className='tooltip-text'>
+                        Must select an option for X and
+                      </p>
+                      <p className='tooltip-text'>
+                        Must have at least 10 cards for quiz
+                      </p>
+                    </>
+                  }
+                  enterDelay={600}
+                  leaveDelay={200}
+                  placement='top'
+                >
+                  <div className='inactive-button'>Start Quiz</div>
+                </Tooltip>
+              ) : (
+                <Link
+                  to='/salt'
+                  className='guess-button orange-glow'
+                  onClick={() => handleStart()}
+                >
+                  Start Quiz
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </main>

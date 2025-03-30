@@ -108,6 +108,11 @@
   transform: scale(95%);
 }
 
+.results-button-container {
+  width: 100%;
+  max-width: 350px;
+}
+
 .results-content {
   width: 100%;
   display: flex;
