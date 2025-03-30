@@ -48,6 +48,18 @@ const SlideBar: React.FC = () => {
     updateGuessFromPointer(e.clientY);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!canScroll) return;
+    setDragging(true);
+    updateGuessFromPointer(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!canScroll || !dragging || !containerRef.current) return;
+    updateGuessFromPointer(e.touches[0].clientY);
+    e.preventDefault();
+  };
+
   const updateGuessFromPointer = (clientY: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -96,6 +108,21 @@ const SlideBar: React.FC = () => {
       }
     };
   }, [hasGuessed]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleTouch = (e: TouchEvent) => e.preventDefault();
+
+    container.addEventListener('touchstart', handleTouch, { passive: false });
+    container.addEventListener('touchmove', handleTouch, { passive: false });
+
+    return () => {
+      container.removeEventListener('touchstart', handleTouch);
+      container.removeEventListener('touchmove', handleTouch);
+    };
+  }, []);
 
   return (
     <>
@@ -214,6 +241,10 @@ const SlideBar: React.FC = () => {
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={() => setDragging(false)}
+            onTouchCancel={() => setDragging(false)}
             width='24'
             height='24'
             viewBox='0 0 24 24'
