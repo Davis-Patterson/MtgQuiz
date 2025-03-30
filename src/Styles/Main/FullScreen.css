@@ -1,3 +1,12 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .fullscreen-overlay {
   position: fixed;
   top: 0;
@@ -17,16 +26,23 @@
 .fullscreen-content {
   position: relative;
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: 95vh;
+  height: 100%;
+  width: 100%;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .fullscreen-image {
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 100%;
+  height: 100%;
   object-fit: contain;
-  border-radius: 32px;
+  border-radius: 42px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin: 10px;
 }
 
 .close-button {
@@ -45,11 +61,20 @@
   color: var(--clr-accent);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@media screen and (max-height: 900px) {
+  .fullscreen-image {
+    border-radius: 32px;
   }
-  to {
-    opacity: 1;
+}
+
+@media screen and (max-height: 690px) {
+  .fullscreen-image {
+    border-radius: 22px;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .fullscreen-image {
+    border-radius: 18px;
   }
 }
