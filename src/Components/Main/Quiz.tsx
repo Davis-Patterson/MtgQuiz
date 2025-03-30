@@ -193,6 +193,29 @@ const Quiz: React.FC = () => {
     }
   };
 
+  const handleGuessInput = (rawValue: string) => {
+    if (rawValue === 'Ø' || rawValue === '') {
+      setUserGuess(0);
+      return;
+    }
+
+    const numericValue = rawValue.replace(/[^0-9]/g, '');
+
+    let sanitizedValue = numericValue;
+    if (numericValue.startsWith('0') && numericValue.length > 1) {
+      sanitizedValue = numericValue.slice(1);
+    }
+
+    const parsedValue = parseInt(sanitizedValue) || 0;
+
+    if (parsedValue === 0) {
+      setUserGuess(0);
+    } else {
+      const clampedValue = Math.min(100, Math.max(1, parsedValue));
+      setUserGuess(clampedValue);
+    }
+  };
+
   if (selectedCards.length === 0) {
     return (
       <>
@@ -299,18 +322,25 @@ const Quiz: React.FC = () => {
               <>
                 <form onSubmit={handleSubmit} className='quiz-form'>
                   <input
-                    type='number'
+                    type='text'
                     className='user-guess'
-                    value={userGuess}
-                    onChange={(e) => {
-                      const value = parseInt(e.target.value) || 0;
-                      const clampedValue = Math.min(100, Math.max(0, value));
-                      setUserGuess(clampedValue);
+                    value={userGuess === 0 ? 'Ø' : userGuess.toString()}
+                    onChange={(e) => handleGuessInput(e.target.value)}
+                    onFocus={(e) => {
+                      if (userGuess === 0) {
+                        e.target.value = '';
+                      }
+                      e.target.select();
                     }}
-                    min='0'
-                    max='100'
-                    onFocus={(e) => e.target.select()}
+                    onBlur={(e) => {
+                      if (e.target.value === '') {
+                        setUserGuess(0);
+                      }
+                    }}
                     inputMode='numeric'
+                    style={{
+                      color: userGuess === 0 ? 'var(--clr-divider)' : 'inherit',
+                    }}
                   />
                   <button
                     type='submit'

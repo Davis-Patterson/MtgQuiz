@@ -80,7 +80,8 @@
   font-family: 'Beleren Bold', sans-serif;
   font-size: 10px;
   white-space: nowrap;
-  text-align: right;
+  text-align: center;
+  width: 100%;
 }
 
 .thumb,

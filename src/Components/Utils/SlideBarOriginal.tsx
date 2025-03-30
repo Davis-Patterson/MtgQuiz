@@ -52,20 +52,11 @@ const SlideBar: React.FC = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const offsetY = clientY - rect.top;
-
-    const rawPercentage = (1 - offsetY / rect.height) * 100;
-    let newGuess = Math.round((rawPercentage / 100) * numberOfCards);
-
-    if (newGuess === 0) {
-      newGuess = 0;
-    } else {
-      newGuess = numberOfCards + 1 - newGuess;
-      newGuess = Math.max(1, Math.min(numberOfCards, newGuess));
-
-      if (rawPercentage < 0) {
-        newGuess = 0;
-      }
-    }
+    const percentage = (1 - offsetY / rect.height) * numberOfCards;
+    const newGuess = Math.max(
+      0,
+      Math.min(numberOfCards, Math.round(percentage))
+    );
     setUserGuess(newGuess);
   };
 
@@ -101,7 +92,7 @@ const SlideBar: React.FC = () => {
     <>
       <div className='slidebar-container'>
         <p className={canScroll ? 'slidebar-label' : 'slidebar-label-inactive'}>
-          Most Salty
+          Least Salty
         </p>
         <div
           className={
@@ -119,14 +110,7 @@ const SlideBar: React.FC = () => {
                 <div
                   key={num}
                   className='dash-container'
-                  style={{
-                    bottom:
-                      num === 0
-                        ? '0%'
-                        : `${
-                            ((numberOfCards + 1 - num) / numberOfCards) * 100
-                          }%`,
-                  }}
+                  style={{ bottom: `${(num / numberOfCards) * 100}%` }}
                 >
                   <svg
                     className={`dash-svg ${isRevealed ? 'revealed-dash' : ''}`}
@@ -177,10 +161,7 @@ const SlideBar: React.FC = () => {
                         y2='5'
                         stroke='var(--clr-light)'
                         strokeWidth={
-                          num === 0
-                            ? 1
-                            : num === 1 ||
-                              num % (numberOfCards === 100 ? 10 : 5) === 0
+                          num % (numberOfCards === 100 ? 10 : 5) === 0
                             ? 2
                             : num === userGuess
                             ? 2
@@ -189,28 +170,16 @@ const SlideBar: React.FC = () => {
                       />
                     )}
                   </svg>
-                  {num === 0 ? (
-                    <span className='dash-label'>Ø</span>
-                  ) : num === 1 ? (
-                    <span className='dash-label'>1</span>
-                  ) : num % (numberOfCards === 100 ? 10 : 5) === 0 &&
-                    num !== 100 ? (
+                  {num % (numberOfCards === 100 ? 10 : 5) === 0 && (
                     <span className='dash-label'>{num}</span>
-                  ) : null}
+                  )}
                 </div>
               );
             })}
           </div>
           <svg
             className={canScroll ? 'thumb orange-glow' : 'thumb-inactive'}
-            style={{
-              bottom:
-                userGuess === 0
-                  ? '0%'
-                  : `${
-                      ((numberOfCards + 1 - userGuess) / numberOfCards) * 100
-                    }%`,
-            }}
+            style={{ bottom: `${(userGuess / numberOfCards) * 100}%` }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
@@ -230,7 +199,7 @@ const SlideBar: React.FC = () => {
           </svg>
         </div>
         <p className={canScroll ? 'slidebar-label' : 'slidebar-label-inactive'}>
-          Least Salty
+          Most Salty
         </p>
         {showPointerHint && !hasGuessed && <PointIcon className='point-icon' />}
       </div>
