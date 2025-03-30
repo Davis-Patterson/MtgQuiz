@@ -242,6 +242,7 @@
   .card-image-front,
   .card-image-back {
     width: 440px;
+    border-radius: 22px;
   }
   .flip-button {
     top: -5px;
@@ -302,6 +303,7 @@
   .card-image-front,
   .card-image-back {
     width: 300px;
+    border-radius: 14px;
   }
   .card-name {
     font-size: 1.6em;
