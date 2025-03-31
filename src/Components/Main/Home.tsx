@@ -13,11 +13,11 @@ const Home: React.FC = () => {
   }
   const {
     cardData,
+    setPlayers,
     setCurrentIndex,
     numberOfCards,
     setNumberOfCards,
-    setUserGuess,
-    setScores,
+    setCurrentCardGuesses,
     setRevealedRanks,
     setStarted,
     setShowSettings,
@@ -28,10 +28,15 @@ const Home: React.FC = () => {
   const [enoughCards, setEnoughCards] = useState(false);
 
   const handleStart = () => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) => ({
+        ...player,
+        scores: [],
+      }))
+    );
     setStarted(false);
     setCurrentIndex(0);
-    setUserGuess(0);
-    setScores([]);
+    setCurrentCardGuesses({});
     setRevealedRanks([]);
     setCanScroll(true);
   };
@@ -121,7 +126,8 @@ const Home: React.FC = () => {
               must guess its rank between 1 and X. Your score for each card is
               the absolute difference between your guess and the card's rank. A
               lower score indicates greater accuracy. You can select cards that
-              you already know to remove them from the quiz.
+              you already know to remove them from the quiz. Now featuring local
+              multiplayer!
             </p>
             <p className='home-text'>Select a value for X to begin:</p>
             <div className='button-gap' />

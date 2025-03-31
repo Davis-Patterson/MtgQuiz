@@ -1,5 +1,13 @@
 import { createContext, ReactNode, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import SaltData from 'Utilities/SaltData.json';
+
+export interface Player {
+  id: string;
+  order: number;
+  name: string;
+  scores: ScoreDetail[];
+}
 
 export interface Face {
   name: string;
@@ -35,6 +43,15 @@ export interface RevealedCard {
 }
 
 interface AppContextType {
+  players: Player[];
+  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
+  currentPlayerIndex: number;
+  setCurrentPlayerIndex: React.Dispatch<React.SetStateAction<number>>;
+  currentCardGuesses: Record<string, number>;
+  setCurrentCardGuesses: React.Dispatch<
+    React.SetStateAction<Record<string, number>>
+  >;
+
   cardData: Card[];
   setCardData: React.Dispatch<React.SetStateAction<Card[]>>;
   selectedCards: Card[];
@@ -44,14 +61,12 @@ interface AppContextType {
 
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
-  userGuess: number;
-  setUserGuess: React.Dispatch<React.SetStateAction<number>>;
-  scores: ScoreDetail[];
-  setScores: React.Dispatch<React.SetStateAction<ScoreDetail[]>>;
   revealedRanks: RevealedCard[];
   setRevealedRanks: React.Dispatch<React.SetStateAction<RevealedCard[]>>;
   selectedRanks: Set<number>;
   setSelectedRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
+  previousQuizRanks: Set<number>;
+  setPreviousQuizRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
 
   started: boolean;
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -75,15 +90,29 @@ interface AppProviderProps {
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
+  const [players, setPlayers] = useState<Player[]>([
+    {
+      id: uuidv4(),
+      order: 1,
+      name: '',
+      scores: [],
+    },
+  ]);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
+  const [currentCardGuesses, setCurrentCardGuesses] = useState<
+    Record<string, number>
+  >({});
+
   const [cardData, setCardData] = useState<Card[]>(SaltData);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [numberOfCards, setNumberOfCards] = useState<number>(0);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [userGuess, setUserGuess] = useState<number>(0);
-  const [scores, setScores] = useState<ScoreDetail[]>([]);
   const [revealedRanks, setRevealedRanks] = useState<RevealedCard[]>([]);
   const [selectedRanks, setSelectedRanks] = useState<Set<number>>(new Set());
+  const [previousQuizRanks, setPreviousQuizRanks] = useState<Set<number>>(
+    new Set()
+  );
 
   const [started, setStarted] = useState<boolean>(false);
   const [finished, setFinished] = useState<boolean>(false);
@@ -96,6 +125,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <AppContext.Provider
       value={{
+        players,
+        setPlayers,
+        currentPlayerIndex,
+        setCurrentPlayerIndex,
+        currentCardGuesses,
+        setCurrentCardGuesses,
+
         cardData,
         setCardData,
         selectedCards,
@@ -105,14 +141,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         currentIndex,
         setCurrentIndex,
-        userGuess,
-        setUserGuess,
-        scores,
-        setScores,
         revealedRanks,
         setRevealedRanks,
         selectedRanks,
         setSelectedRanks,
+        previousQuizRanks,
+        setPreviousQuizRanks,
 
         started,
         setStarted,

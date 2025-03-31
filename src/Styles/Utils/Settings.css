@@ -26,20 +26,41 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 450px;
+  max-height: 90vh;
   z-index: 1001;
   transition: opacity 0.5s ease-in;
   position: relative;
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-icon) var(--clr-divider);
 }
 .settings-container.fade-in {
   animation: containerFadeIn 0.3s forwards;
 }
 .settings-container.fade-out {
   animation: containerFadeOut 0.3s forwards;
+}
+.settings-container::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+.settings-container::-webkit-scrollbar-track {
+  background: var(--clr-divider);
+  border-radius: 4px;
+  margin: 10px 0;
+}
+.settings-container::-webkit-scrollbar-thumb {
+  background: var(--clr-icon);
+  border-radius: 4px;
+  border: 2px solid var(--clr-divider);
+}
+.settings-container::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-text-grey);
 }
 
 .portal-top-toggles {
@@ -51,7 +72,7 @@
 .settings-header {
   display: flex;
   justify-content: center;
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px 10px 0px;
   width: 100%;
   min-width: 299px;
 }
@@ -63,6 +84,30 @@
   font-weight: 300;
   color: var(--clr-text-blue);
   cursor: default;
+  margin: -15px 0px 0px 0px;
+}
+
+.settings-header-subtext {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1em;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--clr-dark);
+  width: 100%;
+  text-align: center;
+  margin: 0px 0px 2px 0px;
+}
+
+.settings-header-sub-subtext {
+  font-family: 'Merriweather', sans-serif;
+  font-size: 0.8em;
+  line-height: 1;
+  font-weight: 200;
+  font-style: italic;
+  color: var(--clr-icon);
+  width: 100%;
+  text-align: center;
+  margin: 0px 0px 10px 0px;
 }
 
 .settings-x-content {
@@ -114,13 +159,22 @@
   margin: 4px 0px 0px 2px;
 }
 
+.settings-dropdowns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 10px 0px;
+}
+
 .settings-dropdown {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px 10px 0px;
 }
 
 .settings-dropdown-header {
@@ -142,7 +196,7 @@
   background-color: var(--clr-screen-blue);
 }
 
-.settings-dropdown-header-text {
+.settings-dropdown-header-text-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -150,7 +204,7 @@
   padding: 0px 10px;
 }
 
-.settings-header-subtext {
+.settings-dropdown-header-text {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 0.9em;
   line-height: 1;
@@ -194,22 +248,98 @@
   box-shadow: 0px 1px 5px #0000004b;
   clip-path: inset(0px -10px -10px -10px);
   z-index: 2;
+  width: 97%;
+}
+
+.settings-dropdown-header-subtext {
+  font-family: 'Merriweather', sans-serif;
+  font-size: 0.8em;
+  line-height: 1;
+  font-weight: 200;
+  font-style: italic;
+  color: var(--clr-icon);
+  width: 100%;
+  text-align: center;
+  margin: 5px 0px 0px 0px;
+}
+
+.settings-known-cards-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 5px 5px 0px 5px;
+}
+
+.exclude-cards-button {
+  padding: 0.5rem 1rem;
+  background: var(--clr-accent-blue);
+  color: var(--clr-light);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  opacity: 1;
+}
+.exclude-cards-button:hover {
+  background: var(--clr-accent-blue-hover);
+}
+.exclude-cards-button:disabled {
+  background: var(--clr-icon);
+  opacity: 0.4;
+  cursor: default;
+}
+.eraser-button {
+  padding: 0.25rem 1rem;
+  height: 32px;
+  background: var(--clr-accent-blue);
+  color: var(--clr-light);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  opacity: 1;
+}
+.eraser-button:hover {
+  background: var(--clr-accent-blue-hover);
+}
+.eraser-button:disabled {
+  background: var(--clr-icon);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.eraser-icon {
+  width: 18px;
+  height: 18px;
+  fill: var(--clr-platinum);
+  transition: all 0.15s ease-in-out;
+  opacity: 1;
 }
 
 .settings-known-cards-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: 6px;
-  margin: 10px 0px 10px 0px;
-  padding: 0 10px;
+  gap: 2px;
+  margin: 5px 0px 10px 0px;
+  padding: 0 28px;
+}
+
+.grid-circle-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .settings-rank {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px solid var(--clr-divider);
   background-color: var(--clr-divider);
@@ -244,4 +374,75 @@
   padding: 0;
   pointer-events: none;
   margin: 2px 0px 0px 0px;
+}
+
+.settings-add-participants {
+  max-height: 229px;
+  padding: 5px 10px 10px 10px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-icon) var(--clr-divider);
+}
+.settings-add-participants::-webkit-scrollbar {
+  width: 6px;
+}
+.settings-add-participants::-webkit-scrollbar-track {
+  background: var(--clr-divider);
+  border-radius: 3px;
+}
+.settings-add-participants::-webkit-scrollbar-thumb {
+  background: var(--clr-icon);
+  border-radius: 3px;
+}
+.settings-add-participants::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-text-grey);
+}
+
+.participants-list {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.participant-input {
+  font-family: 'Beleren Bold', sans-serif;
+  color: var(--clr-text-grey);
+  flex: 1;
+  padding: 0.4em;
+  border: 1px solid var(--clr-divider);
+  background-color: var(--clr-platinum);
+  border-radius: 4px;
+}
+
+.add-player-section {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.add-player-button {
+  padding: 0.5rem 1rem;
+  background: var(--clr-accent-blue);
+  color: var(--clr-light);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  opacity: 1;
+}
+.add-player-button:hover {
+  background: var(--clr-accent-blue-hover);
+}
+.add-player-button:disabled {
+  background: var(--clr-icon);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.add-player-btn:disabled {
+  background: var(--clr-divider);
+  cursor: not-allowed;
+}
+
+.add-player-btn:hover:not(:disabled) {
+  background: var(--clr-accent-hover);
 }

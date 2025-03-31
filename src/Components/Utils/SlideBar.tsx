@@ -12,11 +12,13 @@ const SlideBar: React.FC = () => {
   }
   const {
     numberOfCards,
-    userGuess,
-    setUserGuess,
+    currentCardGuesses,
+    setCurrentCardGuesses,
     revealedRanks,
     canScroll,
     setFullScreenImage,
+    players,
+    currentPlayerIndex,
   } = context;
 
   const [dragging, setDragging] = useState(false);
@@ -26,6 +28,8 @@ const SlideBar: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dashes = Array.from({ length: numberOfCards + 1 }, (_, i) => i);
+  const currentPlayer = players[currentPlayerIndex];
+  const currentGuess = currentCardGuesses[currentPlayer.order] || 0;
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!canScroll) return;
@@ -64,7 +68,6 @@ const SlideBar: React.FC = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const offsetY = clientY - rect.top;
-
     const rawPercentage = (1 - offsetY / rect.height) * 100;
     let newGuess = Math.round((rawPercentage / 100) * numberOfCards);
 
@@ -73,16 +76,22 @@ const SlideBar: React.FC = () => {
     } else {
       newGuess = numberOfCards + 1 - newGuess;
       newGuess = Math.max(1, Math.min(numberOfCards, newGuess));
-
       if (rawPercentage < 0) {
         newGuess = 0;
       }
     }
-    setUserGuess(newGuess);
+
+    setCurrentCardGuesses((prev) => {
+      const currentGuess = prev[currentPlayer.order] || 0;
+      if (currentGuess === newGuess) {
+        return prev;
+      }
+      return { ...prev, [currentPlayer.order]: newGuess };
+    });
   };
 
   useEffect(() => {
-    if (userGuess > 0) {
+    if (currentGuess > 0) {
       setShowPointerHint(false);
       setHasGuessed(true);
       if (timeoutRef.current) {
@@ -90,7 +99,7 @@ const SlideBar: React.FC = () => {
         timeoutRef.current = null;
       }
     }
-  }, [userGuess]);
+  }, [currentGuess]);
 
   useEffect(() => {
     if (!hasGuessed) {
@@ -188,7 +197,7 @@ const SlideBar: React.FC = () => {
                       >
                         <line
                           x1='10'
-                          x2={num === userGuess ? '30' : '20'}
+                          x2={num === currentGuess ? '30' : '20'}
                           y1='5'
                           y2='5'
                           stroke='var(--clr-accent)'
@@ -199,7 +208,7 @@ const SlideBar: React.FC = () => {
                     ) : (
                       <line
                         x1='10'
-                        x2={num === userGuess ? '30' : '20'}
+                        x2={num === currentGuess ? '30' : '20'}
                         y1='5'
                         y2='5'
                         stroke='var(--clr-light)'
@@ -209,7 +218,7 @@ const SlideBar: React.FC = () => {
                             : num === 1 ||
                               num % (numberOfCards === 100 ? 10 : 5) === 0
                             ? 2
-                            : num === userGuess
+                            : num === currentGuess
                             ? 2
                             : 1
                         }
@@ -232,10 +241,10 @@ const SlideBar: React.FC = () => {
             className={canScroll ? 'thumb orange-glow' : 'thumb-inactive'}
             style={{
               bottom:
-                userGuess === 0
+                currentGuess === 0
                   ? '0%'
                   : `${
-                      ((numberOfCards + 1 - userGuess) / numberOfCards) * 100
+                      ((numberOfCards + 1 - currentGuess) / numberOfCards) * 100
                     }%`,
             }}
             onPointerDown={handlePointerDown}
@@ -253,7 +262,7 @@ const SlideBar: React.FC = () => {
               className={
                 !canScroll
                   ? 'pin-icon-inactive'
-                  : userGuess === 0
+                  : currentGuess === 0
                   ? 'pin-icon-zero'
                   : 'pin-icon-orange'
               }

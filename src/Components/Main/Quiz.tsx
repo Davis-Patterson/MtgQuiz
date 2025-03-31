@@ -12,19 +12,21 @@ const Quiz: React.FC = () => {
     throw new Error('No Context available');
   }
   const {
+    players,
+    setPlayers,
+    currentPlayerIndex,
+    setCurrentPlayerIndex,
+    currentCardGuesses,
+    setCurrentCardGuesses,
     cardData,
     selectedCards,
     setSelectedCards,
     numberOfCards,
     currentIndex,
     setCurrentIndex,
-    userGuess,
-    setUserGuess,
-    scores,
-    setScores,
     setRevealedRanks,
     selectedRanks,
-    setSelectedRanks,
+    setPreviousQuizRanks,
     finished,
     setFinished,
     started,
@@ -40,7 +42,10 @@ const Quiz: React.FC = () => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [guessButtonActive, setGuessButtonActive] = useState(false);
 
+  const currentPlayer = players[currentPlayerIndex];
+  const currentCard = selectedCards[currentIndex];
   const navigate = useNavigate();
 
   const shuffleCards = <T,>(array: T[]): T[] => {
@@ -81,8 +86,7 @@ const Quiz: React.FC = () => {
       setSelectedCards(selected);
       setRevealedRanks(initialRevealed);
       setCurrentIndex(0);
-      setUserGuess(0);
-      setScores([]);
+      setCurrentCardGuesses({});
       setFinished(false);
       setStarted(true);
     }
@@ -104,7 +108,6 @@ const Quiz: React.FC = () => {
 
   useEffect(() => {
     if (selectedCards.length > 0 && currentIndex >= 0) {
-      const currentCard = selectedCards[currentIndex];
       const artCropUrl = currentCard.card.front.imgs.art_crop;
 
       if (!currentBackground) {
@@ -139,38 +142,62 @@ const Quiz: React.FC = () => {
     if (selectedCards.length === 0) {
       const timer = setTimeout(() => {
         navigate('/');
-      }, 3000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [selectedCards]);
 
+  useEffect(() => {
+    const currentGuess = currentCardGuesses[currentPlayer.order];
+    if (
+      typeof currentGuess === 'number' &&
+      currentGuess > 0 &&
+      currentGuess <= numberOfCards
+    ) {
+      setGuessButtonActive(true);
+    } else {
+      setGuessButtonActive(false);
+    }
+  }, [currentCardGuesses, currentPlayer.order, numberOfCards]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (isNaN(userGuess) || userGuess < 1 || userGuess > numberOfCards) {
-      alert(`Please enter a valid number between 1 and ${numberOfCards}.`);
-      return;
+
+    const currentGuess = currentCardGuesses[currentPlayer.order];
+    if (typeof currentGuess !== 'number' || isNaN(currentGuess)) return;
+
+    if (currentPlayerIndex < players.length - 1) {
+      setCurrentPlayerIndex((prev) => prev + 1);
+    } else {
+      const currentCard = selectedCards[currentIndex];
+      const cardRank = currentCard.rank as number;
+
+      setPlayers((prevPlayers) =>
+        prevPlayers.map((player) => {
+          const guess = currentCardGuesses[player.order];
+          return {
+            ...player,
+            scores: [
+              ...player.scores,
+              {
+                cardRank,
+                guess,
+                diff: Math.abs(cardRank - guess),
+              },
+            ],
+          };
+        })
+      );
+
+      setIsSubmitted(true);
+      setCanScroll(false);
     }
-
-    const currentCard = selectedCards[currentIndex];
-    const cardRank = currentCard.rank as number;
-    const diff = Math.abs(cardRank - userGuess);
-
-    setScores([...scores, { cardRank, guess: userGuess, diff }]);
-    setRevealedRanks((prev) => [
-      ...prev,
-      {
-        rank: cardRank,
-        name: currentCard.card.front.name,
-        imageUrl: currentCard.card.front.imgs.normal,
-      },
-    ]);
-    setIsSubmitted(true);
-    setCanScroll(false);
   };
 
   const handleNext = () => {
-    setUserGuess(0);
+    setCurrentCardGuesses({});
+    setCurrentPlayerIndex(0);
     setIsSubmitted(false);
     setCanScroll(true);
 
@@ -187,34 +214,31 @@ const Quiz: React.FC = () => {
           quizRanks.add(card.rank);
         }
       });
-      setSelectedRanks(quizRanks);
-
+      setPreviousQuizRanks(quizRanks);
       setFinished(true);
     }
   };
 
   const handleGuessInput = (rawValue: string) => {
-    if (rawValue === 'Ø' || rawValue === '') {
-      setUserGuess(0);
-      return;
-    }
-
     const numericValue = rawValue.replace(/[^0-9]/g, '');
-
     let sanitizedValue = numericValue;
+
     if (numericValue.startsWith('0') && numericValue.length > 1) {
       sanitizedValue = numericValue.slice(1);
     }
 
     const parsedValue = parseInt(sanitizedValue) || 0;
+    const clampedValue = Math.min(100, Math.max(0, parsedValue));
 
-    if (parsedValue === 0) {
-      setUserGuess(0);
-    } else {
-      const clampedValue = Math.min(100, Math.max(1, parsedValue));
-      setUserGuess(clampedValue);
-    }
+    setCurrentCardGuesses((prev) => ({
+      ...prev,
+      [currentPlayer.order]: clampedValue,
+    }));
   };
+
+  const allGuessedForCurrentRound = players.every(
+    (player) => player.scores.length > currentIndex
+  );
 
   if (selectedCards.length === 0) {
     return (
@@ -270,53 +294,114 @@ const Quiz: React.FC = () => {
           )}
           <div className='background-overlay' />
         </div>
-        <UserScore />
+        <UserScore allGuessedForCurrentRound={allGuessedForCurrentRound} />
         <div className='quiz-container'>
           <SlideBar />
           <div className='quiz-content'>
             <p className='card-count'>
               Card {currentIndex + 1} of {selectedCards.length}
             </p>
+            {players.length > 1 &&
+              (allGuessedForCurrentRound ? (
+                <p className='quiz-current-player-guess'>All players guessed</p>
+              ) : (
+                <p className='quiz-current-player-guess'>
+                  {currentPlayer.name
+                    ? `${currentPlayer.name.trim()}'s guess:`
+                    : `Player ${currentPlayer.order}'s guess:`}
+                </p>
+              ))}
             <CardDisplay />
             {isSubmitted ? (
               <>
-                <div className='breakdown'>
-                  {scores.length > 0 && (
-                    <div className='scores-breakdown-container'>
-                      <div className='scores-guess-container'>
-                        <div className='scores-guess-text-row'>
-                          <p className='score-text-label'>Card Rank:</p>
-                          <p className='score-text'>
-                            {scores[scores.length - 1].cardRank}
-                          </p>
+                {players.length === 1 && (
+                  <div className='breakdown'>
+                    {players[0].scores.length > 0 && (
+                      <div className='scores-breakdown-container'>
+                        <div className='scores-guess-container'>
+                          <div className='scores-guess-text-row'>
+                            <p className='score-text-label'>Card Rank:</p>
+                            <p className='score-text'>
+                              {
+                                players[0].scores[players[0].scores.length - 1]
+                                  .cardRank
+                              }
+                            </p>
+                          </div>
+                          <div className='scores-guess-text-row'>
+                            <p className='score-text-label'>Your Guess:</p>
+                            <p className='score-text'>
+                              {
+                                players[0].scores[players[0].scores.length - 1]
+                                  .guess
+                              }
+                            </p>
+                          </div>
                         </div>
-                        <div className='scores-guess-text-row'>
-                          <p className='score-text-label'>Your Guess:</p>
-                          <p className='score-text'>
-                            {scores[scores.length - 1].guess}
-                          </p>
+                        <div className='scores-score-container'>
+                          <p className='score-text-score-label'>Score:</p>
+                          <div className='score-text-score-container'>
+                            <p className='score-text-plus'>+</p>
+                            <p className='score-text-score'>
+                              {
+                                players[0].scores[players[0].scores.length - 1]
+                                  .diff
+                              }
+                            </p>
+                          </div>
                         </div>
                       </div>
-                      <div className='scores-score-container'>
-                        <p className='score-text-score-label'>Score:</p>
-                        <div className='score-text-score-container'>
-                          <p className='score-text-plus'>+</p>
-                          <p className='score-text-score'>
-                            {scores[scores.length - 1].diff}
-                          </p>
-                        </div>
+                    )}
+                    <button
+                      onClick={handleNext}
+                      className='next-button blue-glow'
+                    >
+                      {currentIndex < selectedCards.length - 1
+                        ? 'Next Card'
+                        : 'View Results'}
+                    </button>
+                  </div>
+                )}
+                {players.length > 1 && players[0].scores.length > 0 && (
+                  <div className='multi-breakdown'>
+                    <div className='multi-breakdown-container'>
+                      <div className='card-rank-display'>
+                        <p className='multi-score-text-label'>Card Rank:</p>
+                        <p className='multi-score-text'>
+                          {players[0].scores.slice(-1)[0].cardRank}
+                        </p>
+                      </div>
+
+                      <div className='stat-cards-container'>
+                        {players.map((player) => {
+                          const lastScore = player.scores.slice(-1)[0];
+                          return (
+                            <div key={player.id} className='stat-card'>
+                              <p className='stat-player-name'>
+                                {player.name || `Player ${player.order}`}
+                              </p>
+                              <p className='stat-player-guess'>
+                                Guess: {lastScore.guess}
+                              </p>
+                              <p className='stat-player-diff'>
+                                Score: +{lastScore.diff}
+                              </p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-                  )}
-                  <button
-                    onClick={handleNext}
-                    className='next-button blue-glow'
-                  >
-                    {currentIndex < selectedCards.length - 1
-                      ? 'Next Card'
-                      : 'View Results'}
-                  </button>
-                </div>
+
+                    <button
+                      onClick={handleNext}
+                      className='next-button blue-glow'
+                    >
+                      {currentIndex < selectedCards.length - 1
+                        ? 'Next Card'
+                        : 'View Results'}
+                    </button>
+                  </div>
+                )}
               </>
             ) : (
               <>
@@ -324,34 +409,48 @@ const Quiz: React.FC = () => {
                   <input
                     type='text'
                     className='user-guess'
-                    value={userGuess === 0 ? 'Ø' : userGuess.toString()}
+                    value={
+                      currentCardGuesses[currentPlayer.order] === 0
+                        ? 'Ø'
+                        : currentCardGuesses[currentPlayer.order]?.toString() ||
+                          'Ø'
+                    }
                     onChange={(e) => handleGuessInput(e.target.value)}
                     onFocus={(e) => {
-                      if (userGuess === 0) {
+                      if (currentCardGuesses[currentPlayer.order] === 0) {
                         e.target.value = '';
                       }
                       e.target.select();
                     }}
                     onBlur={(e) => {
                       if (e.target.value === '') {
-                        setUserGuess(0);
+                        setCurrentCardGuesses((prev) => ({
+                          ...prev,
+                          [currentPlayer.order]: 0,
+                        }));
                       }
                     }}
                     inputMode='numeric'
                     style={{
-                      color: userGuess === 0 ? 'var(--clr-divider)' : 'inherit',
+                      color: !guessButtonActive
+                        ? 'var(--clr-divider)'
+                        : 'inherit',
                     }}
                   />
                   <button
                     type='submit'
                     className={
-                      userGuess === 0
-                        ? 'inactive-button'
-                        : 'guess-button orange-glow'
+                      guessButtonActive
+                        ? 'guess-button orange-glow'
+                        : 'inactive-button'
                     }
-                    disabled={userGuess === 0}
+                    disabled={!guessButtonActive}
                   >
-                    Submit Guess
+                    <p className='quiz-button-text'>
+                      {currentPlayer.name
+                        ? `Submit ${currentPlayer.name}`
+                        : `Submit Player ${currentPlayer.order}`}
+                    </p>
                   </button>
                 </form>
               </>
