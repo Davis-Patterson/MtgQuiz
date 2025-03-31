@@ -241,26 +241,7 @@
   }
 }
 
-@media screen and (max-height: 910px), (max-width: 550px) {
-  .flip-container {
-    position: relative;
-    height: 550px;
-  }
-  .card-image-front,
-  .card-image-back {
-    width: 360px;
-  }
-  .flip-button {
-    top: -5px;
-    right: -60px;
-  }
-  .flip-icon {
-    width: 25px;
-    height: 25px;
-  }
-}
-
-@media screen and (max-height: 930px), (max-width: 550px) {
+@media screen and (max-height: 890px), (max-width: 550px) {
   .flip-container {
     position: relative;
     height: 490px;
