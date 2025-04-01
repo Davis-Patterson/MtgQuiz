@@ -59,8 +59,8 @@
 
 .flip-container {
   position: relative;
-  height: 850px;
-  width: 100%;
+  height: 840px;
+  width: 600px;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   perspective: 1000px;
@@ -126,6 +126,37 @@
 .flip-icon:active {
   color: var(--clr-accent-blue);
   fill: var(--clr-accent-blue);
+}
+
+.fullscreen-icon-container {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.15s ease-in-out;
+}
+.flip-container:hover .fullscreen-icon-container,
+.fullscreen-icon-container:hover {
+  opacity: 1;
+}
+
+.fullscreen-icon {
+  fill: var(--clr-icon);
+  width: 35px;
+  height: 35px;
+  transition: all 0.15s ease-in-out;
+}
+.fullscreen-icon-container:hover .fullscreen-icon {
+  fill: var(--clr-divider);
+}
+.fullscreen-icon-container:active .fullscreen-icon {
+  fill: var(--clr-divider);
+  transform: scale(95%);
 }
 
 .card-image-front,
@@ -203,6 +234,7 @@
   .flip-container {
     position: relative;
     height: 750px;
+    width: 540px;
   }
   .card-image-front,
   .card-image-back {
@@ -214,6 +246,7 @@
   .flip-container {
     position: relative;
     height: 680px;
+    width: 500px;
   }
   .card-image-front,
   .card-image-back {
@@ -230,6 +263,7 @@
   .flip-container {
     position: relative;
     height: 620px;
+    width: 450px;
   }
   .card-image-front,
   .card-image-back {
@@ -241,10 +275,11 @@
   }
 }
 
-@media screen and (max-height: 890px), (max-width: 550px) {
+@media screen and (max-height: 910px), (max-width: 620px) {
   .flip-container {
     position: relative;
     height: 490px;
+    width: 380px;
   }
   .card-image-front,
   .card-image-back {
@@ -278,6 +313,7 @@
   .flip-container {
     position: relative;
     height: 400px;
+    width: 350px;
   }
   .card-image-front,
   .card-image-back {
@@ -298,7 +334,7 @@
 
 @media screen and (max-width: 470px) {
   .flip-container {
-    width: 250px;
+    width: 300px;
     height: 380px;
   }
   .card-image-front,
@@ -317,7 +353,7 @@
 
 @media screen and (max-width: 420px) {
   .flip-container {
-    width: 230px;
+    width: 280px;
     height: 345px;
   }
   .card-image-front,
@@ -328,7 +364,7 @@
 
 @media screen and (max-width: 385px) {
   .flip-container {
-    width: 210px;
+    width: 250px;
     height: 310px;
   }
   .card-image-front,

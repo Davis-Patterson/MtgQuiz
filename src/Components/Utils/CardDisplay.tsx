@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import FlipIcon from 'Svgs/FlipIcon';
 import 'Styles/Utils/CardDisplay.css';
+import FullscreenIcon from 'Svgs/FullscreenIcon';
 
 const CardDisplay: React.FC = () => {
   const context = useContext(AppContext);
@@ -97,6 +98,16 @@ const CardDisplay: React.FC = () => {
               activeFace === 'back' ? 'flipped' : ''
             }`}
           />
+          <div
+            className='fullscreen-icon-container'
+            onClick={() =>
+              activeFace === 'back' && currentCard.card.back
+                ? setFullScreenImage(currentCard.card.back.imgs.large)
+                : setFullScreenImage(currentCard.card.front.imgs.large)
+            }
+          >
+            <FullscreenIcon className='fullscreen-icon' />
+          </div>
         </div>
         <p className='card-name'>
           {activeFace === 'back' && currentCard.card.back
