@@ -15,8 +15,9 @@ const Home: React.FC = () => {
     cardData,
     setPlayers,
     setCurrentIndex,
-    numberOfCards,
-    setNumberOfCards,
+    rangeOfQuiz,
+    setRangeOfQuiz,
+    creatorQuiz,
     setCurrentCardGuesses,
     setRevealedRanks,
     setStarted,
@@ -42,10 +43,10 @@ const Home: React.FC = () => {
   };
 
   const handleCardNumber = (value: number) => {
-    if (numberOfCards === value) {
-      setNumberOfCards(0);
+    if (rangeOfQuiz === value) {
+      setRangeOfQuiz(0);
     } else {
-      setNumberOfCards(value);
+      setRangeOfQuiz(value);
     }
   };
 
@@ -65,16 +66,16 @@ const Home: React.FC = () => {
   }, [cardData]);
 
   useEffect(() => {
-    if (numberOfCards > 0) {
-      const validSelected = Array.from(context.selectedRanks).filter(
-        (rank) => rank <= numberOfCards
+    if (rangeOfQuiz > 0) {
+      const validSelected = Array.from(context.excludedRanks).filter(
+        (rank) => rank <= rangeOfQuiz
       ).length;
-      const availableCards = numberOfCards - validSelected;
+      const availableCards = rangeOfQuiz - validSelected;
       setEnoughCards(availableCards >= 10);
     } else {
       setEnoughCards(false);
     }
-  }, [numberOfCards, context.selectedRanks]);
+  }, [rangeOfQuiz, context.excludedRanks]);
 
   return (
     <>
@@ -121,76 +122,119 @@ const Home: React.FC = () => {
               >
                 Top 100 Saltiest Cards
               </a>{' '}
-              list published by EDHREC. Out of X cards you will be shown 10 at
-              random, where X is your selected quiz range. For each card, you
-              must guess its rank between 1 and X. Your score for each card is
-              the absolute difference between your guess and the card's rank. A
-              lower score indicates greater accuracy. You can select cards that
-              you already know to remove them from the quiz. Now featuring local
-              multiplayer!
+              list published by EDHREC. Out of X cards you will be shown a
+              determined amount at random, where X is your selected quiz range.
+              For each card, you must guess its rank between 1 and X. Your score
+              for each card is the absolute difference between your guess and
+              the card's rank. A lower score indicates greater accuracy.
             </p>
             <p className='home-text'>Select a value for X to begin:</p>
             <div className='button-gap' />
-            <div className='home-x-container'>
-              <div
-                className={`x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 25
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(25)}
-              >
-                <p className='x-value'>25</p>
+            {creatorQuiz ? (
+              <div className='home-x-container'>
+                <Tooltip
+                  title={
+                    creatorQuiz ? (
+                      <>
+                        <p className='tooltip-text'>Disabled while creator</p>
+                        <p className='tooltip-text'>quiz is selected</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className='tooltip-text'>Reset quiz length to</p>
+                        <p className='tooltip-text'>the default of 10</p>
+                      </>
+                    )
+                  }
+                  enterDelay={400}
+                  placement='top'
+                >
+                  <div className='home-x-container-disabled'>
+                    <div className='x-container-disabled unselected'>
+                      <p className='x-value'>25</p>
+                    </div>
+                    <div className='x-container-disabled unselected'>
+                      <p className='x-value'>50</p>
+                    </div>
+                    <div className='x-container-disabled unselected'>
+                      <p className='x-value'>75</p>
+                    </div>
+                    <div className='x-container-disabled selected blue-glow'>
+                      <p className='x-value'>100</p>
+                    </div>
+                  </div>
+                </Tooltip>
+                <div
+                  className='gear-container'
+                  onClick={(e) => handleAdvanced(e)}
+                >
+                  <p className='gear-value'>
+                    <GearIcon className='gear-icon' />
+                  </p>
+                </div>
               </div>
-              <div
-                className={`x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 50
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(50)}
-              >
-                <p className='x-value'>50</p>
+            ) : (
+              <div className='home-x-container'>
+                <div
+                  className={`x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 25
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(25)}
+                >
+                  <p className='x-value'>25</p>
+                </div>
+                <div
+                  className={`x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 50
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(50)}
+                >
+                  <p className='x-value'>50</p>
+                </div>
+                <div
+                  className={`x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 75
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(75)}
+                >
+                  <p className='x-value'>75</p>
+                </div>
+                <div
+                  className={`x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 100
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(100)}
+                >
+                  <p className='x-value'>100</p>
+                </div>
+                <div
+                  className='gear-container'
+                  onClick={(e) => handleAdvanced(e)}
+                >
+                  <p className='gear-value'>
+                    <GearIcon className='gear-icon' />
+                  </p>
+                </div>
               </div>
-              <div
-                className={`x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 75
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(75)}
-              >
-                <p className='x-value'>75</p>
-              </div>
-              <div
-                className={`x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 100
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(100)}
-              >
-                <p className='x-value'>100</p>
-              </div>
-              <div
-                className='gear-container'
-                onClick={(e) => handleAdvanced(e)}
-              >
-                <p className='gear-value'>
-                  <GearIcon className='gear-icon' />
-                </p>
-              </div>
-            </div>
+            )}
             <div className='home-button-container'>
-              {numberOfCards === 0 || !enoughCards ? (
+              {rangeOfQuiz === 0 || !enoughCards ? (
                 <Tooltip
                   title={
                     <>

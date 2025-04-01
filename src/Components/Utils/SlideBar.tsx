@@ -11,7 +11,7 @@ const SlideBar: React.FC = () => {
     throw new Error('No Context available');
   }
   const {
-    numberOfCards,
+    rangeOfQuiz,
     currentCardGuesses,
     setCurrentCardGuesses,
     revealedRanks,
@@ -27,7 +27,7 @@ const SlideBar: React.FC = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const dashes = Array.from({ length: numberOfCards + 1 }, (_, i) => i);
+  const dashes = Array.from({ length: rangeOfQuiz + 1 }, (_, i) => i);
   const currentPlayer = players[currentPlayerIndex];
   const currentGuess = currentCardGuesses[currentPlayer.order] || 0;
 
@@ -69,13 +69,13 @@ const SlideBar: React.FC = () => {
     const rect = containerRef.current.getBoundingClientRect();
     const offsetY = clientY - rect.top;
     const rawPercentage = (1 - offsetY / rect.height) * 100;
-    let newGuess = Math.round((rawPercentage / 100) * numberOfCards);
+    let newGuess = Math.round((rawPercentage / 100) * rangeOfQuiz);
 
     if (newGuess === 0) {
       newGuess = 0;
     } else {
-      newGuess = numberOfCards + 1 - newGuess;
-      newGuess = Math.max(1, Math.min(numberOfCards, newGuess));
+      newGuess = rangeOfQuiz + 1 - newGuess;
+      newGuess = Math.max(1, Math.min(rangeOfQuiz, newGuess));
       if (rawPercentage < 0) {
         newGuess = 0;
       }
@@ -159,9 +159,7 @@ const SlideBar: React.FC = () => {
                     bottom:
                       num === 0
                         ? '0%'
-                        : `${
-                            ((numberOfCards + 1 - num) / numberOfCards) * 100
-                          }%`,
+                        : `${((rangeOfQuiz + 1 - num) / rangeOfQuiz) * 100}%`,
                   }}
                 >
                   <svg
@@ -216,7 +214,7 @@ const SlideBar: React.FC = () => {
                           num === 0
                             ? 1
                             : num === 1 ||
-                              num % (numberOfCards === 100 ? 10 : 5) === 0
+                              num % (rangeOfQuiz === 100 ? 10 : 5) === 0
                             ? 2
                             : num === currentGuess
                             ? 2
@@ -229,7 +227,7 @@ const SlideBar: React.FC = () => {
                     <span className='dash-label'>Ø</span>
                   ) : num === 1 ? (
                     <span className='dash-label'>1</span>
-                  ) : num % (numberOfCards === 100 ? 10 : 5) === 0 &&
+                  ) : num % (rangeOfQuiz === 100 ? 10 : 5) === 0 &&
                     num !== 100 ? (
                     <span className='dash-label'>{num}</span>
                   ) : null}
@@ -244,7 +242,7 @@ const SlideBar: React.FC = () => {
                 currentGuess === 0
                   ? '0%'
                   : `${
-                      ((numberOfCards + 1 - currentGuess) / numberOfCards) * 100
+                      ((rangeOfQuiz + 1 - currentGuess) / rangeOfQuiz) * 100
                     }%`,
             }}
             onPointerDown={handlePointerDown}

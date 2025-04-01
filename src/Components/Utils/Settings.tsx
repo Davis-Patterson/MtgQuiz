@@ -11,12 +11,14 @@ import {
   verticalListSortingStrategy,
   arrayMove,
 } from '@dnd-kit/sortable';
+import CardNumberSlider from 'Components/Utils/CardNumberSlider';
 import SortablePlayer from 'Components/Utils/SortablePlayer';
 import XIcon from 'Svgs/XIcon';
 import EraserIcon from 'Svgs/EraserIcon';
 import LinearProgress from '@mui/material/LinearProgress';
 import Tooltip from '@mui/material/Tooltip';
 import DropdownIcon from 'Svgs/DropdownIcon';
+import creatorQuizzes from 'Utilities/CGB-Quizzes.json';
 import 'Styles/Utils/Settings.css';
 
 const Settings: React.FC = () => {
@@ -30,30 +32,60 @@ const Settings: React.FC = () => {
     cardData,
     numberOfCards,
     setNumberOfCards,
+    rangeOfQuiz,
+    setRangeOfQuiz,
+    creatorQuiz,
+    setCreatorQuiz,
     showSettings,
     setShowSettings,
-    selectedRanks,
-    setSelectedRanks,
+    excludedRanks,
+    setExcludedRanks,
+    includedRanks,
+    setIncludedRanks,
+    setCreatorRanks,
+    creatorRanks,
     previousQuizRanks,
   } = appContext;
+
+  console.log('creatorRanks: ', creatorRanks);
 
   const [renderContainer, setRenderContainer] = useState(false);
 
   const [settingsButtonActive, setSettingsButtonActive] = useState(false);
-  const [knownCardsEraserActive, setKnownCardsEraserActive] = useState(false);
-  const [alreadySelectedRanks, setAlreadySelectedRanks] = useState<Set<number>>(
-    new Set(selectedRanks)
+  const [excludeCardsEraserActive, setExcludeCardsEraserActive] =
+    useState<boolean>(false);
+  const [settingsEraserActive, setSettingsEraserActive] =
+    useState<boolean>(false);
+  const [includeCardsEraserActive, setIncludeCardsEraserActive] =
+    useState<boolean>(false);
+  const [alreadyExcludedRanks, setAlreadyExcludedRanks] = useState<Set<number>>(
+    new Set(excludedRanks)
   );
-  const [toBeSelectedRanks, setToBeSelectedRanks] = useState<Set<number>>(
-    new Set(selectedRanks)
+  const [toBeExcludedRanks, setToBeExcludedRanks] = useState<Set<number>>(
+    new Set(excludedRanks)
+  );
+  const [alreadyIncludedRanks, setAlreadyIncludedRanks] = useState<Set<number>>(
+    new Set(includedRanks)
+  );
+  const [toBeIncludedRanks, setToBeIncludedRanks] = useState<Set<number>>(
+    new Set(includedRanks)
   );
   const [initialPlayers, setInitialPlayers] = useState<Player[]>([]);
+  const [initialRangeOfQuiz, setInitialRangeOfQuiz] = useState<number | null>(
+    null
+  );
   const [initialNumberOfCards, setInitialNumberOfCards] = useState<
     number | null
   >(null);
+  const [initialCreatorRanks, setInitialCreatorRanks] = useState<Set<number>>(
+    new Set()
+  );
 
   const [isLoading, setIsLoading] = useState(false);
-  const [showKnownCards, setShowKnownCards] = useState(false);
+  const [isCreatorLoading, setIsCreatorLoading] = useState(false);
+  const [showCardNumber, setShowCardNumber] = useState(false);
+  const [showExcludeCards, setShowExcludeCards] = useState(false);
+  const [showIncludeCards, setShowIncludeCards] = useState(false);
   const [showParticipants, setShowParticipants] = useState(false);
 
   const [newPlayerName, setNewPlayerName] = useState('');
@@ -61,33 +93,62 @@ const Settings: React.FC = () => {
   const settingsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const newSet = new Set(selectedRanks);
-    setAlreadySelectedRanks(newSet);
-    setToBeSelectedRanks(newSet);
-  }, [selectedRanks]);
+    const newSet = new Set(excludedRanks);
+    setAlreadyExcludedRanks(newSet);
+    setToBeExcludedRanks(newSet);
+  }, [excludedRanks]);
+
+  useEffect(() => {
+    const newSet = new Set(includedRanks);
+    setAlreadyIncludedRanks(newSet);
+    setToBeIncludedRanks(newSet);
+  }, [includedRanks]);
 
   useEffect(() => {
     if (showSettings) {
+      setInitialRangeOfQuiz(rangeOfQuiz);
       setInitialNumberOfCards(numberOfCards);
       setInitialPlayers([...players]);
-      const initialRanks = new Set(selectedRanks);
-      setAlreadySelectedRanks(initialRanks);
-      setToBeSelectedRanks(initialRanks);
+      const initialExcludedRanks = new Set(excludedRanks);
+      setAlreadyExcludedRanks(initialExcludedRanks);
+      setToBeExcludedRanks(initialExcludedRanks);
+      const initialIncludedRanks = new Set(includedRanks);
+      setAlreadyIncludedRanks(initialIncludedRanks);
+      setToBeIncludedRanks(initialIncludedRanks);
+      const initialCreatorRanks = new Set(creatorRanks);
+      setInitialCreatorRanks(initialCreatorRanks);
     }
   }, [showSettings]);
 
   const hasChanges = () => {
-    const xChanged = initialNumberOfCards !== numberOfCards;
+    const xChanged = initialRangeOfQuiz !== rangeOfQuiz;
+    const numberOfCardsChanged = initialNumberOfCards !== numberOfCards;
 
-    const rankChanged = !(
-      alreadySelectedRanks.size === toBeSelectedRanks.size &&
-      [...alreadySelectedRanks].every((rank) => toBeSelectedRanks.has(rank))
+    const excludedRanksChanged = !(
+      alreadyExcludedRanks.size === toBeExcludedRanks.size &&
+      [...alreadyExcludedRanks].every((rank) => toBeExcludedRanks.has(rank))
     );
 
+    const includedRanksChanged = !(
+      alreadyIncludedRanks.size === toBeIncludedRanks.size &&
+      [...alreadyIncludedRanks].every((rank) => toBeIncludedRanks.has(rank))
+    );
+
+    const creatorRanksChanged = !(
+      initialCreatorRanks.size === creatorRanks.size &&
+      [...initialCreatorRanks].every((rank) => creatorRanks.has(rank))
+    );
     const playersChanged =
       JSON.stringify(players) !== JSON.stringify(initialPlayers);
 
-    return xChanged || rankChanged || playersChanged;
+    return (
+      xChanged ||
+      numberOfCardsChanged ||
+      excludedRanksChanged ||
+      includedRanksChanged ||
+      creatorRanksChanged ||
+      playersChanged
+    );
   };
 
   useEffect(() => {
@@ -109,7 +170,9 @@ const Settings: React.FC = () => {
         !settingsContainerRef.current.contains(event.target as Node)
       ) {
         setShowSettings(false);
-        setShowKnownCards(false);
+        setShowCardNumber(false);
+        setShowExcludeCards(false);
+        setShowIncludeCards(false);
         setShowParticipants(false);
       }
     };
@@ -126,27 +189,83 @@ const Settings: React.FC = () => {
   }, [showSettings, setShowSettings]);
 
   useEffect(() => {
-    const validSelected = Array.from(toBeSelectedRanks).filter(
-      (rank) => rank <= numberOfCards
+    const validSelected = Array.from(toBeExcludedRanks).filter(
+      (rank) => rank <= rangeOfQuiz
     ).length;
-    const availableCards = numberOfCards - validSelected;
-    const hasEnoughCards = availableCards >= 10;
+    const availableCards = rangeOfQuiz - validSelected;
+    const hasEnoughCards =
+      availableCards >= numberOfCards &&
+      toBeIncludedRanks.size <= numberOfCards;
+    const hasOverlap = Array.from(toBeExcludedRanks).some((rank) =>
+      toBeIncludedRanks.has(rank)
+    );
 
     const hasValidChanges = hasChanges();
 
-    setSettingsButtonActive(hasValidChanges && hasEnoughCards);
-  }, [toBeSelectedRanks, numberOfCards, players, initialPlayers]);
+    setSettingsButtonActive(hasValidChanges && hasEnoughCards && !hasOverlap);
+  }, [
+    toBeExcludedRanks,
+    toBeIncludedRanks,
+    creatorRanks,
+    rangeOfQuiz,
+    players,
+    initialPlayers,
+    numberOfCards,
+  ]);
 
   useEffect(() => {
-    const hasSelectedCards = toBeSelectedRanks.size > 0;
+    const hasExcludedCards = toBeExcludedRanks.size > 0;
+    setExcludeCardsEraserActive(hasExcludedCards);
+  }, [toBeExcludedRanks]);
 
-    setKnownCardsEraserActive(hasSelectedCards);
-  }, [toBeSelectedRanks]);
+  useEffect(() => {
+    const hasIncludedCards =
+      toBeIncludedRanks.size > 0 || creatorRanks.size > 0;
+    setIncludeCardsEraserActive(hasIncludedCards);
+  }, [toBeIncludedRanks, creatorRanks]);
 
-  const handleRankSelection = (rank: number) => {
-    if (rank > numberOfCards) return;
+  useEffect(() => {
+    const areSettingsDefault =
+      rangeOfQuiz === 100 &&
+      numberOfCards === 10 &&
+      excludedRanks.size === 0 &&
+      includedRanks.size === 0 &&
+      creatorRanks.size === 0 &&
+      creatorQuiz === '' &&
+      players.length === 1 &&
+      players[0].name === '' &&
+      players[0].order === 1 &&
+      players[0].scores.length === 0;
 
-    setToBeSelectedRanks((prev) => {
+    setSettingsEraserActive(!areSettingsDefault);
+  }, [
+    rangeOfQuiz,
+    numberOfCards,
+    excludedRanks,
+    includedRanks,
+    creatorRanks,
+    creatorQuiz,
+    players,
+  ]);
+
+  const handleRankExclusionSelection = (rank: number) => {
+    if (rank > rangeOfQuiz) return;
+
+    setToBeExcludedRanks((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(rank)) {
+        newSet.delete(rank);
+      } else {
+        newSet.add(rank);
+      }
+      return newSet;
+    });
+  };
+
+  const handleRankInclusionSelection = (rank: number) => {
+    if (rank > rangeOfQuiz || creatorQuiz) return;
+
+    setToBeIncludedRanks((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(rank)) {
         newSet.delete(rank);
@@ -158,23 +277,33 @@ const Settings: React.FC = () => {
   };
 
   const handleCardNumber = (value: number) => {
-    if (numberOfCards === value) {
-      setNumberOfCards(0);
+    if (rangeOfQuiz === value) {
+      setRangeOfQuiz(0);
     } else {
-      setNumberOfCards(value);
+      setRangeOfQuiz(value);
     }
   };
 
-  const getRankClass = (rank: number) => {
+  const getExcludedRankClass = (rank: number) => {
     const classes = ['settings-rank'];
-    if (rank > numberOfCards) classes.push('unused');
-    if (toBeSelectedRanks.has(rank)) classes.push('selected orange-glow');
+    if (rank > rangeOfQuiz) classes.push('unused');
+    if (toBeExcludedRanks.has(rank)) classes.push('selected orange-glow');
+    return classes.join(' ');
+  };
+
+  const getIncludedRankClass = (rank: number) => {
+    const classes = ['settings-rank'];
+    if (creatorQuiz || rank > rangeOfQuiz) classes.push('unused');
+    if (toBeIncludedRanks.has(rank) && !creatorQuiz)
+      classes.push('selected orange-glow');
     return classes.join(' ');
   };
 
   const handleSubmit = () => {
     setIsLoading(true);
-    setSelectedRanks(toBeSelectedRanks);
+    setExcludedRanks(toBeExcludedRanks);
+    setIncludedRanks(toBeIncludedRanks);
+    setCreatorRanks(creatorRanks);
     setTimeout(() => {
       setShowSettings(false);
       setIsLoading(false);
@@ -186,43 +315,138 @@ const Settings: React.FC = () => {
     event.stopPropagation();
 
     setShowSettings(false);
-    setShowKnownCards(false);
+    setShowCardNumber(false);
+    setShowExcludeCards(false);
+    setShowIncludeCards(false);
     setShowParticipants(false);
   };
 
-  const handleShowKnownCards = () => {
-    if (!showKnownCards) {
-      setShowKnownCards(true);
+  const handleShowCardNumber = () => {
+    if (!showCardNumber) {
+      setShowCardNumber(true);
+      setShowExcludeCards(false);
       setShowParticipants(false);
+      setShowIncludeCards(false);
     } else {
-      setShowKnownCards(false);
+      setShowCardNumber(false);
+    }
+  };
+
+  const handleShowExcludeCards = () => {
+    if (!showExcludeCards) {
+      setShowExcludeCards(true);
+      setShowParticipants(false);
+      setShowIncludeCards(false);
+      setShowCardNumber(false);
+    } else {
+      setShowExcludeCards(false);
+    }
+  };
+
+  const handleShowIncludeCards = () => {
+    if (!showIncludeCards) {
+      setShowIncludeCards(true);
+      setShowExcludeCards(false);
+      setShowParticipants(false);
+      setShowCardNumber(false);
+    } else {
+      setShowIncludeCards(false);
     }
   };
 
   const handleShowParticipants = () => {
     if (!showParticipants) {
       setShowParticipants(true);
-      setShowKnownCards(false);
+      setShowExcludeCards(false);
+      setShowIncludeCards(false);
+      setShowCardNumber(false);
     } else {
       setShowParticipants(false);
     }
   };
 
-  const handleErase = (event: React.MouseEvent) => {
+  const handleSettingsErase = () => {
+    if (creatorRanks.size > 0) {
+      setIsCreatorLoading(true);
+      setTimeout(() => {
+        setIsCreatorLoading(false);
+      }, 500);
+    }
+    setRangeOfQuiz(100);
+    setNumberOfCards(10);
+    setExcludedRanks(new Set());
+    setIncludedRanks(new Set());
+    setCreatorRanks(new Set());
+    setCreatorQuiz('');
+    setPlayers([
+      {
+        id: uuidv4(),
+        order: 1,
+        name: '',
+        scores: [],
+      },
+    ]);
+    setToBeExcludedRanks(new Set());
+    setToBeIncludedRanks(new Set());
+  };
+
+  const handleExclusionErase = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (toBeSelectedRanks.size > 0) {
-      setToBeSelectedRanks(new Set());
+    if (toBeExcludedRanks.size > 0) {
+      setToBeExcludedRanks(new Set());
+    }
+  };
+
+  const handleInclusionErase = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (creatorRanks.size > 0) {
+      setIsCreatorLoading(true);
+      setTimeout(() => {
+        setIsCreatorLoading(false);
+      }, 500);
+    }
+
+    if (toBeIncludedRanks.size > 0 || creatorRanks.size > 0) {
+      setToBeIncludedRanks(new Set());
+      setCreatorRanks(new Set());
+      setCreatorQuiz('');
     }
   };
 
   const handleExcludePreviousQuiz = () => {
-    setToBeSelectedRanks((prev) => {
+    setToBeExcludedRanks((prev) => {
       const mergedRanks = new Set(prev);
       previousQuizRanks.forEach((rank) => mergedRanks.add(rank));
       return mergedRanks;
     });
+  };
+
+  const handleCreatorQuiz = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIsCreatorLoading(true);
+    const selectedCreator = e.target.value;
+    setCreatorQuiz(selectedCreator);
+
+    if (selectedCreator) {
+      const creator = creatorQuizzes.find((c) => c.creator === selectedCreator);
+      if (creator) {
+        setCreatorRanks(new Set(creator.cards));
+        setToBeIncludedRanks(new Set());
+        setRangeOfQuiz(100);
+        setNumberOfCards(10);
+        setTimeout(() => {
+          setIsCreatorLoading(false);
+        }, 500);
+      }
+    } else {
+      setCreatorRanks(new Set());
+      setTimeout(() => {
+        setIsCreatorLoading(false);
+      }, 500);
+    }
   };
 
   const addPlayer = () => {
@@ -274,6 +498,26 @@ const Settings: React.FC = () => {
             }`}
           >
             <div className='portal-top-toggles'>
+              {settingsEraserActive ? (
+                <Tooltip
+                  title={
+                    <>
+                      <p className='tooltip-text'>Reset settings</p>
+                    </>
+                  }
+                  enterDelay={400}
+                  placement='right'
+                >
+                  <EraserIcon
+                    className='eraser-icon'
+                    onClick={
+                      settingsEraserActive ? handleSettingsErase : undefined
+                    }
+                  />
+                </Tooltip>
+              ) : (
+                <EraserIcon className='eraser-icon-disabled' />
+              )}
               <XIcon className='x-icon' onClick={(e) => handleClose(e)} />
             </div>
             <header className='settings-header'>
@@ -281,72 +525,100 @@ const Settings: React.FC = () => {
             </header>
             <p className='settings-header-subtext'>Select a value for X</p>
             <p className='settings-header-sub-subtext'>
-              This value represents the range of ranks in your quiz
+              The range of cards from which your quiz will be drawn from
             </p>
-            <div className='settings-x-content'>
-              <div
-                className={`settings-x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 25
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(25)}
+            {creatorQuiz ? (
+              <Tooltip
+                title={
+                  <>
+                    <p className='tooltip-text'>Disabled while creator</p>
+                    <p className='tooltip-text'>quiz is selected</p>
+                  </>
+                }
+                enterDelay={400}
+                placement='top'
               >
-                <p className='settings-x-value'>25</p>
+                <div className='settings-x-content disabled'>
+                  <div className='settings-x-container-disabled unselected'>
+                    <p className='settings-x-value'>25</p>
+                  </div>
+                  <div className='settings-x-container-disabled unselected'>
+                    <p className='settings-x-value'>50</p>
+                  </div>
+                  <div className='settings-x-container-disabled unselected'>
+                    <p className='settings-x-value'>75</p>
+                  </div>
+                  <div className='settings-x-container-disabled selected blue-glow'>
+                    <p className='settings-x-value'>100</p>
+                  </div>
+                </div>
+              </Tooltip>
+            ) : (
+              <div className='settings-x-content'>
+                <div
+                  className={`settings-x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 25
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(25)}
+                >
+                  <p className='settings-x-value'>25</p>
+                </div>
+                <div
+                  className={`settings-x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 50
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(50)}
+                >
+                  <p className='settings-x-value'>50</p>
+                </div>
+                <div
+                  className={`settings-x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 75
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(75)}
+                >
+                  <p className='settings-x-value'>75</p>
+                </div>
+                <div
+                  className={`settings-x-container ${
+                    rangeOfQuiz === 0
+                      ? ''
+                      : rangeOfQuiz === 100
+                      ? 'selected blue-glow'
+                      : 'unselected'
+                  }`}
+                  onClick={() => handleCardNumber(100)}
+                >
+                  <p className='settings-x-value'>100</p>
+                </div>
               </div>
-              <div
-                className={`settings-x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 50
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(50)}
-              >
-                <p className='settings-x-value'>50</p>
-              </div>
-              <div
-                className={`settings-x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 75
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(75)}
-              >
-                <p className='settings-x-value'>75</p>
-              </div>
-              <div
-                className={`settings-x-container ${
-                  numberOfCards === 0
-                    ? ''
-                    : numberOfCards === 100
-                    ? 'selected blue-glow'
-                    : 'unselected'
-                }`}
-                onClick={() => handleCardNumber(100)}
-              >
-                <p className='settings-x-value'>100</p>
-              </div>
-            </div>
+            )}
 
             <div className='settings-dropdowns'>
               <div className='settings-dropdown'>
                 <div
                   className='settings-dropdown-header'
-                  onClick={() => handleShowKnownCards()}
+                  onClick={() => handleShowCardNumber()}
                 >
                   <div className='settings-dropdown-header-text-container'>
                     <p className='settings-dropdown-header-text'>
-                      Select rankings for cards you already know
+                      Adjust the length of your quiz
                     </p>
                   </div>
                   <div className='settings-header-dropdown-icon'>
-                    {showKnownCards ? (
+                    {showCardNumber ? (
                       <DropdownIcon className='down-icon' />
                     ) : (
                       <DropdownIcon className='up-icon' />
@@ -354,14 +626,44 @@ const Settings: React.FC = () => {
                   </div>
                 </div>
 
-                {showKnownCards && (
+                {showCardNumber && (
+                  <div className='settings-dropdown-contents'>
+                    <p className='settings-dropdown-header-subtext'>
+                      Modify the number of cards in your quiz
+                    </p>
+                    <CardNumberSlider />
+                  </div>
+                )}
+              </div>
+
+              <div className='settings-dropdown'>
+                <div
+                  className='settings-dropdown-header'
+                  onClick={() => handleShowExcludeCards()}
+                >
+                  <div className='settings-dropdown-header-text-container'>
+                    <p className='settings-dropdown-header-text'>
+                      Select rankings to be excluded from quiz
+                    </p>
+                  </div>
+                  <div className='settings-header-dropdown-icon'>
+                    {showExcludeCards ? (
+                      <DropdownIcon className='down-icon' />
+                    ) : (
+                      <DropdownIcon className='up-icon' />
+                    )}
+                  </div>
+                </div>
+
+                {showExcludeCards && (
                   <div className='settings-dropdown-contents'>
                     <div className='settings-known-cards-header '>
                       <Tooltip
                         title={
                           <>
                             <p className='tooltip-text'>Select cards seen in</p>
-                            <p className='tooltip-text'>previous quiz</p>
+                            <p className='tooltip-text'>previous quiz, when</p>
+                            <p className='tooltip-text'>applicable</p>
                           </>
                         }
                         enterDelay={400}
@@ -389,12 +691,14 @@ const Settings: React.FC = () => {
                         <span>
                           <button
                             className='eraser-button'
-                            disabled={!knownCardsEraserActive}
+                            disabled={!excludeCardsEraserActive}
                             onClick={
-                              knownCardsEraserActive ? handleErase : undefined
+                              excludeCardsEraserActive
+                                ? handleExclusionErase
+                                : undefined
                             }
                           >
-                            <EraserIcon className='eraser-icon' />
+                            <EraserIcon className='eraser-button-icon' />
                           </button>
                         </span>
                       </Tooltip>
@@ -403,18 +707,181 @@ const Settings: React.FC = () => {
                       Ranks selected here will be excluded from the quiz
                     </p>
                     <div className='settings-known-cards-grid'>
-                      {cardData.map((card) => (
-                        <div key={card.rank} className='grid-circle-container'>
-                          <div
-                            className={getRankClass(card.rank!)}
-                            onClick={() => handleRankSelection(card.rank!)}
+                      {cardData.map((card) =>
+                        creatorQuiz ? (
+                          <Tooltip
+                            key={card.rank}
+                            title={
+                              <>
+                                <p className='tooltip-text'>
+                                  Disabled while creator
+                                </p>
+                                <p className='tooltip-text'>quiz is selected</p>
+                              </>
+                            }
+                            enterDelay={400}
+                            placement='top'
                           >
-                            <span className='settings-rank-value'>
-                              {card.rank}
-                            </span>
+                            <div className='grid-circle-container'>
+                              <div className='settings-rank unused'>
+                                <span className='settings-rank-value'>
+                                  {card.rank}
+                                </span>
+                              </div>
+                            </div>
+                          </Tooltip>
+                        ) : (
+                          <div
+                            key={card.rank}
+                            className='grid-circle-container'
+                          >
+                            <div
+                              className={getExcludedRankClass(card.rank!)}
+                              onClick={() =>
+                                handleRankExclusionSelection(card.rank!)
+                              }
+                            >
+                              <span className='settings-rank-value'>
+                                {card.rank}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className='settings-dropdown'>
+                <div
+                  className='settings-dropdown-header'
+                  onClick={() => handleShowIncludeCards()}
+                >
+                  <div className='settings-dropdown-header-text-container'>
+                    <p className='settings-dropdown-header-text'>
+                      Select rankings to be included in the quiz
+                    </p>
+                  </div>
+                  <div className='settings-header-dropdown-icon'>
+                    {showIncludeCards ? (
+                      <DropdownIcon className='down-icon' />
+                    ) : (
+                      <DropdownIcon className='up-icon' />
+                    )}
+                  </div>
+                </div>
+
+                {showIncludeCards && (
+                  <div className='settings-dropdown-contents'>
+                    <div className='settings-known-cards-header '>
+                      <Tooltip
+                        title={
+                          <>
+                            <p className='tooltip-text'>
+                              Recreate past quizzes
+                            </p>
+                            <p className='tooltip-text'>taken by creators</p>
+                          </>
+                        }
+                        enterDelay={400}
+                        placement='top'
+                      >
+                        {isCreatorLoading ? (
+                          <div className='creator-dropdown'>
+                            <LinearProgress
+                              className='linear-progress'
+                              color='inherit'
+                            />
+                          </div>
+                        ) : (
+                          <select
+                            className='creator-dropdown'
+                            value={creatorQuiz}
+                            onChange={(e) => handleCreatorQuiz(e)}
+                          >
+                            <option value=''>
+                              {toBeIncludedRanks.size > 0
+                                ? 'Custom'
+                                : 'Select a creator quiz'}
+                            </option>
+                            {creatorQuizzes.map((quiz) => (
+                              <option key={quiz.creator} value={quiz.creator}>
+                                {quiz.creator}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </Tooltip>
+                      <Tooltip
+                        title={
+                          <>
+                            <p className='tooltip-text'>Clear selections</p>
+                          </>
+                        }
+                        enterDelay={400}
+                        placement='top'
+                      >
+                        <span>
+                          <button
+                            className='eraser-button'
+                            disabled={!includeCardsEraserActive}
+                            onClick={
+                              includeCardsEraserActive
+                                ? handleInclusionErase
+                                : undefined
+                            }
+                          >
+                            <EraserIcon className='eraser-button-icon' />
+                          </button>
+                        </span>
+                      </Tooltip>
+                    </div>
+                    <p className='settings-dropdown-header-subtext'>
+                      Ranks selected here will be included in the quiz
+                    </p>
+                    <div className='settings-known-cards-grid'>
+                      {cardData.map((card) =>
+                        creatorQuiz ? (
+                          <Tooltip
+                            key={card.rank}
+                            title={
+                              <>
+                                <p className='tooltip-text'>
+                                  Disabled while creator
+                                </p>
+                                <p className='tooltip-text'>quiz is selected</p>
+                              </>
+                            }
+                            enterDelay={400}
+                            placement='top'
+                          >
+                            <div className='grid-circle-container'>
+                              <div className='settings-rank unused'>
+                                <span className='settings-rank-value'>
+                                  {card.rank}
+                                </span>
+                              </div>
+                            </div>
+                          </Tooltip>
+                        ) : (
+                          <div
+                            key={card.rank}
+                            className='grid-circle-container'
+                          >
+                            <div
+                              className={getIncludedRankClass(card.rank!)}
+                              onClick={() =>
+                                handleRankInclusionSelection(card.rank!)
+                              }
+                            >
+                              <span className='settings-rank-value'>
+                                {card.rank}
+                              </span>
+                            </div>
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
                 )}
@@ -503,6 +970,8 @@ const Settings: React.FC = () => {
             >
               {isLoading ? (
                 <LinearProgress className='linear-progress' color='inherit' />
+              ) : creatorQuiz ? (
+                `Save ${creatorQuiz} Settings`
               ) : (
                 'Save Settings'
               )}

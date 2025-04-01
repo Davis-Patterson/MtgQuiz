@@ -1,0 +1,188 @@
+.settings-card-number-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: auto;
+  padding: 0px 10px 10px 10px;
+  opacity: 1;
+}
+.settings-card-number-container.disabled {
+  opacity: 0.4;
+}
+
+.settings-card-number-display-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.settings-slider-value-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px 8px 0px;
+  padding: 0px 12px;
+  border: 1px solid var(--clr-icon);
+  background-color: var(--clr-screen);
+  width: 100px;
+  height: 40px;
+  border-radius: 8px;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.4em;
+  color: var(--clr-accent-orange);
+  text-align: center;
+}
+
+.settings-slider-value {
+  margin: 2px 0px 0px 0px;
+}
+
+.reset-icon-placeholder {
+  width: 30px;
+  height: 38px;
+}
+
+.reset-icon-container,
+.reset-icon-container-inactive {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 1;
+}
+.reset-icon-container-inactive {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.reset-icon,
+.reset-icon-inactive {
+  fill: var(--clr-icon);
+  opacity: 1;
+  width: 18px;
+  height: 18px;
+  transition: all 0.15s ease-in-out;
+}
+.reset-icon-container:hover .reset-icon {
+  transform: rotate(-42deg);
+  fill: var(--clr-text-grey);
+}
+.reset-icon-container:active .reset-icon {
+  scale: 90%;
+  fill: var(--clr-text-grey);
+}
+
+.settings-slider-wrapper {
+  position: relative;
+  width: 350px;
+  height: 18px;
+  cursor: pointer;
+  margin: 18px 0px 10px 0px;
+}
+.settings-slider-wrapper.inactive {
+  cursor: default;
+}
+
+.settings-dash-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.settings-dash-item {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  min-width: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  pointer-events: none;
+}
+
+.settings-dash-label {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  transform: translateX(-50%);
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.6em;
+  color: var(--clr-text-grey);
+  white-space: nowrap;
+  transform: translateX(-20%);
+  pointer-events: none;
+  user-select: none;
+}
+.settings-dash-label.last {
+  left: -4px;
+}
+
+.settings-dash-svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 18px;
+  stroke: var(--clr-icon);
+}
+.settings-dash-svg.highlight-dash {
+  stroke: var(--clr-icon);
+}
+.settings-dash-svg.current-dash {
+  stroke: var(--clr-accent-orange);
+}
+.settings-dash-svg line {
+  stroke-width: 1;
+}
+.settings-dash-svg.highlight-dash line {
+  stroke-width: 1.5;
+}
+.settings-dash-svg.current-dash line {
+  stroke: var(--clr-accent-orange);
+  stroke-width: 2;
+}
+
+.settings-slider-indicator {
+  position: absolute;
+  cursor: grab;
+  z-index: 10;
+  top: -24px;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.settings-slider-indicator:active {
+  cursor: grabbing;
+}
+.settings-slider-indicator.disabled {
+  cursor: default;
+}
+
+.card-number-pin-icon-orange {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  fill: var(--clr-accent-orange);
+  width: 20px;
+  height: 26px;
+  transition: transform 0.2s, fill 0.2s;
+}
+.settings-slider-indicator:hover .card-number-pin-icon-orange {
+  fill: var(--clr-accent-orange-hover);
+  transform: scale(1.1);
+}
+.settings-slider-indicator.disabled:hover
+  .card-number-pin-icon-orange.disabled {
+  fill: var(--clr-accent-orange);
+  transform: scale(1);
+}

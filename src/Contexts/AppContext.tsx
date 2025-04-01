@@ -58,13 +58,21 @@ interface AppContextType {
   setSelectedCards: React.Dispatch<React.SetStateAction<Card[]>>;
   numberOfCards: number;
   setNumberOfCards: React.Dispatch<React.SetStateAction<number>>;
+  rangeOfQuiz: number;
+  setRangeOfQuiz: React.Dispatch<React.SetStateAction<number>>;
+  creatorQuiz: string;
+  setCreatorQuiz: React.Dispatch<React.SetStateAction<string>>;
 
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
   revealedRanks: RevealedCard[];
   setRevealedRanks: React.Dispatch<React.SetStateAction<RevealedCard[]>>;
-  selectedRanks: Set<number>;
-  setSelectedRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
+  excludedRanks: Set<number>;
+  setExcludedRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
+  includedRanks: Set<number>;
+  setIncludedRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
+  creatorRanks: Set<number>;
+  setCreatorRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
   previousQuizRanks: Set<number>;
   setPreviousQuizRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
 
@@ -105,11 +113,15 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   const [cardData, setCardData] = useState<Card[]>(SaltData);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
-  const [numberOfCards, setNumberOfCards] = useState<number>(0);
+  const [numberOfCards, setNumberOfCards] = useState<number>(10);
+  const [rangeOfQuiz, setRangeOfQuiz] = useState<number>(100);
+  const [creatorQuiz, setCreatorQuiz] = useState<string>('');
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [revealedRanks, setRevealedRanks] = useState<RevealedCard[]>([]);
-  const [selectedRanks, setSelectedRanks] = useState<Set<number>>(new Set());
+  const [excludedRanks, setExcludedRanks] = useState<Set<number>>(new Set());
+  const [includedRanks, setIncludedRanks] = useState<Set<number>>(new Set());
+  const [creatorRanks, setCreatorRanks] = useState<Set<number>>(new Set());
   const [previousQuizRanks, setPreviousQuizRanks] = useState<Set<number>>(
     new Set()
   );
@@ -138,13 +150,21 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setSelectedCards,
         numberOfCards,
         setNumberOfCards,
+        rangeOfQuiz,
+        setRangeOfQuiz,
+        creatorQuiz,
+        setCreatorQuiz,
 
         currentIndex,
         setCurrentIndex,
         revealedRanks,
         setRevealedRanks,
-        selectedRanks,
-        setSelectedRanks,
+        excludedRanks,
+        setExcludedRanks,
+        includedRanks,
+        setIncludedRanks,
+        creatorRanks,
+        setCreatorRanks,
         previousQuizRanks,
         setPreviousQuizRanks,
 

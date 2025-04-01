@@ -26,7 +26,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 450px;
-  max-height: 90vh;
+  max-height: 95vh;
   z-index: 1001;
   transition: opacity 0.5s ease-in;
   position: relative;
@@ -67,6 +67,32 @@
   width: 100%;
   justify-content: space-between;
   margin: 0px 0px 10px 0px;
+}
+
+.eraser-icon,
+.eraser-icon-disabled {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 22px;
+  height: 22px;
+  fill: var(--clr-break);
+  transition: all 0.15s ease-in-out;
+}
+.eraser-icon {
+  opacity: 1;
+  cursor: pointer;
+}
+.eraser-icon-disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.eraser-icon:hover {
+  fill: var(--clr-accent-blue);
+}
+.eraser-icon:active {
+  fill: var(--clr-accent-blue-hover);
+  transform: scale(95%);
 }
 
 .settings-header {
@@ -118,8 +144,12 @@
   gap: 8px;
   margin: 0px 0px 20px 0px;
 }
+.settings-x-content.disabled {
+  opacity: 0.4;
+}
 
-.settings-x-container {
+.settings-x-container,
+.settings-x-container-disabled {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,11 +162,16 @@
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 }
-.settings-x-container.unselected {
+.settings-x-container-disabled {
+  cursor: default;
+}
+.settings-x-container.unselected,
+.settings-x-container-disabled.unselected {
   border: 1px solid var(--clr-divider);
   background-color: var(--clr-screen);
 }
-.settings-x-container.selected {
+.settings-x-container.selected,
+.settings-x-container-disabled.selected {
   border: 1px solid var(--clr-accent-blue);
   background-color: var(--clr-accent-blue);
 }
@@ -144,7 +179,8 @@
   border: 1px solid var(--clr-accent-blue-hover);
   background-color: var(--clr-accent-blue-hover);
 }
-.settings-x-container.unselected {
+.settings-x-container.unselected,
+.settings-x-container-disabled.unselected {
   opacity: 0.3;
 }
 
@@ -157,6 +193,7 @@
   line-height: 1;
   color: var(--clr-light);
   margin: 4px 0px 0px 2px;
+  user-select: none;
 }
 
 .settings-dropdowns {
@@ -212,6 +249,7 @@
   color: var(--clr-dark);
   width: 100%;
   text-align: left;
+  user-select: none;
 }
 
 .settings-header-dropdown-icon {
@@ -261,6 +299,7 @@
   width: 100%;
   text-align: center;
   margin: 5px 0px 0px 0px;
+  user-select: none;
 }
 
 .settings-known-cards-header {
@@ -311,7 +350,7 @@
   cursor: default;
 }
 
-.eraser-icon {
+.eraser-button-icon {
   width: 18px;
   height: 18px;
   fill: var(--clr-platinum);
@@ -374,6 +413,60 @@
   padding: 0;
   pointer-events: none;
   margin: 2px 0px 0px 0px;
+  user-select: none;
+}
+
+.creator-dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.creator-dropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  background: var(--clr-accent-blue);
+  color: var(--clr-light);
+  border: none;
+  border-radius: 4px;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  background-color: var(--clr-accent-blue);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1em;
+  height: 30px;
+  width: 250px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  user-select: none;
+}
+
+.creator-dropdown:hover {
+  background-color: var(--clr-accent-blue-hover);
+}
+
+.creator-dropdown:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--clr-accent-blue);
+}
+
+.creator-dropdown option {
+  background: var(--clr-platinum);
+  color: var(--clr-dark);
+  padding: 0.5rem;
+}
+
+@-moz-document url-prefix() {
+  .creator-dropdown {
+    padding-right: 1rem;
+    background-image: none;
+  }
 }
 
 .settings-add-participants {

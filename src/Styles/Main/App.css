@@ -81,6 +81,7 @@
   align-items: center;
   text-align: center;
   color: var(--clr-light);
+  user-select: none;
 }
 .guess-button {
   background-color: var(--clr-accent-orange);

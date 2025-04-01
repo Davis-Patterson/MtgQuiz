@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext, RevealedCard } from 'Contexts/AppContext';
+import { AppContext, Card, RevealedCard } from 'Contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import UserScore from 'Components/Utils/UserScore';
 import CardDisplay from 'Components/Utils/CardDisplay';
@@ -22,10 +22,14 @@ const Quiz: React.FC = () => {
     selectedCards,
     setSelectedCards,
     numberOfCards,
+    setNumberOfCards,
+    rangeOfQuiz,
     currentIndex,
     setCurrentIndex,
     setRevealedRanks,
-    selectedRanks,
+    excludedRanks,
+    includedRanks,
+    creatorRanks,
     setPreviousQuizRanks,
     finished,
     setFinished,
@@ -59,15 +63,62 @@ const Quiz: React.FC = () => {
 
   useEffect(() => {
     if (!started) {
-      const validCards = cardData.filter(
-        (card) =>
-          card.rank !== null &&
-          card.salt_score !== null &&
-          !selectedRanks.has(card.rank) &&
-          card.rank <= numberOfCards
-      );
+      let selected: Card[] = [];
+      let finalNumberOfCards = numberOfCards;
 
-      const initialRevealed = Array.from(selectedRanks)
+      if (creatorRanks.size > 0) {
+        const creatorCards = Array.from(creatorRanks)
+          .map((rank) => cardData.find((c) => c.rank === rank))
+          .filter((card): card is Card => !!card);
+
+        selected = creatorCards;
+        finalNumberOfCards = creatorCards.length;
+        setNumberOfCards(creatorCards.length);
+      } else if (includedRanks.size > 0) {
+        const validIncludedCards = Array.from(includedRanks)
+          .map((rank) =>
+            cardData.find(
+              (c) =>
+                c.rank === rank &&
+                !excludedRanks.has(rank) &&
+                c.rank <= rangeOfQuiz
+            )
+          )
+          .filter((card): card is Card => !!card);
+
+        const shuffledIncluded = shuffleCards(validIncludedCards);
+        const neededCards = finalNumberOfCards - shuffledIncluded.length;
+
+        if (neededCards > 0) {
+          const remainingValidCards = cardData.filter(
+            (card) =>
+              card.rank !== null &&
+              card.salt_score !== null &&
+              !excludedRanks.has(card.rank) &&
+              !includedRanks.has(card.rank) &&
+              card.rank <= rangeOfQuiz
+          );
+
+          const additionalCards = shuffleCards(remainingValidCards).slice(
+            0,
+            neededCards
+          );
+          selected = shuffleCards([...shuffledIncluded, ...additionalCards]);
+        } else {
+          selected = shuffledIncluded.slice(0, finalNumberOfCards);
+        }
+      } else {
+        const validCards = cardData.filter(
+          (card) =>
+            card.rank !== null &&
+            card.salt_score !== null &&
+            !excludedRanks.has(card.rank) &&
+            card.rank <= rangeOfQuiz
+        );
+        selected = shuffleCards(validCards).slice(0, finalNumberOfCards);
+      }
+
+      const initialRevealed = Array.from(excludedRanks)
         .map((rank) => {
           const card = cardData.find((c) => c.rank === rank);
           return card
@@ -80,11 +131,8 @@ const Quiz: React.FC = () => {
         })
         .filter(Boolean) as RevealedCard[];
 
-      const shuffled = shuffleCards(validCards);
-      const selected = shuffled.slice(0, 10);
-
-      setSelectedCards(selected);
       setRevealedRanks(initialRevealed);
+      setSelectedCards(selected);
       setCurrentIndex(0);
       setCurrentCardGuesses({});
       setFinished(false);
@@ -93,11 +141,15 @@ const Quiz: React.FC = () => {
   }, [
     started,
     cardData,
-    numberOfCards,
-    selectedRanks,
+    rangeOfQuiz,
+    excludedRanks,
+    includedRanks,
+    creatorRanks,
     setRevealedRanks,
     setSelectedCards,
     setStarted,
+    numberOfCards,
+    setNumberOfCards,
   ]);
 
   useEffect(() => {
@@ -152,13 +204,13 @@ const Quiz: React.FC = () => {
     if (
       typeof currentGuess === 'number' &&
       currentGuess > 0 &&
-      currentGuess <= numberOfCards
+      currentGuess <= rangeOfQuiz
     ) {
       setGuessButtonActive(true);
     } else {
       setGuessButtonActive(false);
     }
-  }, [currentCardGuesses, currentPlayer.order, numberOfCards]);
+  }, [currentCardGuesses, currentPlayer.order, rangeOfQuiz]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -173,8 +225,8 @@ const Quiz: React.FC = () => {
       const currentCard = selectedCards[currentIndex];
       const cardRank = currentCard.rank as number;
 
-      setPlayers((prevPlayers) =>
-        prevPlayers.map((player) => {
+      setPlayers((prevPlayers) => {
+        const updatedPlayers = prevPlayers.map((player) => {
           const guess = currentCardGuesses[player.order];
           return {
             ...player,
@@ -187,8 +239,24 @@ const Quiz: React.FC = () => {
               },
             ],
           };
-        })
-      );
+        });
+
+        // Check if all players have guessed AFTER updating scores
+        const allGuessed = updatedPlayers.every(
+          (player) => player.scores.length > currentIndex
+        );
+
+        if (allGuessed) {
+          const revealedCard = {
+            rank: cardRank,
+            name: currentCard.card.front.name,
+            imageUrl: currentCard.card.front.imgs.normal,
+          };
+          setRevealedRanks((prev) => [...prev, revealedCard]);
+        }
+
+        return updatedPlayers;
+      });
 
       setIsSubmitted(true);
       setCanScroll(false);
@@ -208,12 +276,10 @@ const Quiz: React.FC = () => {
         setCurrentIndex(currentIndex + 1);
       }, 300);
     } else {
-      const quizRanks = new Set(selectedRanks);
-      selectedCards.forEach((card) => {
-        if (card.rank !== null) {
-          quizRanks.add(card.rank);
-        }
-      });
+      const quizRanks = new Set([
+        ...excludedRanks,
+        ...(selectedCards.map((card) => card.rank).filter(Boolean) as number[]),
+      ]);
       setPreviousQuizRanks(quizRanks);
       setFinished(true);
     }
@@ -299,7 +365,7 @@ const Quiz: React.FC = () => {
           <SlideBar />
           <div className='quiz-content'>
             <p className='card-count'>
-              Card {currentIndex + 1} of {selectedCards.length}
+              Card {currentIndex + 1} of {numberOfCards}
             </p>
             {players.length > 1 &&
               (allGuessedForCurrentRound ? (
@@ -356,7 +422,7 @@ const Quiz: React.FC = () => {
                       onClick={handleNext}
                       className='next-button blue-glow'
                     >
-                      {currentIndex < selectedCards.length - 1
+                      {currentIndex < numberOfCards - 1
                         ? 'Next Card'
                         : 'View Results'}
                     </button>
