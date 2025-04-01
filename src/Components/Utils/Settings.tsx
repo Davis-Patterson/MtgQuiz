@@ -235,7 +235,9 @@ const Settings: React.FC = () => {
       players.length === 1 &&
       players[0].name === '' &&
       players[0].order === 1 &&
-      players[0].scores.length === 0;
+      players[0].scores.length === 0 &&
+      toBeExcludedRanks.size === 0 &&
+      toBeIncludedRanks.size === 0;
 
     setSettingsEraserActive(!areSettingsDefault);
   }, [
@@ -246,6 +248,8 @@ const Settings: React.FC = () => {
     creatorRanks,
     creatorQuiz,
     players,
+    toBeExcludedRanks,
+    toBeIncludedRanks,
   ]);
 
   const handleRankExclusionSelection = (rank: number) => {
@@ -372,6 +376,7 @@ const Settings: React.FC = () => {
         setIsCreatorLoading(false);
       }, 500);
     }
+
     setRangeOfQuiz(100);
     setNumberOfCards(10);
     setExcludedRanks(new Set());
@@ -386,6 +391,7 @@ const Settings: React.FC = () => {
         scores: [],
       },
     ]);
+
     setToBeExcludedRanks(new Set());
     setToBeIncludedRanks(new Set());
   };
