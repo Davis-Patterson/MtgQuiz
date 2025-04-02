@@ -34,13 +34,13 @@
 
 .score-label {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 2.2em;
+  font-size: 1.8em;
   color: var(--clr-text);
 }
 
 .score-value {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 2.2em;
+  font-size: 2em;
   font-weight: bold;
   color: var(--clr-accent);
 }
@@ -285,6 +285,10 @@
 }
 
 @media screen and (max-height: 780px) {
+  .user-score-score-container {
+    display: flex;
+    gap: 5px;
+  }
   .score-label {
     font-size: 1em;
   }
