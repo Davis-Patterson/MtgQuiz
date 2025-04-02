@@ -47,8 +47,6 @@ const Settings: React.FC = () => {
     previousQuizRanks,
   } = appContext;
 
-  console.log('creatorRanks: ', creatorRanks);
-
   const [renderContainer, setRenderContainer] = useState(false);
 
   const [settingsButtonActive, setSettingsButtonActive] = useState(false);
