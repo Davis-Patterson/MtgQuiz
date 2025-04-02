@@ -108,9 +108,7 @@ const Home: React.FC = () => {
               >
                 CovertGoSalt
               </a>
-              , where he quizzes other creators on the 100 saltiest cards. His
-              series inspired the creation of this web app so that anyone can
-              try it out for themselves. Now featured in the latest episode!
+              . Now featured in the latest episode!
             </p>
             <p className='home-text'>
               SaltQuiz features MTG cards from the 2024{' '}
