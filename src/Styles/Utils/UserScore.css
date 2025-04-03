@@ -154,10 +154,11 @@
   -webkit-line-clamp: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 2px 0px 4px 0px;
+  margin: 2px 0px 2px 0px;
 }
 
-.player-total {
+.player-total,
+.multi-player-total {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.2em;
   line-height: 1;
@@ -243,8 +244,9 @@
   .player-name {
     font-size: 0.8em;
   }
-  .player-total {
-    font-size: 1em;
+  .player-total,
+  .multi-player-total {
+    font-size: 1.2em;
   }
 }
 

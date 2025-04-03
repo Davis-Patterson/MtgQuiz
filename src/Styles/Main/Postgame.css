@@ -140,7 +140,7 @@
   max-width: 330px;
   padding: 0px 0px 15px 0px;
   margin: 0px 0px 10px 0px;
-  border-bottom: 1px solid var(--clr-divider);
+  border-bottom: 1px solid var(--clr-icon);
 }
 
 .results-image-container {
@@ -170,7 +170,7 @@
 
 .results-card-name {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 1.1em;
+  font-size: 1.4em;
   text-align: center;
   font-weight: 400;
   line-height: 1;
@@ -204,7 +204,7 @@
 
 .results-text-label {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
   text-align: left;
   font-weight: 400;
   line-height: 1;
@@ -216,7 +216,7 @@
 
 .results-score-text-label {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 0.9em;
+  font-size: 1.2em;
   text-align: left;
   font-weight: 400;
   line-height: 1;
@@ -234,7 +234,7 @@
 
 .results-score-plus {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 1.1em;
+  font-size: 1.2em;
   text-align: left;
   font-weight: 400;
   line-height: 1;
@@ -244,7 +244,7 @@
 
 .results-score-text {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 1.6em;
+  font-size: 2.2em;
   text-align: left;
   font-weight: 400;
   line-height: 1;
@@ -362,13 +362,43 @@
 
 .multi-player-header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
   border: 1px solid var(--clr-divider);
+  background-color: var(--clr-screen);
   border-radius: 8px;
   margin: 0px 0px 10px 0px;
+}
+
+.multi-player-header-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid var(--clr-icon);
+  padding: 0px 0px 5px 0px;
+}
+
+.multi-player-header-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0px 0px 0px;
+}
+
+.multi-results-avg-text {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.95em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 0px 0px 2px 0px;
 }
 
 .multi-results-title-container {
@@ -396,7 +426,7 @@
   text-align: left;
   font-weight: 400;
   line-height: 1.8;
-  padding: 4px;
+  padding: 0px 4px;
   display: -webkit-box;
   line-clamp: 1;
   -webkit-line-clamp: 1;
@@ -410,13 +440,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 12px;
+  padding: 0px 12px 0px 12px;
 }
 
 .player-total-score {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2em;
-  color: var(--clr-light);
+  color: var(--clr-accent-orange);
   text-align: left;
   font-weight: 400;
   line-height: 1;
@@ -428,10 +458,51 @@
   justify-content: space-evenly;
   align-items: center;
   gap: 10px;
-  max-width: 250px;
-  padding: 0px 5px 5px 5px;
+  max-width: 280px;
+  padding: 0px 0px 10px 0px;
   margin: 0px 0px 10px 0px;
-  border-bottom: 1px solid var(--clr-divider);
+  border-bottom: 1px solid var(--clr-icon);
+}
+
+.multi-results-title-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.multi-results-card-name-container {
+  margin: 0px 0px 5px 0px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.multi-results-card-name {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: 200;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: left;
+  width: 100%;
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 5px 0px;
+}
+
+.multi-results-main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .multi-results-image-container {
@@ -453,51 +524,86 @@
   opacity: 1;
 }
 
-.multi-results-card-name-container {
-  margin: 0px 0px 15px 0px;
-  width: 150px;
+.multi-results-guess-content {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  width: 100%;
+  flex: 1;
+  height: 100%;
+  gap: 8px;
+  margin: 0px 2px;
+}
+
+.multi-results-text-label,
+.multi-results-avg-label {
+  font-family: 'Beleren Bold', sans-serif;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  width: 100%;
+}
+.multi-results-text-label {
+  font-size: 0.85em;
+}
+.multi-results-avg-label {
+  font-size: 0.8em;
+}
+
+.multi-results-content-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 100%;
+  gap: 2px;
+  margin: 10px 0px 0px 0px;
+}
+
+.multi-results-score-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 0px 2px;
+}
+
+.multi-results-score-plus-container {
+  display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
-.multi-results-card-name {
+.multi-results-score-plus {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 1em;
-  text-align: center;
-  font-weight: 200;
+  font-size: 1.2em;
+  text-align: left;
+  font-weight: 400;
   line-height: 1;
   color: var(--clr-light);
   text-align: left;
-  width: 100%;
-  display: -webkit-box;
-  line-clamp: 1;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.multi-results-text-label {
+.multi-results-score-text {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 0.85em;
+  font-size: 2em;
   text-align: left;
   font-weight: 400;
   line-height: 1;
   color: var(--clr-light);
   text-align: left;
   width: 100%;
-  margin: 4px 0px 0px 0px;
 }
 
-.results-score-text-label {
+.multi-results-score-text-label {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 0.9em;
   text-align: left;
   font-weight: 400;
   line-height: 1;
   color: var(--clr-light);
-  text-align: left;
+  text-align: center;
   width: 100%;
   margin: 0px 0px 2px 0px;
 }

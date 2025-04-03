@@ -18,7 +18,10 @@ const Quiz: React.FC = () => {
     setCurrentPlayerIndex,
     currentCardGuesses,
     setCurrentCardGuesses,
+    currentCardStats,
+    setCurrentCardStats,
     cardData,
+    setCardStats,
     selectedCards,
     setSelectedCards,
     numberOfCards,
@@ -31,10 +34,12 @@ const Quiz: React.FC = () => {
     includedRanks,
     creatorRanks,
     setPreviousQuizRanks,
-    finished,
-    setFinished,
     started,
     setStarted,
+    isSubmitted,
+    setIsSubmitted,
+    finished,
+    setFinished,
     setCanScroll,
     setShouldFlip,
   } = context;
@@ -44,7 +49,7 @@ const Quiz: React.FC = () => {
   );
   const [nextBackground, setNextBackground] = useState<string | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [guessButtonActive, setGuessButtonActive] = useState(false);
 
@@ -222,49 +227,63 @@ const Quiz: React.FC = () => {
     if (currentPlayerIndex < players.length - 1) {
       setCurrentPlayerIndex((prev) => prev + 1);
     } else {
-      const currentCard = selectedCards[currentIndex];
-      const cardRank = currentCard.rank as number;
-
-      setPlayers((prevPlayers) => {
-        const updatedPlayers = prevPlayers.map((player) => {
-          const guess = currentCardGuesses[player.order];
-          return {
-            ...player,
-            scores: [
-              ...player.scores,
-              {
-                cardRank,
-                guess,
-                diff: Math.abs(cardRank - guess),
-              },
-            ],
-          };
-        });
-
-        // Check if all players have guessed AFTER updating scores
-        const allGuessed = updatedPlayers.every(
-          (player) => player.scores.length > currentIndex
-        );
-
-        if (allGuessed) {
-          const revealedCard = {
-            rank: cardRank,
-            name: currentCard.card.front.name,
-            imageUrl: currentCard.card.front.imgs.normal,
-          };
-          setRevealedRanks((prev) => [...prev, revealedCard]);
-        }
-
-        return updatedPlayers;
-      });
-
+      processCardResults();
       setIsSubmitted(true);
       setCanScroll(false);
     }
   };
 
+  const processCardResults = () => {
+    const currentCard = selectedCards[currentIndex];
+    if (!currentCard?.rank) return;
+
+    const cardRank = currentCard.rank;
+    const guesses = Object.values(currentCardGuesses);
+
+    if (guesses.length !== players.length) {
+      console.error('Missing guesses for some players');
+      return;
+    }
+
+    const avgGuess = guesses.reduce((a, b) => a + b, 0) / guesses.length;
+
+    setCurrentCardStats({
+      cardRank,
+      averageGuess: avgGuess,
+    });
+
+    if (currentCard.card?.front?.imgs?.normal) {
+      const revealedCard = {
+        rank: cardRank,
+        name: currentCard.card.front.name,
+        imageUrl: currentCard.card.front.imgs.normal,
+      };
+      setRevealedRanks((prev) => [...prev, revealedCard]);
+    }
+  };
+
   const handleNext = () => {
+    if (!currentCardStats) return;
+
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) => ({
+        ...player,
+        scores: [
+          ...player.scores,
+          {
+            cardRank: currentCardStats.cardRank,
+            guess: currentCardGuesses[player.order],
+            diff: Math.abs(
+              currentCardStats.cardRank - currentCardGuesses[player.order]
+            ),
+          },
+        ],
+      }))
+    );
+
+    setCardStats((prev) => [...prev, currentCardStats]);
     setCurrentCardGuesses({});
+    setCurrentCardStats(null);
     setCurrentPlayerIndex(0);
     setIsSubmitted(false);
     setCanScroll(true);
@@ -302,9 +321,18 @@ const Quiz: React.FC = () => {
     }));
   };
 
-  const allGuessedForCurrentRound = players.every(
-    (player) => player.scores.length > currentIndex
-  );
+  const calculateTotalScore = (player: (typeof players)[0]) => {
+    const historicalTotal = player.scores.reduce(
+      (sum, score) => sum + score.diff,
+      0
+    );
+    const currentGuess = currentCardGuesses[player.order] || 0;
+    const currentDiff = currentCardStats
+      ? Math.abs(currentCardStats.cardRank - currentGuess)
+      : 0;
+
+    return historicalTotal + (isSubmitted ? currentDiff : 0);
+  };
 
   if (selectedCards.length === 0) {
     return (
@@ -360,7 +388,7 @@ const Quiz: React.FC = () => {
           )}
           <div className='background-overlay' />
         </div>
-        <UserScore allGuessedForCurrentRound={allGuessedForCurrentRound} />
+        <UserScore />
         <div className='quiz-container'>
           <SlideBar />
           <div className='quiz-content'>
@@ -368,7 +396,7 @@ const Quiz: React.FC = () => {
               Card {currentIndex + 1} of {numberOfCards}
             </p>
             {players.length > 1 &&
-              (allGuessedForCurrentRound ? (
+              (isSubmitted ? (
                 <p className='quiz-current-player-guess'>All players guessed</p>
               ) : (
                 <p className='quiz-current-player-guess'>
@@ -380,94 +408,162 @@ const Quiz: React.FC = () => {
             <CardDisplay />
             {isSubmitted ? (
               <>
-                {players.length === 1 && (
-                  <div className='breakdown'>
-                    {players[0].scores.length > 0 && (
-                      <div className='scores-breakdown-container'>
-                        <div className='scores-guess-container'>
-                          <div className='scores-guess-text-row'>
-                            <p className='score-text-label'>Card Rank:</p>
-                            <p className='score-text'>
-                              {
-                                players[0].scores[players[0].scores.length - 1]
-                                  .cardRank
-                              }
-                            </p>
-                          </div>
-                          <div className='scores-guess-text-row'>
-                            <p className='score-text-label'>Your Guess:</p>
-                            <p className='score-text'>
-                              {
-                                players[0].scores[players[0].scores.length - 1]
-                                  .guess
-                              }
-                            </p>
-                          </div>
-                        </div>
-                        <div className='scores-score-container'>
-                          <p className='score-text-score-label'>Score:</p>
-                          <div className='score-text-score-container'>
-                            <p className='score-text-plus'>+</p>
-                            <p className='score-text-score'>
-                              {
-                                players[0].scores[players[0].scores.length - 1]
-                                  .diff
-                              }
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    <button
-                      onClick={handleNext}
-                      className='next-button blue-glow'
-                    >
-                      {currentIndex < numberOfCards - 1
-                        ? 'Next Card'
-                        : 'View Results'}
-                    </button>
-                  </div>
-                )}
-                {players.length > 1 && players[0].scores.length > 0 && (
-                  <div className='multi-breakdown'>
-                    <div className='multi-breakdown-container'>
-                      <div className='card-rank-display'>
-                        <p className='multi-score-text-label'>Card Rank:</p>
-                        <p className='multi-score-text'>
-                          {players[0].scores.slice(-1)[0].cardRank}
-                        </p>
-                      </div>
-
-                      <div className='stat-cards-container'>
-                        {players.map((player) => {
-                          const lastScore = player.scores.slice(-1)[0];
-                          return (
-                            <div key={player.id} className='stat-card'>
-                              <p className='stat-player-name'>
-                                {player.name || `Player ${player.order}`}
-                              </p>
-                              <p className='stat-player-guess'>
-                                Guess: {lastScore.guess}
-                              </p>
-                              <p className='stat-player-diff'>
-                                Score: +{lastScore.diff}
+                {players.length === 1
+                  ? currentCardStats && (
+                      <div className='breakdown'>
+                        <div className='scores-breakdown-container'>
+                          <div className='scores-guess-container'>
+                            <div className='scores-guess-text-row'>
+                              <p className='score-text-label'>Card Rank:</p>
+                              <p className='score-text'>
+                                {currentCardStats.cardRank}
                               </p>
                             </div>
-                          );
-                        })}
+                            <div className='scores-guess-text-row'>
+                              <p className='score-text-label'>Your Guess:</p>
+                              <p className='score-text'>
+                                {currentCardGuesses[currentPlayer.order]}
+                              </p>
+                            </div>
+                          </div>
+                          <div className='scores-score-container'>
+                            <p className='score-text-score-label'>Score:</p>
+                            <div className='score-text-score-container'>
+                              <p className='score-text-plus'>+</p>
+                              <p className='score-text-score'>
+                                {Math.abs(
+                                  currentCardStats.cardRank -
+                                    currentCardGuesses[currentPlayer.order]
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={handleNext}
+                          className='next-button blue-glow'
+                        >
+                          {currentIndex < numberOfCards - 1
+                            ? 'Next Card'
+                            : 'View Results'}
+                        </button>
                       </div>
-                    </div>
+                    )
+                  : currentCardStats && (
+                      <div className='multi-breakdown'>
+                        <div className='multi-breakdown-container'>
+                          <div className='card-rank-display'>
+                            <div className='multi-score-text-container'>
+                              <p className='multi-score-text-label'>
+                                Card Rank:
+                              </p>
+                              {currentCardStats && (
+                                <>
+                                  <p className='multi-score-text'>
+                                    {currentCardStats.cardRank}
+                                  </p>
+                                </>
+                              )}
+                            </div>
+                            <div className='multi-score-text-container'>
+                              {currentCardStats && (
+                                <>
+                                  <p className='multi-score-average-label'>
+                                    Avg Guess:
+                                  </p>
+                                  <p className='multi-score-average-text'>
+                                    {currentCardStats.averageGuess.toFixed(1)}
+                                  </p>
+                                </>
+                              )}
+                            </div>
+                          </div>
 
-                    <button
-                      onClick={handleNext}
-                      className='next-button blue-glow'
-                    >
-                      {currentIndex < selectedCards.length - 1
-                        ? 'Next Card'
-                        : 'View Results'}
-                    </button>
-                  </div>
-                )}
+                          <div className='stat-cards-container'>
+                            {players.map((player) => {
+                              const currentGuess =
+                                currentCardGuesses[player.order];
+                              return (
+                                <>
+                                  {players.length === 2 ? (
+                                    <div
+                                      key={player.id}
+                                      className='duo-stat-card'
+                                    >
+                                      <p className='stat-player-name'>
+                                        {player.name ||
+                                          `Player ${player.order}`}
+                                      </p>
+                                      <div className='duo-stat-container'>
+                                        <div className='duo-guess-container'>
+                                          <p className='stat-player-guess'>
+                                            Guess: {currentGuess}
+                                          </p>
+                                          <p className='stat-player-diff'>
+                                            Score: +
+                                            {Math.abs(
+                                              currentCardStats.cardRank -
+                                                currentGuess
+                                            )}
+                                          </p>
+                                        </div>
+                                        {currentCardStats && (
+                                          <div className='duo-total-container'>
+                                            {currentCardStats && (
+                                              <>
+                                                <p className='stat-player-total-label'>
+                                                  Total
+                                                </p>
+                                                <p className='stat-player-total'>
+                                                  {calculateTotalScore(player)}
+                                                </p>
+                                              </>
+                                            )}
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div key={player.id} className='stat-card'>
+                                      <p className='stat-player-name'>
+                                        {player.name ||
+                                          `Player ${player.order}`}
+                                      </p>
+                                      <p className='stat-player-guess'>
+                                        Guess: {currentGuess}
+                                      </p>
+                                      {currentCardStats && (
+                                        <p className='stat-player-diff'>
+                                          Score: +
+                                          {Math.abs(
+                                            currentCardStats.cardRank -
+                                              currentGuess
+                                          )}
+                                        </p>
+                                      )}
+                                      {currentCardStats && (
+                                        <p className='stat-player-diff'>
+                                          Total: {calculateTotalScore(player)}
+                                        </p>
+                                      )}
+                                    </div>
+                                  )}
+                                </>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={handleNext}
+                          className='next-button blue-glow'
+                        >
+                          {currentIndex < selectedCards.length - 1
+                            ? 'Next Card'
+                            : 'View Results'}
+                        </button>
+                      </div>
+                    )}
               </>
             ) : (
               <>

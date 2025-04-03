@@ -7,11 +7,7 @@ import ExpandIcon from 'Svgs/ExpandIcon';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Utils/UserScore.css';
 
-interface UserScoreProps {
-  allGuessedForCurrentRound: boolean;
-}
-
-const UserScore: React.FC<UserScoreProps> = ({ allGuessedForCurrentRound }) => {
+const UserScore: React.FC = () => {
   const context = useContext(AppContext);
   if (!context) {
     throw new Error('No Context available');
@@ -24,6 +20,7 @@ const UserScore: React.FC<UserScoreProps> = ({ allGuessedForCurrentRound }) => {
     setCurrentPlayerIndex,
     setCurrentIndex,
     setRevealedRanks,
+    isSubmitted,
     setFinished,
   } = context;
 
@@ -32,8 +29,21 @@ const UserScore: React.FC<UserScoreProps> = ({ allGuessedForCurrentRound }) => {
 
   const navigate = useNavigate();
 
-  const calculateTotalScore = (playerScores: Array<{ diff: number }>) => {
-    return playerScores.reduce((acc, curr) => acc + curr.diff, 0);
+  const calculateTotalScore = (
+    playerScores: Array<{ diff: number }>,
+    playerOrder: number
+  ) => {
+    const currentRoundDiff = context?.currentCardStats
+      ? Math.abs(
+          context.currentCardStats.cardRank -
+            (context.currentCardGuesses[playerOrder] || 0)
+        )
+      : 0;
+
+    return (
+      playerScores.reduce((acc, curr) => acc + curr.diff, 0) +
+      (context?.isSubmitted ? currentRoundDiff : 0)
+    );
   };
 
   const handleConfirm = () => {
@@ -69,7 +79,7 @@ const UserScore: React.FC<UserScoreProps> = ({ allGuessedForCurrentRound }) => {
         <div className='user-score-score-container'>
           <span className='score-label'>Score:</span>
           <span className='score-value'>
-            {calculateTotalScore(players[0].scores)}
+            {calculateTotalScore(players[0].scores, players[0].order)}
           </span>
         </div>
       ) : (
@@ -91,7 +101,7 @@ const UserScore: React.FC<UserScoreProps> = ({ allGuessedForCurrentRound }) => {
             <div className='multi-player-scores'>
               {players.map((player, index) => {
                 let playerClass = '';
-                if (allGuessedForCurrentRound) {
+                if (isSubmitted) {
                   playerClass = 'guessed';
                 } else {
                   if (index < currentPlayerIndex) {
@@ -108,8 +118,8 @@ const UserScore: React.FC<UserScoreProps> = ({ allGuessedForCurrentRound }) => {
                     <span className='player-name'>
                       {player.name.trim() || `Player ${index + 1}`}
                     </span>
-                    <span className='player-total'>
-                      {calculateTotalScore(player.scores)}
+                    <span className='multi-player-total'>
+                      {calculateTotalScore(player.scores, player.order)}
                     </span>
                   </div>
                 );
@@ -119,14 +129,19 @@ const UserScore: React.FC<UserScoreProps> = ({ allGuessedForCurrentRound }) => {
             <div className='single-player-score-container'>
               <div
                 key={players[currentPlayerIndex].order}
-                className='player-score single'
+                className={`player-score ${
+                  isSubmitted ? 'guessed' : 'current-player'
+                }`}
               >
                 <span className='player-name'>
                   {players[currentPlayerIndex].name.trim() ||
                     `Player ${currentPlayerIndex + 1}`}
                 </span>
-                <span className='player-total'>
-                  {calculateTotalScore(players[currentPlayerIndex].scores)}
+                <span className='multi-player-total'>
+                  {calculateTotalScore(
+                    players[currentPlayerIndex].scores,
+                    players[currentPlayerIndex].order
+                  )}
                 </span>
               </div>
             </div>

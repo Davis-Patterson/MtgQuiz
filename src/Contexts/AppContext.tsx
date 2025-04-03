@@ -36,6 +36,11 @@ export interface ScoreDetail {
   diff: number;
 }
 
+export interface CardStat {
+  cardRank: number;
+  averageGuess: number;
+}
+
 export interface RevealedCard {
   rank: number;
   name: string;
@@ -51,9 +56,13 @@ interface AppContextType {
   setCurrentCardGuesses: React.Dispatch<
     React.SetStateAction<Record<string, number>>
   >;
+  currentCardStats: CardStat | null;
+  setCurrentCardStats: React.Dispatch<React.SetStateAction<CardStat | null>>;
 
   cardData: Card[];
   setCardData: React.Dispatch<React.SetStateAction<Card[]>>;
+  cardStats: CardStat[];
+  setCardStats: React.Dispatch<React.SetStateAction<CardStat[]>>;
   selectedCards: Card[];
   setSelectedCards: React.Dispatch<React.SetStateAction<Card[]>>;
   numberOfCards: number;
@@ -78,6 +87,8 @@ interface AppContextType {
 
   started: boolean;
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
+  isSubmitted: boolean;
+  setIsSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
   finished: boolean;
   setFinished: React.Dispatch<React.SetStateAction<boolean>>;
   canScroll: boolean;
@@ -110,8 +121,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [currentCardGuesses, setCurrentCardGuesses] = useState<
     Record<string, number>
   >({});
+  const [currentCardStats, setCurrentCardStats] = useState<CardStat | null>(
+    null
+  );
 
   const [cardData, setCardData] = useState<Card[]>(SaltData);
+  const [cardStats, setCardStats] = useState<CardStat[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [numberOfCards, setNumberOfCards] = useState<number>(10);
   const [rangeOfQuiz, setRangeOfQuiz] = useState<number>(100);
@@ -127,6 +142,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   );
 
   const [started, setStarted] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [finished, setFinished] = useState<boolean>(false);
   const [canScroll, setCanScroll] = useState<boolean>(true);
   const [showSettings, setShowSettings] = useState<boolean>(false);
@@ -143,9 +159,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setCurrentPlayerIndex,
         currentCardGuesses,
         setCurrentCardGuesses,
+        currentCardStats,
+        setCurrentCardStats,
 
         cardData,
         setCardData,
+        cardStats,
+        setCardStats,
         selectedCards,
         setSelectedCards,
         numberOfCards,
@@ -170,6 +190,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         started,
         setStarted,
+        isSubmitted,
+        setIsSubmitted,
         finished,
         setFinished,
         canScroll,

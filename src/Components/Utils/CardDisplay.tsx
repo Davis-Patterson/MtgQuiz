@@ -109,6 +109,8 @@ const CardDisplay: React.FC = () => {
             <FullscreenIcon className='fullscreen-icon' />
           </div>
         </div>
+      </div>
+      <div className='card-name-container'>
         <p className='card-name'>
           {activeFace === 'back' && currentCard.card.back
             ? currentCard.card.back.name

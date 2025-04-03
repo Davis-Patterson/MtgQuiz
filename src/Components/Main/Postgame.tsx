@@ -18,6 +18,7 @@ const Postgame: React.FC = () => {
   const {
     players,
     cardData,
+    cardStats,
     selectedCards,
     setCurrentIndex,
     setCurrentCardGuesses,
@@ -49,6 +50,42 @@ const Postgame: React.FC = () => {
       setBackgroundImage(artCropUrl);
     }
   }, [cardData]);
+
+  const handleHome = () => {
+    setCurrentIndex(0);
+    setCurrentCardGuesses({});
+    setPlayers(
+      players.map((player) => ({
+        ...player,
+        scores: [],
+      }))
+    );
+    setRevealedRanks([]);
+    setFinished(false);
+  };
+
+  const calculateGlobalAverageTotal = (players: typeof context.players) => {
+    const totalScores = players.map((p) =>
+      p.scores.reduce((sum, score) => sum + score.diff, 0)
+    );
+    return totalScores.reduce((a, b) => a + b, 0) / (players.length || 1);
+  };
+
+  const calculateGlobalAveragePerCard = (players: typeof context.players) => {
+    const averages = players.map((p) => {
+      const total = p.scores.reduce((sum, score) => sum + score.diff, 0);
+      return total / (p.scores.length || 1);
+    });
+    return averages.reduce((a, b) => a + b, 0) / (players.length || 1);
+  };
+
+  const calculatePlayerAverage = (player: (typeof context.players)[0]) => {
+    const total = player.scores.reduce((sum, score) => sum + score.diff, 0);
+    return total / (player.scores.length || 1);
+  };
+
+  const globalAvgTotal = calculateGlobalAverageTotal(players);
+  const globalAvgPerCard = calculateGlobalAveragePerCard(players);
 
   if (!finished) {
     return (
@@ -83,19 +120,6 @@ const Postgame: React.FC = () => {
       </>
     );
   }
-
-  const handleHome = () => {
-    setCurrentIndex(0);
-    setCurrentCardGuesses({});
-    setPlayers(
-      players.map((player) => ({
-        ...player,
-        scores: [],
-      }))
-    );
-    setRevealedRanks([]);
-    setFinished(false);
-  };
 
   return (
     <section className='results-container'>
@@ -250,51 +274,85 @@ const Postgame: React.FC = () => {
                 return (
                   <div key={player.id} className='player-results-column'>
                     <div className='multi-player-header'>
-                      <h3 className='results-player-name'>
-                        {player.name.trim() || `Player ${player.order}`}
-                      </h3>
-                      <div className='player-total-score-container'>
-                        <p className='player-total-score'>{totalScore}</p>
+                      <div className='multi-player-header-top'>
+                        <h3 className='results-player-name'>
+                          {player.name.trim() || `Player ${player.order}`}
+                        </h3>
+                        <div className='player-total-score-container'>
+                          <p className='player-total-score orange-glow'>
+                            {totalScore}
+                          </p>
+                        </div>
+                      </div>
+                      <div className='multi-player-header-bottom'>
+                        <div className='avg-stats-container'>
+                          <p className='multi-results-avg-text'>
+                            Avg Score: {globalAvgTotal.toFixed(1)}
+                          </p>
+                          <p className='multi-results-avg-text'>
+                            Avg Score/Card: {globalAvgPerCard.toFixed(1)}
+                          </p>
+                          <p className='multi-results-avg-text'>
+                            Your Avg/Card:{' '}
+                            {calculatePlayerAverage(player).toFixed(1)}
+                          </p>
+                        </div>
                       </div>
                     </div>
                     {player.scores.map((score, scoreIndex) => {
                       const card = selectedCards[scoreIndex];
                       return (
                         <div key={scoreIndex} className='multi-results-card'>
-                          <div className='multi-results-image-container'>
-                            <img
-                              src={card.card.front.imgs.small}
-                              alt={card.card.front.name}
-                              className='multi-results-card-image'
-                              onClick={() =>
-                                setFullScreenImage(card.card.front.imgs.large)
-                              }
-                            />
-                          </div>
-                          <div className='results-content-container'>
+                          <div className='multi-results-title-content'>
                             <div className='multi-results-card-name-container'>
                               <div className='multi-results-card-name'>
                                 {card.card.front.name}
                               </div>
                             </div>
-                            <div className='results-score-content'>
-                              <div className='results-guess-content'>
-                                <p className='multi-results-text-label'>
-                                  Card Rank: {score.cardRank}
-                                </p>
-                                <p className='multi-results-text-label'>
-                                  Your Guess: {score.guess}
-                                </p>
+                            <div className='multi-results-main-content'>
+                              <div className='multi-results-image-container'>
+                                <img
+                                  src={card.card.front.imgs.small}
+                                  alt={card.card.front.name}
+                                  className='multi-results-card-image'
+                                  onClick={() =>
+                                    setFullScreenImage(
+                                      card.card.front.imgs.large
+                                    )
+                                  }
+                                />
                               </div>
-                              <div className='results-score-score-container'>
-                                <p className='results-score-text-label'>
-                                  Score:
-                                </p>
-                                <div className='results-score-plus-container'>
-                                  <p className='results-score-plus'>+</p>
-                                  <p className='results-score-text'>
-                                    {score.diff}
+                              <div className='multi-results-content-container'>
+                                <div className='multi-results-guess-content'>
+                                  <p className='multi-results-text-label'>
+                                    Card Rank: {score.cardRank}
                                   </p>
+                                  <p className='multi-results-text-label'>
+                                    Your Guess: {score.guess}
+                                  </p>
+                                  {cardStats[scoreIndex] && (
+                                    <div className='results-average-guess'>
+                                      <p className='multi-results-avg-label'>
+                                        Avg Guess:{' '}
+                                        {cardStats[
+                                          scoreIndex
+                                        ].averageGuess.toFixed(1)}
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className='multi-results-score-container'>
+                                  <p className='multi-results-score-text-label'>
+                                    Score:
+                                  </p>
+                                  <div className='multi-results-score-plus-container'>
+                                    <p className='multi-results-score-plus'>
+                                      +
+                                    </p>
+                                    <p className='multi-results-score-text'>
+                                      {score.diff}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </div>

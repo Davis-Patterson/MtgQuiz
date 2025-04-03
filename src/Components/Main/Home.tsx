@@ -21,6 +21,7 @@ const Home: React.FC = () => {
     setCurrentCardGuesses,
     setRevealedRanks,
     setStarted,
+    setIsSubmitted,
     setShowSettings,
     setCanScroll,
   } = context;
@@ -36,6 +37,7 @@ const Home: React.FC = () => {
       }))
     );
     setStarted(false);
+    setIsSubmitted(false);
     setCurrentIndex(0);
     setCurrentCardGuesses({});
     setRevealedRanks([]);
@@ -120,11 +122,11 @@ const Home: React.FC = () => {
               >
                 Top 100 Saltiest Cards
               </a>{' '}
-              list published by EDHREC. Out of X cards you will be shown a
-              determined amount at random, where X is your selected quiz range.
-              For each card, you must guess its rank between 1 and X. Your score
-              for each card is the absolute difference between your guess and
-              the card's rank. A lower score indicates greater accuracy.
+              list published by EDHREC. Out of X cards, where X is your selected
+              quiz range, you will be shown a selection at random. For each
+              card, you must guess its rank between 1 and X. Your score for each
+              card is the absolute difference between your guess and the card's
+              rank. A lower score indicates greater accuracy.
             </p>
             <p className='home-text'>Select a value for X to begin:</p>
             <div className='button-gap' />
