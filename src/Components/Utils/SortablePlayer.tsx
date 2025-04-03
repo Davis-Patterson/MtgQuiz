@@ -1,7 +1,8 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext, Player } from 'Contexts/AppContext';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import EditIcon from 'Svgs/EditIcon';
 import DragIcon from 'Svgs/DragIcon';
 import TrashIcon from 'Svgs/TrashIcon';
 import CheckIcon from 'Svgs/CheckIcon';
@@ -20,6 +21,9 @@ const SortablePlayer = ({ player }: { player: Player }) => {
     });
 
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [showEditNameInput, setShowEditNameInput] = useState(false);
+
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -46,23 +50,73 @@ const SortablePlayer = ({ player }: { player: Player }) => {
     }
   };
 
+  const handleEditName = () => {
+    setShowEditNameInput(!showEditNameInput);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  };
+
   const handleNameChange = (order: number, newName: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setShowEditNameInput(false);
+    }, 8000);
+
     setPlayers((prev) =>
       prev.map((p) => (p.order === order ? { ...p, name: newName } : p))
     );
   };
 
+  useEffect(() => {
+    if (showEditNameInput) {
+      timeoutRef.current = setTimeout(() => {
+        setShowEditNameInput(false);
+      }, 8000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [showEditNameInput, player.name]);
+
   return (
     <div ref={setNodeRef} style={style} className='participant-item'>
       <p className='participant-order'>{player.order}</p>
-      <input
-        type='text'
-        value={player.name}
-        onChange={(e) => handleNameChange(player.order, e.target.value)}
-        placeholder={`Player ${player.order}`}
-        className='participant-name-input'
-      />
+      {showEditNameInput ? (
+        <input
+          type='text'
+          value={player.name}
+          onChange={(e) => handleNameChange(player.order, e.target.value)}
+          placeholder={`Player ${player.order}`}
+          className='participant-name-input'
+        />
+      ) : (
+        <div className='participant-name-display'>
+          <p className='participant-name-display-text'>
+            {player.name || `Player ${player.order}`}
+          </p>
+        </div>
+      )}
       <div className='participant-controls'>
+        <div className='participants-edit-icon-container'>
+          {showEditNameInput ? (
+            <CheckIcon
+              className='participants-check-icon'
+              onClick={() => handleEditName()}
+            />
+          ) : (
+            <EditIcon
+              className='participants-edit-icon'
+              onClick={() => handleEditName()}
+            />
+          )}
+        </div>
         {players.length <= 1 ? (
           <div
             className='drag-container-inactive'

@@ -355,6 +355,61 @@
   user-select: none;
 }
 
+.settings-dropdown-info-text {
+  font-family: 'Merriweather', sans-serif;
+  font-size: 0.8em;
+  line-height: 0.8;
+  font-weight: 200;
+  font-style: italic;
+  color: var(--clr-icon);
+  width: auto;
+  text-align: center;
+  user-select: none;
+}
+
+.settings-participants-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  margin: 2px 0px 0px 0px;
+  width: 100%;
+}
+
+.settings-participants-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.info-icon-container {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: help;
+}
+.info-icon {
+  width: 14px;
+  height: 14px;
+  fill: var(--clr-icon);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: help;
+  opacity: 0.4;
+  transition: all 0.15s ease-in-out;
+}
+.info-icon:hover,
+.settings-participants-header-container:hover .info-icon {
+  fill: var(--clr-icon);
+  opacity: 1;
+}
+
 .settings-known-cards-header {
   display: flex;
   flex-direction: row;

@@ -23,6 +23,7 @@ import 'Styles/Utils/Settings.css';
 import BackArrow from 'Svgs/BackArrow';
 import MailIcon from 'Svgs/MailIcon';
 import Email from 'Components/Utils/Email';
+import InfoIcon from 'Svgs/InfoIcon';
 
 const Settings: React.FC = () => {
   const appContext = useContext(AppContext);
@@ -1006,9 +1007,32 @@ const Settings: React.FC = () => {
                       {showParticipants && (
                         <div className='settings-dropdown-contents'>
                           <div className='settings-participants-content'>
-                            <p className='settings-dropdown-header-subtext'>
-                              Local multiplayer only
-                            </p>
+                            <div className='settings-participants-header'>
+                              <Tooltip
+                                title={
+                                  <>
+                                    <p className='tooltip-text'>
+                                      Multiplayer is limited to a single device.
+                                    </p>
+                                    <p className='tooltip-text'>
+                                      No online or cross-device play available
+                                      at this time.
+                                    </p>
+                                  </>
+                                }
+                                enterDelay={400}
+                                placement='top'
+                              >
+                                <div className='settings-participants-header-container'>
+                                  <p className='settings-dropdown-info-text'>
+                                    Local multiplayer only
+                                  </p>
+                                  <div className='info-icon-container'>
+                                    <InfoIcon className='info-icon' />
+                                  </div>
+                                </div>
+                              </Tooltip>
+                            </div>
                             <div className='settings-add-participants'>
                               <DndContext
                                 collisionDetection={closestCenter}
