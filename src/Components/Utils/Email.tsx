@@ -34,53 +34,81 @@ function Email() {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!import.meta.env.VITE_EMAILJS_USER_ID) {
+      setError('Email user configuration error - please try again later');
+      setIsLoading(false);
+      setSending(false);
+      return;
+    }
+    if (!import.meta.env.VITE_EMAILJS_TEMPLATE_ID) {
+      setError('Email template configuration error - please try again later');
+      setIsLoading(false);
+      setSending(false);
+      return;
+    }
+    if (!import.meta.env.VITE_EMAILJS_SERVICE_ID) {
+      setError('Email service configuration error - please try again later');
+      setIsLoading(false);
+      setSending(false);
+      return;
+    }
+
     setSending(true);
     setIsLoading(true);
 
-    const templateParams = {
-      firstName: form.firstName,
-      lastName: form.lastName,
-      email: form.email,
-      message: form.message,
-    };
+    try {
+      const templateParams = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        message: form.message,
+      };
 
-    const sendEmail = emailjs.send(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      templateParams,
-      import.meta.env.VITE_EMAILJS_USER_ID
-    );
+      const response = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAILJS_USER_ID
+      );
 
-    Promise.all([sendEmail])
-      .then((results) => {
-        setSending(false);
-        setIsLoading(false);
-        setSuccess(true);
-        console.log('Emails successfully sent!', results);
-        setTimeout(() => {
-          setForm({
-            firstName: '',
-            lastName: '',
-            email: '',
-            message: '',
-          });
-          setShowContactWindow(false);
-          setShowSettingsWindow(true);
-          setSuccess(false);
-        }, 3000);
-      })
-      .catch((error) => {
-        setSending(false);
-        setIsLoading(false);
-        setError(error.text || error.message || 'Unknown error occurred');
-        console.log('Failed to send:', error.text);
-        setTimeout(() => {
-          setError('');
-        }, 3000);
-      });
+      setSuccess(true);
+      console.log('Emails successfully sent!', response);
+      setTimeout(() => {
+        setForm({
+          firstName: '',
+          lastName: '',
+          email: '',
+          message: '',
+        });
+        setShowContactWindow(false);
+        setShowSettingsWindow(true);
+        setSuccess(false);
+      }, 3000);
+    } catch (error) {
+      let errorMessage = 'Unknown error occurred';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      setError(errorMessage);
+      console.error('Email send failed:', error);
+    } finally {
+      setSending(false);
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    console.log('EmailJS Config:', {
+      service: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      template: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      user: import.meta.env.VITE_EMAILJS_USER_ID,
+    });
+  }, []);
 
   useEffect(() => {
     const isMessageFormEmpty =
