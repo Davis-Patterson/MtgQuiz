@@ -560,7 +560,7 @@
   flex: 1;
   padding: 0.4em;
   border: 1px solid var(--clr-divider);
-  background-color: var(--clr-platinum);
+  background-color: var(--clr-light);
   border-radius: 4px;
 }
 
