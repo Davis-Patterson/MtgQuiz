@@ -95,6 +95,10 @@ interface AppContextType {
   setCanScroll: React.Dispatch<React.SetStateAction<boolean>>;
   showSettings: boolean;
   setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
+  showSettingsWindow: boolean;
+  setShowSettingsWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  showContactWindow: boolean;
+  setShowContactWindow: React.Dispatch<React.SetStateAction<boolean>>;
 
   shouldFlip: boolean;
   setShouldFlip: React.Dispatch<React.SetStateAction<boolean>>;
@@ -146,6 +150,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [finished, setFinished] = useState<boolean>(false);
   const [canScroll, setCanScroll] = useState<boolean>(true);
   const [showSettings, setShowSettings] = useState<boolean>(false);
+  const [showSettingsWindow, setShowSettingsWindow] = useState<boolean>(true);
+  const [showContactWindow, setShowContactWindow] = useState<boolean>(false);
 
   const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
@@ -198,6 +204,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setCanScroll,
         showSettings,
         setShowSettings,
+        showSettingsWindow,
+        setShowSettingsWindow,
+        showContactWindow,
+        setShowContactWindow,
 
         shouldFlip,
         setShouldFlip,
