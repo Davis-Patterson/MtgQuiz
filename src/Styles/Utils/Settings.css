@@ -103,12 +103,13 @@
   fill: var(--clr-divider);
   cursor: pointer;
   transition: all 0.15s ease-in-out;
+  opacity: 0.4;
 }
 .settings-back-arrow:hover {
-  fill: var(--clr-accent-blue);
+  opacity: 1;
 }
 .settings-back-arrow:active {
-  fill: var(--clr-accent-blue-hover);
+  opacity: 1;
   transform: scale(90%);
 }
 
