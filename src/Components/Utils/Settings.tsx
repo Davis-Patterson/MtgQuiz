@@ -439,6 +439,7 @@ const Settings: React.FC = () => {
       if (creator) {
         setCreatorRanks(new Set(creator.cards));
         setToBeIncludedRanks(new Set());
+        setToBeExcludedRanks(new Set());
         setRangeOfQuiz(100);
         setNumberOfCards(10);
         setTimeout(() => {
@@ -662,27 +663,55 @@ const Settings: React.FC = () => {
                 {showExcludeCards && (
                   <div className='settings-dropdown-contents'>
                     <div className='settings-known-cards-header '>
-                      <Tooltip
-                        title={
-                          <>
-                            <p className='tooltip-text'>Select cards seen in</p>
-                            <p className='tooltip-text'>previous quiz, when</p>
-                            <p className='tooltip-text'>applicable</p>
-                          </>
-                        }
-                        enterDelay={400}
-                        placement='top'
-                      >
-                        <span>
-                          <button
-                            onClick={handleExcludePreviousQuiz}
-                            disabled={previousQuizRanks.size === 0}
-                            className='exclude-cards-button'
-                          >
-                            Select Previous Quiz
-                          </button>
-                        </span>
-                      </Tooltip>
+                      {creatorQuiz ? (
+                        <Tooltip
+                          title={
+                            <>
+                              <p className='tooltip-text'>
+                                Disabled while creator
+                              </p>
+                              <p className='tooltip-text'>quiz is selected</p>
+                            </>
+                          }
+                          enterDelay={400}
+                          placement='top'
+                        >
+                          <span>
+                            <button
+                              disabled={true}
+                              className='exclude-cards-button-disabled'
+                            >
+                              Select Previous Quiz
+                            </button>
+                          </span>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip
+                          title={
+                            <>
+                              <p className='tooltip-text'>
+                                Select cards seen in
+                              </p>
+                              <p className='tooltip-text'>
+                                previous quiz, when
+                              </p>
+                              <p className='tooltip-text'>applicable</p>
+                            </>
+                          }
+                          enterDelay={400}
+                          placement='top'
+                        >
+                          <span>
+                            <button
+                              onClick={handleExcludePreviousQuiz}
+                              disabled={previousQuizRanks.size === 0}
+                              className='exclude-cards-button'
+                            >
+                              Select Previous Quiz
+                            </button>
+                          </span>
+                        </Tooltip>
+                      )}
                       <Tooltip
                         title={
                           <>

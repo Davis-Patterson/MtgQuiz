@@ -312,7 +312,8 @@
   padding: 5px 5px 0px 5px;
 }
 
-.exclude-cards-button {
+.exclude-cards-button,
+.exclude-cards-button-disabled {
   padding: 0.5rem 1rem;
   background: var(--clr-accent-blue);
   color: var(--clr-light);
@@ -322,10 +323,14 @@
   transition: all 0.15s ease-in-out;
   opacity: 1;
 }
+.exclude-cards-button-disabled {
+  background: var(--clr-icon);
+}
 .exclude-cards-button:hover {
   background: var(--clr-accent-blue-hover);
 }
-.exclude-cards-button:disabled {
+.exclude-cards-button:disabled,
+.exclude-cards-button-disabled {
   background: var(--clr-icon);
   opacity: 0.4;
   cursor: default;
