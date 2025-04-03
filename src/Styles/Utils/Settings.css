@@ -406,7 +406,7 @@
 }
 .info-icon:hover,
 .settings-participants-header-container:hover .info-icon {
-  fill: var(--clr-icon);
+  fill: var(--clr-accent-blue);
   opacity: 1;
 }
 

@@ -320,6 +320,12 @@ const Settings: React.FC = () => {
       setShowSettings(false);
       setIsLoading(false);
     }, 100);
+    setShowCardNumber(false);
+    setShowExcludeCards(false);
+    setShowIncludeCards(false);
+    setShowParticipants(false);
+    setShowSettingsWindow(true);
+    setShowContactWindow(false);
   };
 
   const handleClose = (event: React.MouseEvent) => {
