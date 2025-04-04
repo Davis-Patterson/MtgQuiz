@@ -25,6 +25,14 @@ import MailIcon from 'Svgs/MailIcon';
 import Email from 'Components/Utils/Email';
 import InfoIcon from 'Svgs/InfoIcon';
 
+type DropdownType =
+  | 'listYear'
+  | 'cardNumber'
+  | 'excludeCards'
+  | 'includeCards'
+  | 'participants'
+  | null;
+
 const Settings: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) {
@@ -94,12 +102,7 @@ const Settings: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatorLoading, setIsCreatorLoading] = useState(false);
-  const [showListYear, setShowListYear] = useState(false);
-  const [showCardNumber, setShowCardNumber] = useState(false);
-  const [showExcludeCards, setShowExcludeCards] = useState(false);
-  const [showIncludeCards, setShowIncludeCards] = useState(false);
-  const [showParticipants, setShowParticipants] = useState(false);
-
+  const [activeDropdown, setActiveDropdown] = useState<DropdownType>(null);
   const [newPlayerName, setNewPlayerName] = useState('');
 
   const settingsContainerRef = useRef<HTMLDivElement>(null);
@@ -185,11 +188,7 @@ const Settings: React.FC = () => {
         !settingsContainerRef.current.contains(event.target as Node)
       ) {
         setShowSettings(false);
-        setShowListYear(false);
-        setShowCardNumber(false);
-        setShowExcludeCards(false);
-        setShowIncludeCards(false);
-        setShowParticipants(false);
+        setActiveDropdown(null);
         setShowContactWindow(false);
         setShowSettingsWindow(true);
       }
@@ -333,11 +332,7 @@ const Settings: React.FC = () => {
       setShowSettings(false);
       setIsLoading(false);
     }, 100);
-    setShowCardNumber(false);
-    setShowListYear(false);
-    setShowExcludeCards(false);
-    setShowIncludeCards(false);
-    setShowParticipants(false);
+    setActiveDropdown(null);
     setShowSettingsWindow(true);
     setShowContactWindow(false);
   };
@@ -347,73 +342,13 @@ const Settings: React.FC = () => {
     event.stopPropagation();
 
     setShowSettings(false);
-    setShowListYear(false);
-    setShowCardNumber(false);
-    setShowExcludeCards(false);
-    setShowIncludeCards(false);
-    setShowParticipants(false);
+    setActiveDropdown(null);
     setShowContactWindow(false);
     setShowSettingsWindow(true);
   };
 
-  const handleShowListYear = () => {
-    if (!showListYear) {
-      setShowListYear(true);
-      setShowCardNumber(false);
-      setShowExcludeCards(false);
-      setShowParticipants(false);
-      setShowIncludeCards(false);
-    } else {
-      setShowListYear(false);
-    }
-  };
-
-  const handleShowCardNumber = () => {
-    if (!showCardNumber) {
-      setShowCardNumber(true);
-      setShowListYear(false);
-      setShowExcludeCards(false);
-      setShowParticipants(false);
-      setShowIncludeCards(false);
-    } else {
-      setShowCardNumber(false);
-    }
-  };
-
-  const handleShowExcludeCards = () => {
-    if (!showExcludeCards) {
-      setShowExcludeCards(true);
-      setShowListYear(false);
-      setShowParticipants(false);
-      setShowIncludeCards(false);
-      setShowCardNumber(false);
-    } else {
-      setShowExcludeCards(false);
-    }
-  };
-
-  const handleShowIncludeCards = () => {
-    if (!showIncludeCards) {
-      setShowIncludeCards(true);
-      setShowListYear(false);
-      setShowExcludeCards(false);
-      setShowParticipants(false);
-      setShowCardNumber(false);
-    } else {
-      setShowIncludeCards(false);
-    }
-  };
-
-  const handleShowParticipants = () => {
-    if (!showParticipants) {
-      setShowParticipants(true);
-      setShowListYear(false);
-      setShowExcludeCards(false);
-      setShowIncludeCards(false);
-      setShowCardNumber(false);
-    } else {
-      setShowParticipants(false);
-    }
+  const toggleDropdown = (dropdown: DropdownType) => {
+    setActiveDropdown((current) => (current === dropdown ? null : dropdown));
   };
 
   const handleSettingsErase = () => {
@@ -545,6 +480,7 @@ const Settings: React.FC = () => {
 
   const handleContactWindow = () => {
     setShowSettingsWindow(false);
+    setActiveDropdown(null);
     setShowContactWindow(true);
   };
 
@@ -707,7 +643,7 @@ const Settings: React.FC = () => {
                     <div className='settings-dropdown'>
                       <div
                         className='settings-dropdown-header'
-                        onClick={() => handleShowListYear()}
+                        onClick={() => toggleDropdown('listYear')}
                       >
                         <div className='settings-dropdown-header-text-container'>
                           <p className='settings-dropdown-header-text'>
@@ -715,7 +651,7 @@ const Settings: React.FC = () => {
                           </p>
                         </div>
                         <div className='settings-header-dropdown-icon'>
-                          {showListYear ? (
+                          {activeDropdown === 'listYear' ? (
                             <DropdownIcon className='down-icon' />
                           ) : (
                             <DropdownIcon className='up-icon' />
@@ -723,7 +659,7 @@ const Settings: React.FC = () => {
                         </div>
                       </div>
 
-                      {showListYear && (
+                      {activeDropdown === 'listYear' && (
                         <div className='settings-dropdown-contents'>
                           <p className='settings-dropdown-header-subtext'>
                             Choose which year's saltiest cards list to use for
@@ -770,7 +706,7 @@ const Settings: React.FC = () => {
                     <div className='settings-dropdown'>
                       <div
                         className='settings-dropdown-header'
-                        onClick={() => handleShowCardNumber()}
+                        onClick={() => toggleDropdown('cardNumber')}
                       >
                         <div className='settings-dropdown-header-text-container'>
                           <p className='settings-dropdown-header-text'>
@@ -778,7 +714,7 @@ const Settings: React.FC = () => {
                           </p>
                         </div>
                         <div className='settings-header-dropdown-icon'>
-                          {showCardNumber ? (
+                          {activeDropdown === 'cardNumber' ? (
                             <DropdownIcon className='down-icon' />
                           ) : (
                             <DropdownIcon className='up-icon' />
@@ -786,7 +722,7 @@ const Settings: React.FC = () => {
                         </div>
                       </div>
 
-                      {showCardNumber && (
+                      {activeDropdown === 'cardNumber' && (
                         <div className='settings-dropdown-contents'>
                           <p className='settings-dropdown-header-subtext'>
                             Modify the number of cards in your quiz
@@ -799,7 +735,7 @@ const Settings: React.FC = () => {
                     <div className='settings-dropdown'>
                       <div
                         className='settings-dropdown-header'
-                        onClick={() => handleShowExcludeCards()}
+                        onClick={() => toggleDropdown('excludeCards')}
                       >
                         <div className='settings-dropdown-header-text-container'>
                           <p className='settings-dropdown-header-text'>
@@ -807,7 +743,7 @@ const Settings: React.FC = () => {
                           </p>
                         </div>
                         <div className='settings-header-dropdown-icon'>
-                          {showExcludeCards ? (
+                          {activeDropdown === 'excludeCards' ? (
                             <DropdownIcon className='down-icon' />
                           ) : (
                             <DropdownIcon className='up-icon' />
@@ -815,7 +751,7 @@ const Settings: React.FC = () => {
                         </div>
                       </div>
 
-                      {showExcludeCards && (
+                      {activeDropdown === 'excludeCards' && (
                         <div className='settings-dropdown-contents'>
                           <div className='settings-known-cards-header '>
                             {creatorQuiz ? (
@@ -950,7 +886,7 @@ const Settings: React.FC = () => {
                     <div className='settings-dropdown'>
                       <div
                         className='settings-dropdown-header'
-                        onClick={() => handleShowIncludeCards()}
+                        onClick={() => toggleDropdown('includeCards')}
                       >
                         <div className='settings-dropdown-header-text-container'>
                           <p className='settings-dropdown-header-text'>
@@ -958,7 +894,7 @@ const Settings: React.FC = () => {
                           </p>
                         </div>
                         <div className='settings-header-dropdown-icon'>
-                          {showIncludeCards ? (
+                          {activeDropdown === 'includeCards' ? (
                             <DropdownIcon className='down-icon' />
                           ) : (
                             <DropdownIcon className='up-icon' />
@@ -966,7 +902,7 @@ const Settings: React.FC = () => {
                         </div>
                       </div>
 
-                      {showIncludeCards && (
+                      {activeDropdown === 'includeCards' && (
                         <div className='settings-dropdown-contents'>
                           <div className='settings-known-cards-header '>
                             <Tooltip
@@ -1093,7 +1029,7 @@ const Settings: React.FC = () => {
                     <div className='settings-dropdown'>
                       <div
                         className='settings-dropdown-header'
-                        onClick={() => handleShowParticipants()}
+                        onClick={() => toggleDropdown('participants')}
                       >
                         <div className='settings-dropdown-header-text-container'>
                           <p className='settings-dropdown-header-text'>
@@ -1101,7 +1037,7 @@ const Settings: React.FC = () => {
                           </p>
                         </div>
                         <div className='settings-header-dropdown-icon'>
-                          {showParticipants ? (
+                          {activeDropdown === 'participants' ? (
                             <DropdownIcon className='down-icon' />
                           ) : (
                             <DropdownIcon className='up-icon' />
@@ -1109,7 +1045,7 @@ const Settings: React.FC = () => {
                         </div>
                       </div>
 
-                      {showParticipants && (
+                      {activeDropdown === 'participants' && (
                         <div className='settings-dropdown-contents'>
                           <div className='settings-participants-content'>
                             <div className='settings-participants-header'>
