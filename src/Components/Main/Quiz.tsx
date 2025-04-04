@@ -720,15 +720,18 @@ const Quiz: React.FC = () => {
     const currentCard = selectedCards[currentIndex];
     if (!currentCard?.rank) return;
 
-    const cardRank = currentCard.rank;
-    const guesses = Object.values(currentCardGuesses);
+    const cardRank = currentCard.rank || 0;
+    const guesses = Object.values(currentCardGuesses).filter(Number.isFinite);
 
     if (guesses.length !== players.length) {
       console.error('Missing guesses for some players');
       return;
     }
 
-    const avgGuess = guesses.reduce((a, b) => a + b, 0) / guesses.length;
+    const avgGuess =
+      guesses.length > 0
+        ? guesses.reduce((a, b) => a + b, 0) / guesses.length
+        : 0;
 
     setCurrentCardStats({
       cardRank,
@@ -806,7 +809,7 @@ const Quiz: React.FC = () => {
 
   const calculateTotalScore = (player: (typeof players)[0]) => {
     const historicalTotal = player.scores.reduce(
-      (sum, score) => sum + score.diff,
+      (sum, score) => sum + (score.diff || 0),
       0
     );
     const currentGuess = currentCardGuesses[player.order] || 0;
@@ -905,7 +908,7 @@ const Quiz: React.FC = () => {
                             <div className='scores-guess-text-row'>
                               <p className='score-text-label'>Your Guess:</p>
                               <p className='score-text'>
-                                {currentCardGuesses[currentPlayer.order]}
+                                {currentCardGuesses[currentPlayer.order] ?? 0}
                               </p>
                             </div>
                           </div>
@@ -980,7 +983,7 @@ const Quiz: React.FC = () => {
                                       <div className='duo-stat-container'>
                                         <div className='duo-guess-container'>
                                           <p className='stat-player-guess'>
-                                            Guess: {currentGuess}
+                                            Guess: {currentGuess ?? 0}
                                           </p>
                                           <p className='stat-player-diff'>
                                             Score: +
