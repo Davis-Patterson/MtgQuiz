@@ -730,44 +730,36 @@ const Settings: React.FC = () => {
                           </p>
                           <div className='settings-dropdown-years-container'>
                             <div
-                              className={`settings-year-wrapper ${
-                                listYear === 2024 ? 'active' : ''
+                              className={`settings-year-container ${
+                                listYear === 2024
+                                  ? 'active blue-glow'
+                                  : 'inactive'
                               }`}
                               onClick={() => handleSetListYear(2024)}
                             >
-                              <div
-                                className={`settings-year-container ${
-                                  listYear === 2024 ? 'active' : ''
+                              <p
+                                className={`settings-year ${
+                                  listYear === 2024 ? 'active' : 'inactive'
                                 }`}
                               >
-                                <p
-                                  className={`settings-year ${
-                                    listYear === 2024 ? 'active' : 'inactive'
-                                  }`}
-                                >
-                                  2024
-                                </p>
-                              </div>
+                                2024
+                              </p>
                             </div>
                             <div
-                              className={`settings-year-wrapper ${
-                                listYear === 2023 ? 'active' : ''
+                              className={`settings-year-container ${
+                                listYear === 2023
+                                  ? 'active blue-glow'
+                                  : 'inactive'
                               }`}
                               onClick={() => handleSetListYear(2023)}
                             >
-                              <div
-                                className={`settings-year-container ${
-                                  listYear === 2023 ? 'active' : ''
+                              <p
+                                className={`settings-year ${
+                                  listYear === 2023 ? 'active' : 'inactive'
                                 }`}
                               >
-                                <p
-                                  className={`settings-year ${
-                                    listYear === 2023 ? 'active' : 'inactive'
-                                  }`}
-                                >
-                                  2023
-                                </p>
-                              </div>
+                                2023
+                              </p>
                             </div>
                           </div>
                         </div>
