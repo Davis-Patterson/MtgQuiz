@@ -49,7 +49,7 @@ export interface RevealedCard {
 }
 
 interface AppContextType {
-  listYearDefault: number;
+  defaultListYear: number;
 
   players: Player[];
   setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
@@ -118,7 +118,7 @@ interface AppProviderProps {
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  const listYearDefault = 2024;
+  const defaultListYear = 2024;
 
   const [players, setPlayers] = useState<Player[]>([
     {
@@ -171,14 +171,14 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     };
 
     const selectedData =
-      yearsMapping[listYear] || yearsMapping[listYearDefault];
+      yearsMapping[listYear] || yearsMapping[defaultListYear];
     setCardData(selectedData);
   }, [listYear]);
 
   return (
     <AppContext.Provider
       value={{
-        listYearDefault,
+        defaultListYear,
 
         players,
         setPlayers,

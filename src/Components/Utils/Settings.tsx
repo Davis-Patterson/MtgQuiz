@@ -31,7 +31,7 @@ const Settings: React.FC = () => {
     throw new Error('No Context');
   }
   const {
-    listYearDefault,
+    defaultListYear,
     players,
     setPlayers,
     cardData,
@@ -80,7 +80,7 @@ const Settings: React.FC = () => {
     new Set(includedRanks)
   );
   const [initialListYear, setInitialListYear] =
-    useState<number>(listYearDefault);
+    useState<number>(defaultListYear);
   const [initialPlayers, setInitialPlayers] = useState<Player[]>([]);
   const [initialRangeOfQuiz, setInitialRangeOfQuiz] = useState<number | null>(
     null
@@ -246,7 +246,7 @@ const Settings: React.FC = () => {
   useEffect(() => {
     const areSettingsDefault =
       rangeOfQuiz === 100 &&
-      listYear === listYearDefault &&
+      listYear === defaultListYear &&
       numberOfCards === 10 &&
       excludedRanks.size === 0 &&
       includedRanks.size === 0 &&
@@ -424,7 +424,7 @@ const Settings: React.FC = () => {
     }
 
     setRangeOfQuiz(100);
-    setListYear(listYearDefault);
+    setListYear(defaultListYear);
     setNumberOfCards(10);
     setExcludedRanks(new Set());
     setIncludedRanks(new Set());
