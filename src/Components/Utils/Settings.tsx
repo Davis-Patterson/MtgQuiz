@@ -185,6 +185,7 @@ const Settings: React.FC = () => {
         !settingsContainerRef.current.contains(event.target as Node)
       ) {
         setShowSettings(false);
+        setShowListYear(false);
         setShowCardNumber(false);
         setShowExcludeCards(false);
         setShowIncludeCards(false);
@@ -345,6 +346,7 @@ const Settings: React.FC = () => {
     event.stopPropagation();
 
     setShowSettings(false);
+    setShowListYear(false);
     setShowCardNumber(false);
     setShowExcludeCards(false);
     setShowIncludeCards(false);
