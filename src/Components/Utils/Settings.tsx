@@ -334,6 +334,7 @@ const Settings: React.FC = () => {
       setIsLoading(false);
     }, 100);
     setShowCardNumber(false);
+    setShowListYear(false);
     setShowExcludeCards(false);
     setShowIncludeCards(false);
     setShowParticipants(false);
