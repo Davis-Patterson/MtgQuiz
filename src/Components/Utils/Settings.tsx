@@ -31,9 +31,12 @@ const Settings: React.FC = () => {
     throw new Error('No Context');
   }
   const {
+    listYearDefault,
     players,
     setPlayers,
     cardData,
+    listYear,
+    setListYear,
     numberOfCards,
     setNumberOfCards,
     rangeOfQuiz,
@@ -76,6 +79,8 @@ const Settings: React.FC = () => {
   const [toBeIncludedRanks, setToBeIncludedRanks] = useState<Set<number>>(
     new Set(includedRanks)
   );
+  const [initialListYear, setInitialListYear] =
+    useState<number>(listYearDefault);
   const [initialPlayers, setInitialPlayers] = useState<Player[]>([]);
   const [initialRangeOfQuiz, setInitialRangeOfQuiz] = useState<number | null>(
     null
@@ -89,6 +94,7 @@ const Settings: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatorLoading, setIsCreatorLoading] = useState(false);
+  const [showListYear, setShowListYear] = useState(false);
   const [showCardNumber, setShowCardNumber] = useState(false);
   const [showExcludeCards, setShowExcludeCards] = useState(false);
   const [showIncludeCards, setShowIncludeCards] = useState(false);
@@ -113,6 +119,7 @@ const Settings: React.FC = () => {
   useEffect(() => {
     if (showSettings) {
       setInitialRangeOfQuiz(rangeOfQuiz);
+      setInitialListYear(listYear);
       setInitialNumberOfCards(numberOfCards);
       setInitialPlayers([...players]);
       const initialExcludedRanks = new Set(excludedRanks);
@@ -128,6 +135,7 @@ const Settings: React.FC = () => {
 
   const hasChanges = () => {
     const xChanged = initialRangeOfQuiz !== rangeOfQuiz;
+    const listYearChanged = initialListYear !== listYear;
     const numberOfCardsChanged = initialNumberOfCards !== numberOfCards;
 
     const excludedRanksChanged = !(
@@ -149,6 +157,7 @@ const Settings: React.FC = () => {
 
     return (
       xChanged ||
+      listYearChanged ||
       numberOfCardsChanged ||
       excludedRanksChanged ||
       includedRanksChanged ||
@@ -212,6 +221,7 @@ const Settings: React.FC = () => {
 
     setSettingsButtonActive(hasValidChanges && hasEnoughCards && !hasOverlap);
   }, [
+    listYear,
     toBeExcludedRanks,
     toBeIncludedRanks,
     creatorRanks,
@@ -235,6 +245,7 @@ const Settings: React.FC = () => {
   useEffect(() => {
     const areSettingsDefault =
       rangeOfQuiz === 100 &&
+      listYear === listYearDefault &&
       numberOfCards === 10 &&
       excludedRanks.size === 0 &&
       includedRanks.size === 0 &&
@@ -250,6 +261,7 @@ const Settings: React.FC = () => {
     setSettingsEraserActive(!areSettingsDefault);
   }, [
     rangeOfQuiz,
+    listYear,
     numberOfCards,
     excludedRanks,
     includedRanks,
@@ -341,9 +353,22 @@ const Settings: React.FC = () => {
     setShowSettingsWindow(true);
   };
 
+  const handleShowListYear = () => {
+    if (!showListYear) {
+      setShowListYear(true);
+      setShowCardNumber(false);
+      setShowExcludeCards(false);
+      setShowParticipants(false);
+      setShowIncludeCards(false);
+    } else {
+      setShowListYear(false);
+    }
+  };
+
   const handleShowCardNumber = () => {
     if (!showCardNumber) {
       setShowCardNumber(true);
+      setShowListYear(false);
       setShowExcludeCards(false);
       setShowParticipants(false);
       setShowIncludeCards(false);
@@ -355,6 +380,7 @@ const Settings: React.FC = () => {
   const handleShowExcludeCards = () => {
     if (!showExcludeCards) {
       setShowExcludeCards(true);
+      setShowListYear(false);
       setShowParticipants(false);
       setShowIncludeCards(false);
       setShowCardNumber(false);
@@ -366,6 +392,7 @@ const Settings: React.FC = () => {
   const handleShowIncludeCards = () => {
     if (!showIncludeCards) {
       setShowIncludeCards(true);
+      setShowListYear(false);
       setShowExcludeCards(false);
       setShowParticipants(false);
       setShowCardNumber(false);
@@ -377,6 +404,7 @@ const Settings: React.FC = () => {
   const handleShowParticipants = () => {
     if (!showParticipants) {
       setShowParticipants(true);
+      setShowListYear(false);
       setShowExcludeCards(false);
       setShowIncludeCards(false);
       setShowCardNumber(false);
@@ -394,6 +422,7 @@ const Settings: React.FC = () => {
     }
 
     setRangeOfQuiz(100);
+    setListYear(listYearDefault);
     setNumberOfCards(10);
     setExcludedRanks(new Set());
     setIncludedRanks(new Set());
@@ -514,6 +543,10 @@ const Settings: React.FC = () => {
   const handleContactWindow = () => {
     setShowSettingsWindow(false);
     setShowContactWindow(true);
+  };
+
+  const handleSetListYear = (year: number) => {
+    setListYear(year);
   };
 
   return (
@@ -668,6 +701,77 @@ const Settings: React.FC = () => {
                   )}
 
                   <div className='settings-dropdowns'>
+                    <div className='settings-dropdown'>
+                      <div
+                        className='settings-dropdown-header'
+                        onClick={() => handleShowListYear()}
+                      >
+                        <div className='settings-dropdown-header-text-container'>
+                          <p className='settings-dropdown-header-text'>
+                            Select salt lists by year
+                          </p>
+                        </div>
+                        <div className='settings-header-dropdown-icon'>
+                          {showListYear ? (
+                            <DropdownIcon className='down-icon' />
+                          ) : (
+                            <DropdownIcon className='up-icon' />
+                          )}
+                        </div>
+                      </div>
+
+                      {showListYear && (
+                        <div className='settings-dropdown-contents'>
+                          <p className='settings-dropdown-header-subtext'>
+                            Choose which year's saltiest cards list to use for
+                            your quiz
+                          </p>
+                          <div className='settings-dropdown-years-container'>
+                            <div
+                              className={`settings-year-wrapper ${
+                                listYear === 2024 ? 'active' : ''
+                              }`}
+                              onClick={() => handleSetListYear(2024)}
+                            >
+                              <div
+                                className={`settings-year-container ${
+                                  listYear === 2024 ? 'active' : ''
+                                }`}
+                              >
+                                <p
+                                  className={`settings-year ${
+                                    listYear === 2024 ? 'active' : 'inactive'
+                                  }`}
+                                >
+                                  2024
+                                </p>
+                              </div>
+                            </div>
+                            <div
+                              className={`settings-year-wrapper ${
+                                listYear === 2023 ? 'active' : ''
+                              }`}
+                              onClick={() => handleSetListYear(2023)}
+                            >
+                              <div
+                                className={`settings-year-container ${
+                                  listYear === 2023 ? 'active' : ''
+                                }`}
+                              >
+                                <p
+                                  className={`settings-year ${
+                                    listYear === 2023 ? 'active' : 'inactive'
+                                  }`}
+                                >
+                                  2023
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
                     <div className='settings-dropdown'>
                       <div
                         className='settings-dropdown-header'

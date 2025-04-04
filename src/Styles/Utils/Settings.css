@@ -353,6 +353,7 @@
   text-align: center;
   margin: 5px 0px 0px 0px;
   user-select: none;
+  padding: 0px 10px;
 }
 
 .settings-dropdown-info-text {
@@ -365,6 +366,54 @@
   width: auto;
   text-align: center;
   user-select: none;
+}
+
+.settings-dropdown-years-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 10px 15px 10px;
+}
+
+.settings-year-wrapper {
+  padding: 1px;
+  border: 2px solid var(--clr-transparent);
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+.settings-year-wrapper:hover {
+  border: 2px solid var(--clr-accent-blue);
+}
+.settings-year-wrapper.active {
+  border: 2px solid var(--clr-transparent);
+}
+
+.settings-year-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--clr-divider);
+  padding: 2px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--clr-transparent);
+  transition: all 0.15s ease-in-out;
+}
+.settings-year-container.active {
+  border: 2px solid var(--clr-accent-blue);
+}
+
+.settings-year {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1em;
+  color: var(--clr-light);
+  margin: 2px 0px 0px 0px;
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+}
+.settings-year.active {
+  color: var(--clr-accent-blue);
 }
 
 .settings-participants-header {

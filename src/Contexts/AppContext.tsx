@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import SaltData2024 from 'Utilities/SaltData2024.json';
+import SaltData2023 from 'Utilities/SaltData2023.json';
 
 export interface Player {
   id: string;
@@ -48,6 +49,8 @@ export interface RevealedCard {
 }
 
 interface AppContextType {
+  listYearDefault: number;
+
   players: Player[];
   setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
   currentPlayerIndex: number;
@@ -115,6 +118,8 @@ interface AppProviderProps {
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
+  const listYearDefault = 2024;
+
   const [players, setPlayers] = useState<Player[]>([
     {
       id: uuidv4(),
@@ -162,15 +167,19 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   useEffect(() => {
     const yearsMapping: { [key: number]: Card[] } = {
       2024: SaltData2024 as Card[],
+      2023: SaltData2023 as Card[],
     };
 
-    const selectedData = yearsMapping[listYear] || yearsMapping[2024];
+    const selectedData =
+      yearsMapping[listYear] || yearsMapping[listYearDefault];
     setCardData(selectedData);
   }, [listYear]);
 
   return (
     <AppContext.Provider
       value={{
+        listYearDefault,
+
         players,
         setPlayers,
         currentPlayerIndex,
