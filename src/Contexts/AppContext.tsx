@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import SaltData from 'Utilities/SaltData.json';
+import SaltData2024 from 'Utilities/SaltData2024.json';
 
 export interface Player {
   id: string;
@@ -61,6 +61,8 @@ interface AppContextType {
 
   cardData: Card[];
   setCardData: React.Dispatch<React.SetStateAction<Card[]>>;
+  listYear: number;
+  setListYear: React.Dispatch<React.SetStateAction<number>>;
   cardStats: CardStat[];
   setCardStats: React.Dispatch<React.SetStateAction<CardStat[]>>;
   selectedCards: Card[];
@@ -129,7 +131,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     null
   );
 
-  const [cardData, setCardData] = useState<Card[]>(SaltData);
+  const [cardData, setCardData] = useState<Card[]>([]);
+  const [listYear, setListYear] = useState<number>(2024);
   const [cardStats, setCardStats] = useState<CardStat[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [numberOfCards, setNumberOfCards] = useState<number>(10);
@@ -156,6 +159,15 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
 
+  useEffect(() => {
+    const yearsMapping: { [key: number]: Card[] } = {
+      2024: SaltData2024 as Card[],
+    };
+
+    const selectedData = yearsMapping[listYear] || yearsMapping[2024];
+    setCardData(selectedData);
+  }, [listYear]);
+
   return (
     <AppContext.Provider
       value={{
@@ -170,6 +182,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         cardData,
         setCardData,
+        listYear,
+        setListYear,
         cardStats,
         setCardStats,
         selectedCards,
