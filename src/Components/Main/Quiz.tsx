@@ -642,7 +642,7 @@ const Quiz: React.FC = () => {
 
   useEffect(() => {
     if (finished) {
-      navigate('/results');
+      navigate('/salt/results');
     }
   }, [finished]);
 

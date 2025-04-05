@@ -59,7 +59,7 @@
 
 .flip-container {
   position: relative;
-  height: 840px;
+  height: 69vh;
   width: 600px;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -161,9 +161,9 @@
 
 .card-image-front,
 .card-image-back {
-  width: 550px;
-  height: auto;
-  border-radius: 32px;
+  width: auto;
+  height: 64vh;
+  border-radius: 50px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.6s ease;
   cursor: pointer;
@@ -225,7 +225,7 @@
 
 .card-name {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 1.6em;
+  font-size: 3em;
   line-height: 1;
   font-weight: 400;
   color: var(--clr-light);
@@ -241,6 +241,30 @@
   transition: all 0.3s ease-in-out;
 }
 
+@media screen and (max-height: 2560px), (max-width: 1100px) {
+  .card-image-front,
+  .card-image-back {
+    border-radius: 35px;
+  }
+  .card-name {
+    font-size: 2.25em;
+  }
+}
+
+@media screen and (max-height: 1250px), (max-width: 1100px) {
+  .flip-container {
+    position: relative;
+    height: 840px;
+    width: 600px;
+  }
+  .card-image-front,
+  .card-image-back {
+    border-radius: 35px;
+    width: 500px;
+    height: auto;
+  }
+}
+
 @media screen and (max-height: 1200px), (max-width: 800px) {
   .flip-container {
     position: relative;
@@ -250,6 +274,7 @@
   .card-image-front,
   .card-image-back {
     width: 500px;
+    height: auto;
   }
 }
 
@@ -262,6 +287,7 @@
   .card-image-front,
   .card-image-back {
     width: 440px;
+    height: auto;
     border-radius: 22px;
   }
   .flip-button {
@@ -279,10 +305,14 @@
   .card-image-front,
   .card-image-back {
     width: 400px;
+    height: auto;
   }
   .flip-button {
     top: -5px;
     right: -90px;
+  }
+  .card-name {
+    font-size: 1.8em;
   }
 }
 
@@ -295,6 +325,7 @@
   .card-image-front,
   .card-image-back {
     width: 320px;
+    height: auto;
   }
 }
 
@@ -312,6 +343,7 @@
   .card-image-front,
   .card-image-back {
     width: 300px;
+    height: auto;
     border-radius: 14px;
   }
   .card-name {
@@ -329,6 +361,7 @@
   .card-image-front,
   .card-image-back {
     width: 280px;
+    height: auto;
   }
 }
 
@@ -340,6 +373,7 @@
   .card-image-front,
   .card-image-back {
     width: 250px;
+    height: auto;
   }
 }
 
@@ -351,6 +385,7 @@
   .card-image-front,
   .card-image-back {
     width: 250px;
+    height: auto;
   }
   .flip-icon {
     width: 20px;
@@ -370,6 +405,7 @@
   .card-image-front,
   .card-image-back {
     width: 230px;
+    height: auto;
   }
 }
 
@@ -381,6 +417,7 @@
   .card-image-front,
   .card-image-back {
     width: 210px;
+    height: auto;
   }
   .flip-icon {
     width: 16px;

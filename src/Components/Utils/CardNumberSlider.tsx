@@ -10,7 +10,7 @@ const CardNumberSlider: React.FC = () => {
   if (!appContext) {
     throw new Error('No Context');
   }
-  const { numberOfCards, setNumberOfCards, creatorQuiz } = appContext;
+  const { gameMode, numberOfCards, setNumberOfCards, creatorQuiz } = appContext;
   const [resetButtonActive, setResetButtonActive] = useState(false);
 
   const sliderRef = useRef<HTMLDivElement>(null);

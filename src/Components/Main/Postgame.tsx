@@ -38,7 +38,7 @@ const Postgame: React.FC = () => {
     if (!finished) {
       const timer = setTimeout(() => {
         navigate('/');
-      }, 4000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [finished]);

@@ -12,6 +12,7 @@ const Home: React.FC = () => {
     throw new Error('No Context available');
   }
   const {
+    gameMode,
     cardData,
     setPlayers,
     setCurrentIndex,
@@ -254,11 +255,11 @@ const Home: React.FC = () => {
                 </Tooltip>
               ) : (
                 <Link
-                  to='/salt'
+                  to={gameMode === 'salt' ? '/salt' : '/shift'}
                   className='guess-button orange-glow'
                   onClick={() => handleStart()}
                 >
-                  Start Quiz
+                  {gameMode === 'salt' ? 'Start Quiz' : 'Start Salt Shift'}
                 </Link>
               )}
             </div>

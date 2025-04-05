@@ -3,6 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import SaltData2024 from 'Utilities/SaltData2024.json';
 import SaltData2023 from 'Utilities/SaltData2023.json';
 
+export interface ScoreDetail {
+  cardRank: number;
+  guess: number;
+  diff: number;
+}
+
 export interface Player {
   id: string;
   order: number;
@@ -31,12 +37,6 @@ export interface Card {
   };
 }
 
-export interface ScoreDetail {
-  cardRank: number;
-  guess: number;
-  diff: number;
-}
-
 export interface CardStat {
   cardRank: number;
   averageGuess: number;
@@ -50,6 +50,8 @@ export interface RevealedCard {
 
 interface AppContextType {
   defaultListYear: number;
+  gameMode: string;
+  setGameMode: React.Dispatch<React.SetStateAction<string>>;
 
   players: Player[];
   setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
@@ -109,6 +111,11 @@ interface AppContextType {
   setShouldFlip: React.Dispatch<React.SetStateAction<boolean>>;
   fullScreenImage: string | null;
   setFullScreenImage: React.Dispatch<React.SetStateAction<string | null>>;
+
+  shiftData2024: Card[];
+  setShiftData2024: React.Dispatch<React.SetStateAction<Card[]>>;
+  shiftData2023: Card[];
+  setShiftData2023: React.Dispatch<React.SetStateAction<Card[]>>;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -119,6 +126,7 @@ interface AppProviderProps {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   const defaultListYear = 2024;
+  const [gameMode, setGameMode] = useState<string>('salt');
 
   const [players, setPlayers] = useState<Player[]>([
     {
@@ -164,6 +172,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
 
+  const [shiftData2024, setShiftData2024] = useState<Card[]>(SaltData2024);
+  const [shiftData2023, setShiftData2023] = useState<Card[]>(SaltData2023);
+
   useEffect(() => {
     const yearsMapping: { [key: number]: Card[] } = {
       2024: SaltData2024 as Card[],
@@ -179,6 +190,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     <AppContext.Provider
       value={{
         defaultListYear,
+        gameMode,
+        setGameMode,
 
         players,
         setPlayers,
@@ -236,6 +249,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setShouldFlip,
         fullScreenImage,
         setFullScreenImage,
+
+        shiftData2024,
+        setShiftData2024,
+        shiftData2023,
+        setShiftData2023,
       }}
     >
       {children}
