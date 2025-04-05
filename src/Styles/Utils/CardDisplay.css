@@ -55,6 +55,7 @@
   perspective: 1000px;
   width: 300px;
   height: auto;
+  transition: all 0.2s ease-in-out;
 }
 
 .flip-container {
@@ -171,6 +172,7 @@
   backface-visibility: hidden;
   transform-origin: bottom center;
   transform-style: preserve-3d;
+  transition: all 0.2s ease-in-out;
 }
 
 .card-image-front {

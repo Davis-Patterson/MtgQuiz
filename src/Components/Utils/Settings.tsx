@@ -26,6 +26,7 @@ import Email from 'Components/Utils/Email';
 import InfoIcon from 'Svgs/InfoIcon';
 
 type DropdownType =
+  | 'gameMode'
   | 'listYear'
   | 'cardNumber'
   | 'excludeCards'
@@ -40,6 +41,8 @@ const Settings: React.FC = () => {
   }
   const {
     defaultListYear,
+    gameMode,
+    setGameMode,
     players,
     setPlayers,
     cardData,
@@ -87,6 +90,7 @@ const Settings: React.FC = () => {
   const [toBeIncludedRanks, setToBeIncludedRanks] = useState<Set<number>>(
     new Set(includedRanks)
   );
+  const [initialGameMode, setInitialGameMode] = useState<string>('');
   const [initialListYear, setInitialListYear] =
     useState<number>(defaultListYear);
   const [initialPlayers, setInitialPlayers] = useState<Player[]>([]);
@@ -122,6 +126,7 @@ const Settings: React.FC = () => {
   useEffect(() => {
     if (showSettings) {
       setInitialRangeOfQuiz(rangeOfQuiz);
+      setInitialGameMode(gameMode);
       setInitialListYear(listYear);
       setInitialNumberOfCards(numberOfCards);
       setInitialPlayers([...players]);
@@ -138,6 +143,7 @@ const Settings: React.FC = () => {
 
   const hasChanges = () => {
     const xChanged = initialRangeOfQuiz !== rangeOfQuiz;
+    const gameModeChanged = initialGameMode !== gameMode;
     const listYearChanged = initialListYear !== listYear;
     const numberOfCardsChanged = initialNumberOfCards !== numberOfCards;
 
@@ -160,6 +166,7 @@ const Settings: React.FC = () => {
 
     return (
       xChanged ||
+      gameModeChanged ||
       listYearChanged ||
       numberOfCardsChanged ||
       excludedRanksChanged ||
@@ -221,6 +228,7 @@ const Settings: React.FC = () => {
 
     setSettingsButtonActive(hasValidChanges && hasEnoughCards && !hasOverlap);
   }, [
+    gameMode,
     listYear,
     toBeExcludedRanks,
     toBeIncludedRanks,
@@ -244,6 +252,7 @@ const Settings: React.FC = () => {
 
   useEffect(() => {
     const areSettingsDefault =
+      gameMode === 'salt' &&
       rangeOfQuiz === 100 &&
       listYear === defaultListYear &&
       numberOfCards === 10 &&
@@ -260,6 +269,7 @@ const Settings: React.FC = () => {
 
     setSettingsEraserActive(!areSettingsDefault);
   }, [
+    gameMode,
     rangeOfQuiz,
     listYear,
     numberOfCards,
@@ -360,6 +370,7 @@ const Settings: React.FC = () => {
     }
 
     setRangeOfQuiz(100);
+    setGameMode('salt');
     setListYear(defaultListYear);
     setNumberOfCards(10);
     setExcludedRanks(new Set());
@@ -422,21 +433,19 @@ const Settings: React.FC = () => {
     if (selectedCreator) {
       const creator = creatorQuizzes.find((c) => c.creator === selectedCreator);
       if (creator) {
+        setGameMode('salt');
         setCreatorRanks(new Set(creator.cards));
         setToBeIncludedRanks(new Set());
         setToBeExcludedRanks(new Set());
         setRangeOfQuiz(100);
         setNumberOfCards(10);
-        setTimeout(() => {
-          setIsCreatorLoading(false);
-        }, 500);
       }
     } else {
       setCreatorRanks(new Set());
-      setTimeout(() => {
-        setIsCreatorLoading(false);
-      }, 500);
     }
+    setTimeout(() => {
+      setIsCreatorLoading(false);
+    }, 500);
   };
 
   const addPlayer = () => {
@@ -560,12 +569,12 @@ const Settings: React.FC = () => {
                   <p className='settings-header-sub-subtext'>
                     The range of cards from which your quiz will be drawn from
                   </p>
-                  {creatorQuiz ? (
+                  {creatorQuiz || gameMode === 'shift' ? (
                     <Tooltip
                       title={
                         <>
-                          <p className='tooltip-text'>Disabled while creator</p>
-                          <p className='tooltip-text'>quiz is selected</p>
+                          <p className='tooltip-text'>Disabled under</p>
+                          <p className='tooltip-text'>current settings</p>
                         </>
                       }
                       enterDelay={400}
@@ -640,391 +649,416 @@ const Settings: React.FC = () => {
                   )}
 
                   <div className='settings-dropdowns'>
-                    <div className='settings-dropdown'>
-                      <div
-                        className='settings-dropdown-header'
-                        onClick={() => toggleDropdown('listYear')}
-                      >
-                        <div className='settings-dropdown-header-text-container'>
-                          <p className='settings-dropdown-header-text'>
-                            Select salt lists by year
-                          </p>
-                        </div>
-                        <div className='settings-header-dropdown-icon'>
-                          {activeDropdown === 'listYear' ? (
-                            <DropdownIcon className='down-icon' />
-                          ) : (
-                            <DropdownIcon className='up-icon' />
-                          )}
-                        </div>
-                      </div>
-
-                      {activeDropdown === 'listYear' && (
-                        <div className='settings-dropdown-contents'>
-                          <p className='settings-dropdown-header-subtext'>
-                            Choose which year's saltiest cards list to use for
-                            your quiz
-                          </p>
-                          <div className='settings-dropdown-years-container'>
-                            <div
-                              className={`settings-year-container ${
-                                listYear === 2024
-                                  ? 'active blue-glow'
-                                  : 'inactive'
-                              }`}
-                              onClick={() => handleSetListYear(2024)}
-                            >
-                              <p
-                                className={`settings-year ${
-                                  listYear === 2024 ? 'active' : 'inactive'
-                                }`}
-                              >
-                                2024
+                    {gameMode === 'salt' && (
+                      <>
+                        <div className='settings-dropdown'>
+                          <div
+                            className='settings-dropdown-header'
+                            onClick={() => toggleDropdown('listYear')}
+                          >
+                            <div className='settings-dropdown-header-text-container'>
+                              <p className='settings-dropdown-header-text'>
+                                Select salt lists by year
                               </p>
                             </div>
-                            <div
-                              className={`settings-year-container ${
-                                listYear === 2023
-                                  ? 'active blue-glow'
-                                  : 'inactive'
-                              }`}
-                              onClick={() => handleSetListYear(2023)}
-                            >
-                              <p
-                                className={`settings-year ${
-                                  listYear === 2023 ? 'active' : 'inactive'
-                                }`}
-                              >
-                                2023
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className='settings-dropdown'>
-                      <div
-                        className='settings-dropdown-header'
-                        onClick={() => toggleDropdown('cardNumber')}
-                      >
-                        <div className='settings-dropdown-header-text-container'>
-                          <p className='settings-dropdown-header-text'>
-                            Adjust the length of your quiz
-                          </p>
-                        </div>
-                        <div className='settings-header-dropdown-icon'>
-                          {activeDropdown === 'cardNumber' ? (
-                            <DropdownIcon className='down-icon' />
-                          ) : (
-                            <DropdownIcon className='up-icon' />
-                          )}
-                        </div>
-                      </div>
-
-                      {activeDropdown === 'cardNumber' && (
-                        <div className='settings-dropdown-contents'>
-                          <p className='settings-dropdown-header-subtext'>
-                            Modify the number of cards in your quiz
-                          </p>
-                          <CardNumberSlider />
-                        </div>
-                      )}
-                    </div>
-
-                    <div className='settings-dropdown'>
-                      <div
-                        className='settings-dropdown-header'
-                        onClick={() => toggleDropdown('excludeCards')}
-                      >
-                        <div className='settings-dropdown-header-text-container'>
-                          <p className='settings-dropdown-header-text'>
-                            Select rankings to be excluded from quiz
-                          </p>
-                        </div>
-                        <div className='settings-header-dropdown-icon'>
-                          {activeDropdown === 'excludeCards' ? (
-                            <DropdownIcon className='down-icon' />
-                          ) : (
-                            <DropdownIcon className='up-icon' />
-                          )}
-                        </div>
-                      </div>
-
-                      {activeDropdown === 'excludeCards' && (
-                        <div className='settings-dropdown-contents'>
-                          <div className='settings-known-cards-header '>
-                            {creatorQuiz ? (
-                              <Tooltip
-                                title={
-                                  <>
-                                    <p className='tooltip-text'>
-                                      Disabled while creator
-                                    </p>
-                                    <p className='tooltip-text'>
-                                      quiz is selected
-                                    </p>
-                                  </>
-                                }
-                                enterDelay={400}
-                                placement='top'
-                              >
-                                <span>
-                                  <button
-                                    disabled={true}
-                                    className='exclude-cards-button-disabled'
-                                  >
-                                    Select Previous Quiz
-                                  </button>
-                                </span>
-                              </Tooltip>
-                            ) : (
-                              <Tooltip
-                                title={
-                                  <>
-                                    <p className='tooltip-text'>
-                                      Select cards seen in
-                                    </p>
-                                    <p className='tooltip-text'>
-                                      previous quiz, when
-                                    </p>
-                                    <p className='tooltip-text'>applicable</p>
-                                  </>
-                                }
-                                enterDelay={400}
-                                placement='top'
-                              >
-                                <span>
-                                  <button
-                                    onClick={handleExcludePreviousQuiz}
-                                    disabled={previousQuizRanks.size === 0}
-                                    className='exclude-cards-button'
-                                  >
-                                    Select Previous Quiz
-                                  </button>
-                                </span>
-                              </Tooltip>
-                            )}
-                            <Tooltip
-                              title={
-                                <>
-                                  <p className='tooltip-text'>
-                                    Clear selections
-                                  </p>
-                                </>
-                              }
-                              enterDelay={400}
-                              placement='top'
-                            >
-                              <span>
-                                <button
-                                  className='eraser-button'
-                                  disabled={!excludeCardsEraserActive}
-                                  onClick={
-                                    excludeCardsEraserActive
-                                      ? handleExclusionErase
-                                      : undefined
-                                  }
-                                >
-                                  <EraserIcon className='eraser-button-icon' />
-                                </button>
-                              </span>
-                            </Tooltip>
-                          </div>
-                          <p className='settings-dropdown-header-subtext'>
-                            Ranks selected here will be excluded from the quiz
-                          </p>
-                          <div className='settings-known-cards-grid'>
-                            {cardData.map((card) =>
-                              creatorQuiz ? (
-                                <Tooltip
-                                  key={card.rank}
-                                  title={
-                                    <>
-                                      <p className='tooltip-text'>
-                                        Disabled while creator
-                                      </p>
-                                      <p className='tooltip-text'>
-                                        quiz is selected
-                                      </p>
-                                    </>
-                                  }
-                                  enterDelay={400}
-                                  placement='top'
-                                >
-                                  <div className='grid-circle-container'>
-                                    <div className='settings-rank unused'>
-                                      <span className='settings-rank-value'>
-                                        {card.rank}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </Tooltip>
+                            <div className='settings-header-dropdown-icon'>
+                              {activeDropdown === 'listYear' ? (
+                                <DropdownIcon className='down-icon' />
                               ) : (
-                                <div
-                                  key={card.rank}
-                                  className='grid-circle-container'
-                                >
-                                  <div
-                                    className={getExcludedRankClass(card.rank!)}
-                                    onClick={() =>
-                                      handleRankExclusionSelection(card.rank!)
-                                    }
-                                  >
-                                    <span className='settings-rank-value'>
-                                      {card.rank}
-                                    </span>
-                                  </div>
-                                </div>
-                              )
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className='settings-dropdown'>
-                      <div
-                        className='settings-dropdown-header'
-                        onClick={() => toggleDropdown('includeCards')}
-                      >
-                        <div className='settings-dropdown-header-text-container'>
-                          <p className='settings-dropdown-header-text'>
-                            Select rankings to be included in the quiz
-                          </p>
-                        </div>
-                        <div className='settings-header-dropdown-icon'>
-                          {activeDropdown === 'includeCards' ? (
-                            <DropdownIcon className='down-icon' />
-                          ) : (
-                            <DropdownIcon className='up-icon' />
-                          )}
-                        </div>
-                      </div>
-
-                      {activeDropdown === 'includeCards' && (
-                        <div className='settings-dropdown-contents'>
-                          <div className='settings-known-cards-header '>
-                            <Tooltip
-                              title={
-                                <>
-                                  <p className='tooltip-text'>
-                                    Recreate past quizzes
-                                  </p>
-                                  <p className='tooltip-text'>
-                                    taken by creators
-                                  </p>
-                                </>
-                              }
-                              enterDelay={400}
-                              placement='top'
-                            >
-                              {isCreatorLoading ? (
-                                <div className='creator-dropdown'>
-                                  <LinearProgress
-                                    className='linear-progress'
-                                    color='inherit'
-                                  />
-                                </div>
-                              ) : (
-                                <select
-                                  className='creator-dropdown'
-                                  value={creatorQuiz}
-                                  onChange={(e) => handleCreatorQuiz(e)}
-                                >
-                                  <option value=''>
-                                    {toBeIncludedRanks.size > 0
-                                      ? 'Custom'
-                                      : 'Select a creator quiz'}
-                                  </option>
-                                  {creatorQuizzes.map((quiz) => (
-                                    <option
-                                      key={quiz.creator}
-                                      value={quiz.creator}
-                                    >
-                                      {quiz.creator}
-                                    </option>
-                                  ))}
-                                </select>
+                                <DropdownIcon className='up-icon' />
                               )}
-                            </Tooltip>
-                            <Tooltip
-                              title={
-                                <>
-                                  <p className='tooltip-text'>
-                                    Clear selections
-                                  </p>
-                                </>
-                              }
-                              enterDelay={400}
-                              placement='top'
-                            >
-                              <span>
-                                <button
-                                  className='eraser-button'
-                                  disabled={!includeCardsEraserActive}
-                                  onClick={
-                                    includeCardsEraserActive
-                                      ? handleInclusionErase
-                                      : undefined
-                                  }
-                                >
-                                  <EraserIcon className='eraser-button-icon' />
-                                </button>
-                              </span>
-                            </Tooltip>
+                            </div>
                           </div>
-                          <p className='settings-dropdown-header-subtext'>
-                            Ranks selected here will be included in the quiz
-                          </p>
-                          <div className='settings-known-cards-grid'>
-                            {cardData.map((card) =>
-                              creatorQuiz ? (
+
+                          {activeDropdown === 'listYear' && (
+                            <div className='settings-dropdown-contents'>
+                              <p className='settings-dropdown-header-subtext'>
+                                Choose which year's saltiest cards list to use
+                                for your quiz
+                              </p>
+                              <div className='settings-dropdown-years-container'>
+                                <div
+                                  className={`settings-year-container ${
+                                    listYear === 2024
+                                      ? 'active blue-glow'
+                                      : 'inactive'
+                                  }`}
+                                  onClick={() => handleSetListYear(2024)}
+                                >
+                                  <p
+                                    className={`settings-year ${
+                                      listYear === 2024 ? 'active' : 'inactive'
+                                    }`}
+                                  >
+                                    2024
+                                  </p>
+                                </div>
+                                <div
+                                  className={`settings-year-container ${
+                                    listYear === 2023
+                                      ? 'active blue-glow'
+                                      : 'inactive'
+                                  }`}
+                                  onClick={() => handleSetListYear(2023)}
+                                >
+                                  <p
+                                    className={`settings-year ${
+                                      listYear === 2023 ? 'active' : 'inactive'
+                                    }`}
+                                  >
+                                    2023
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    <>
+                      <div className='settings-dropdown'>
+                        <div
+                          className='settings-dropdown-header'
+                          onClick={() => toggleDropdown('cardNumber')}
+                        >
+                          <div className='settings-dropdown-header-text-container'>
+                            <p className='settings-dropdown-header-text'>
+                              Adjust the length of your quiz
+                            </p>
+                          </div>
+                          <div className='settings-header-dropdown-icon'>
+                            {activeDropdown === 'cardNumber' ? (
+                              <DropdownIcon className='down-icon' />
+                            ) : (
+                              <DropdownIcon className='up-icon' />
+                            )}
+                          </div>
+                        </div>
+
+                        {activeDropdown === 'cardNumber' && (
+                          <div className='settings-dropdown-contents'>
+                            <p className='settings-dropdown-header-subtext'>
+                              Modify the number of cards in your quiz
+                            </p>
+                            <CardNumberSlider />
+                          </div>
+                        )}
+                      </div>
+                    </>
+
+                    {gameMode === 'salt' && (
+                      <>
+                        <div className='settings-dropdown'>
+                          <div
+                            className='settings-dropdown-header'
+                            onClick={() => toggleDropdown('excludeCards')}
+                          >
+                            <div className='settings-dropdown-header-text-container'>
+                              <p className='settings-dropdown-header-text'>
+                                Select rankings to be excluded from quiz
+                              </p>
+                            </div>
+                            <div className='settings-header-dropdown-icon'>
+                              {activeDropdown === 'excludeCards' ? (
+                                <DropdownIcon className='down-icon' />
+                              ) : (
+                                <DropdownIcon className='up-icon' />
+                              )}
+                            </div>
+                          </div>
+
+                          {activeDropdown === 'excludeCards' && (
+                            <div className='settings-dropdown-contents'>
+                              <div className='settings-known-cards-header '>
+                                {creatorQuiz ? (
+                                  <Tooltip
+                                    title={
+                                      <>
+                                        <p className='tooltip-text'>
+                                          Disabled while creator
+                                        </p>
+                                        <p className='tooltip-text'>
+                                          quiz is selected
+                                        </p>
+                                      </>
+                                    }
+                                    enterDelay={400}
+                                    placement='top'
+                                  >
+                                    <span>
+                                      <button
+                                        disabled={true}
+                                        className='exclude-cards-button-disabled'
+                                      >
+                                        Select Previous Quiz
+                                      </button>
+                                    </span>
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip
+                                    title={
+                                      <>
+                                        <p className='tooltip-text'>
+                                          Select cards seen in
+                                        </p>
+                                        <p className='tooltip-text'>
+                                          previous quiz, when
+                                        </p>
+                                        <p className='tooltip-text'>
+                                          applicable
+                                        </p>
+                                      </>
+                                    }
+                                    enterDelay={400}
+                                    placement='top'
+                                  >
+                                    <span>
+                                      <button
+                                        onClick={handleExcludePreviousQuiz}
+                                        disabled={previousQuizRanks.size === 0}
+                                        className='exclude-cards-button'
+                                      >
+                                        Select Previous Quiz
+                                      </button>
+                                    </span>
+                                  </Tooltip>
+                                )}
                                 <Tooltip
-                                  key={card.rank}
                                   title={
                                     <>
                                       <p className='tooltip-text'>
-                                        Disabled while creator
-                                      </p>
-                                      <p className='tooltip-text'>
-                                        quiz is selected
+                                        Clear selections
                                       </p>
                                     </>
                                   }
                                   enterDelay={400}
                                   placement='top'
                                 >
-                                  <div className='grid-circle-container'>
-                                    <div className='settings-rank unused'>
-                                      <span className='settings-rank-value'>
-                                        {card.rank}
-                                      </span>
-                                    </div>
-                                  </div>
+                                  <span>
+                                    <button
+                                      className='eraser-button'
+                                      disabled={!excludeCardsEraserActive}
+                                      onClick={
+                                        excludeCardsEraserActive
+                                          ? handleExclusionErase
+                                          : undefined
+                                      }
+                                    >
+                                      <EraserIcon className='eraser-button-icon' />
+                                    </button>
+                                  </span>
                                 </Tooltip>
-                              ) : (
-                                <div
-                                  key={card.rank}
-                                  className='grid-circle-container'
-                                >
-                                  <div
-                                    className={getIncludedRankClass(card.rank!)}
-                                    onClick={() =>
-                                      handleRankInclusionSelection(card.rank!)
-                                    }
-                                  >
-                                    <span className='settings-rank-value'>
-                                      {card.rank}
-                                    </span>
-                                  </div>
-                                </div>
-                              )
-                            )}
-                          </div>
+                              </div>
+                              <p className='settings-dropdown-header-subtext'>
+                                Ranks selected here will be excluded from the
+                                quiz
+                              </p>
+                              <div className='settings-known-cards-grid'>
+                                {cardData.map((card) =>
+                                  creatorQuiz ? (
+                                    <Tooltip
+                                      key={card.rank}
+                                      title={
+                                        <>
+                                          <p className='tooltip-text'>
+                                            Disabled while creator
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            quiz is selected
+                                          </p>
+                                        </>
+                                      }
+                                      enterDelay={400}
+                                      placement='top'
+                                    >
+                                      <div className='grid-circle-container'>
+                                        <div className='settings-rank unused'>
+                                          <span className='settings-rank-value'>
+                                            {card.rank}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </Tooltip>
+                                  ) : (
+                                    <div
+                                      key={card.rank}
+                                      className='grid-circle-container'
+                                    >
+                                      <div
+                                        className={getExcludedRankClass(
+                                          card.rank!
+                                        )}
+                                        onClick={() =>
+                                          handleRankExclusionSelection(
+                                            card.rank!
+                                          )
+                                        }
+                                      >
+                                        <span className='settings-rank-value'>
+                                          {card.rank}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
+                      </>
+                    )}
+
+                    {gameMode === 'salt' && (
+                      <>
+                        <div className='settings-dropdown'>
+                          <div
+                            className='settings-dropdown-header'
+                            onClick={() => toggleDropdown('includeCards')}
+                          >
+                            <div className='settings-dropdown-header-text-container'>
+                              <p className='settings-dropdown-header-text'>
+                                Select rankings to be included in the quiz
+                              </p>
+                            </div>
+                            <div className='settings-header-dropdown-icon'>
+                              {activeDropdown === 'includeCards' ? (
+                                <DropdownIcon className='down-icon' />
+                              ) : (
+                                <DropdownIcon className='up-icon' />
+                              )}
+                            </div>
+                          </div>
+
+                          {activeDropdown === 'includeCards' && (
+                            <div className='settings-dropdown-contents'>
+                              <div className='settings-known-cards-header '>
+                                <Tooltip
+                                  title={
+                                    <>
+                                      <p className='tooltip-text'>
+                                        Recreate past quizzes
+                                      </p>
+                                      <p className='tooltip-text'>
+                                        taken by creators
+                                      </p>
+                                    </>
+                                  }
+                                  enterDelay={400}
+                                  placement='top'
+                                >
+                                  {isCreatorLoading ? (
+                                    <div className='creator-dropdown'>
+                                      <LinearProgress
+                                        className='linear-progress'
+                                        color='inherit'
+                                      />
+                                    </div>
+                                  ) : (
+                                    <select
+                                      className='creator-dropdown'
+                                      value={creatorQuiz}
+                                      onChange={(e) => handleCreatorQuiz(e)}
+                                    >
+                                      <option value=''>
+                                        {toBeIncludedRanks.size > 0
+                                          ? 'Custom'
+                                          : 'Select a creator quiz'}
+                                      </option>
+                                      {creatorQuizzes.map((quiz) => (
+                                        <option
+                                          key={quiz.creator}
+                                          value={quiz.creator}
+                                        >
+                                          {quiz.creator}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  )}
+                                </Tooltip>
+                                <Tooltip
+                                  title={
+                                    <>
+                                      <p className='tooltip-text'>
+                                        Clear selections
+                                      </p>
+                                    </>
+                                  }
+                                  enterDelay={400}
+                                  placement='top'
+                                >
+                                  <span>
+                                    <button
+                                      className='eraser-button'
+                                      disabled={!includeCardsEraserActive}
+                                      onClick={
+                                        includeCardsEraserActive
+                                          ? handleInclusionErase
+                                          : undefined
+                                      }
+                                    >
+                                      <EraserIcon className='eraser-button-icon' />
+                                    </button>
+                                  </span>
+                                </Tooltip>
+                              </div>
+                              <p className='settings-dropdown-header-subtext'>
+                                Ranks selected here will be included in the quiz
+                              </p>
+                              <div className='settings-known-cards-grid'>
+                                {cardData.map((card) =>
+                                  creatorQuiz ? (
+                                    <Tooltip
+                                      key={card.rank}
+                                      title={
+                                        <>
+                                          <p className='tooltip-text'>
+                                            Disabled while creator
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            quiz is selected
+                                          </p>
+                                        </>
+                                      }
+                                      enterDelay={400}
+                                      placement='top'
+                                    >
+                                      <div className='grid-circle-container'>
+                                        <div className='settings-rank unused'>
+                                          <span className='settings-rank-value'>
+                                            {card.rank}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </Tooltip>
+                                  ) : (
+                                    <div
+                                      key={card.rank}
+                                      className='grid-circle-container'
+                                    >
+                                      <div
+                                        className={getIncludedRankClass(
+                                          card.rank!
+                                        )}
+                                        onClick={() =>
+                                          handleRankInclusionSelection(
+                                            card.rank!
+                                          )
+                                        }
+                                      >
+                                        <span className='settings-rank-value'>
+                                          {card.rank}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
 
                     <div className='settings-dropdown'>
                       <div
