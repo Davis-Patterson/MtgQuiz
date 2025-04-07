@@ -196,6 +196,27 @@
   filter: drop-shadow(0 0 1em #ffa52f88);
   transition: filter 0.15s ease-in-out;
 }
+.red-glow {
+  filter: drop-shadow(0 0 1em #ff646488);
+}
+.red-glow:hover {
+  filter: drop-shadow(0 0 1em #ff2f2f88);
+  transition: filter 0.15s ease-in-out;
+}
+.grey-glow {
+  filter: drop-shadow(0 0 1em #cacaca88);
+}
+.grey-glow:hover {
+  filter: drop-shadow(0 0 1em #cfcfcf88);
+  transition: filter 0.15s ease-in-out;
+}
+.green-glow {
+  filter: drop-shadow(0 0 1em #69ff6488);
+}
+.green-glow:hover {
+  filter: drop-shadow(0 0 1em #32ff2f88);
+  transition: filter 0.15s ease-in-out;
+}
 .shadow-glow {
   filter: drop-shadow(0 0 1em var(--clr-screen));
 }

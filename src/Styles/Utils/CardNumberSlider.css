@@ -100,7 +100,6 @@
 .settings-dash-item {
   flex: 1;
   height: 100%;
-  position: relative;
   min-width: 1px;
   display: flex;
   justify-content: center;

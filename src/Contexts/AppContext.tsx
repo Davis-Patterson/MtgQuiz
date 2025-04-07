@@ -7,6 +7,14 @@ export interface ScoreDetail {
   cardRank: number;
   guess: number;
   diff: number;
+  correct?: boolean;
+}
+
+export interface ShiftScoreDetail {
+  cardRank: number;
+  guess: number | undefined;
+  diff: number;
+  correct?: boolean;
 }
 
 export interface Player {
@@ -31,6 +39,9 @@ export interface Face {
 export interface Card {
   rank: number | null;
   salt_score: number | null;
+  previousRank?: number;
+  previousYear?: number;
+  currentYear?: number;
   card: {
     front: Face;
     back?: Face;
@@ -47,6 +58,8 @@ export interface RevealedCard {
   name: string;
   imageUrl: string;
 }
+
+export type WindowType = 'settings' | 'notes' | 'contact';
 
 interface AppContextType {
   defaultListYear: number;
@@ -102,10 +115,8 @@ interface AppContextType {
   setCanScroll: React.Dispatch<React.SetStateAction<boolean>>;
   showSettings: boolean;
   setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
-  showSettingsWindow: boolean;
-  setShowSettingsWindow: React.Dispatch<React.SetStateAction<boolean>>;
-  showContactWindow: boolean;
-  setShowContactWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  settingsWindow: WindowType;
+  setSettingsWindow: React.Dispatch<React.SetStateAction<WindowType>>;
 
   shouldFlip: boolean;
   setShouldFlip: React.Dispatch<React.SetStateAction<boolean>>;
@@ -116,6 +127,11 @@ interface AppContextType {
   setShiftData2024: React.Dispatch<React.SetStateAction<Card[]>>;
   shiftData2023: Card[];
   setShiftData2023: React.Dispatch<React.SetStateAction<Card[]>>;
+
+  currentShiftGuesses: Record<string, number | undefined>;
+  setCurrentShiftGuesses: React.Dispatch<
+    React.SetStateAction<Record<string, number | undefined>>
+  >;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -166,14 +182,17 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [finished, setFinished] = useState<boolean>(false);
   const [canScroll, setCanScroll] = useState<boolean>(true);
   const [showSettings, setShowSettings] = useState<boolean>(false);
-  const [showSettingsWindow, setShowSettingsWindow] = useState<boolean>(true);
-  const [showContactWindow, setShowContactWindow] = useState<boolean>(false);
+  const [settingsWindow, setSettingsWindow] = useState<WindowType>('settings');
 
   const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
 
   const [shiftData2024, setShiftData2024] = useState<Card[]>(SaltData2024);
   const [shiftData2023, setShiftData2023] = useState<Card[]>(SaltData2023);
+
+  const [currentShiftGuesses, setCurrentShiftGuesses] = useState<
+    Record<string, number | undefined>
+  >({});
 
   useEffect(() => {
     const yearsMapping: { [key: number]: Card[] } = {
@@ -240,10 +259,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setCanScroll,
         showSettings,
         setShowSettings,
-        showSettingsWindow,
-        setShowSettingsWindow,
-        showContactWindow,
-        setShowContactWindow,
+        settingsWindow,
+        setSettingsWindow,
 
         shouldFlip,
         setShouldFlip,
@@ -254,6 +271,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setShiftData2024,
         shiftData2023,
         setShiftData2023,
+
+        currentShiftGuesses,
+        setCurrentShiftGuesses,
       }}
     >
       {children}

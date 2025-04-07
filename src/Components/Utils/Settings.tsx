@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { AppContext, Player } from 'Contexts/AppContext';
+import { AppContext, Player, WindowType } from 'Contexts/AppContext';
 import { v4 as uuidv4 } from 'uuid';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import {
@@ -16,14 +16,16 @@ import SortablePlayer from 'Components/Utils/SortablePlayer';
 import XIcon from 'Svgs/XIcon';
 import EraserIcon from 'Svgs/EraserIcon';
 import LinearProgress from '@mui/material/LinearProgress';
-import Tooltip from '@mui/material/Tooltip';
 import DropdownIcon from 'Svgs/DropdownIcon';
-import creatorQuizzes from 'Utilities/CGB-Quizzes.json';
-import 'Styles/Utils/Settings.css';
 import BackArrow from 'Svgs/BackArrow';
+import NotesIcon from 'Svgs/NotesIcon';
 import MailIcon from 'Svgs/MailIcon';
 import Email from 'Components/Utils/Email';
+import PatchNotes from 'Components/Utils/PatchNotes';
 import InfoIcon from 'Svgs/InfoIcon';
+import creatorQuizzes from 'Utilities/CGB-Quizzes.json';
+import Tooltip from '@mui/material/Tooltip';
+import 'Styles/Utils/Settings.css';
 
 type DropdownType =
   | 'gameMode'
@@ -56,10 +58,8 @@ const Settings: React.FC = () => {
     setCreatorQuiz,
     showSettings,
     setShowSettings,
-    showSettingsWindow,
-    setShowSettingsWindow,
-    showContactWindow,
-    setShowContactWindow,
+    settingsWindow,
+    setSettingsWindow,
     excludedRanks,
     setExcludedRanks,
     includedRanks,
@@ -196,8 +196,7 @@ const Settings: React.FC = () => {
       ) {
         setShowSettings(false);
         setActiveDropdown(null);
-        setShowContactWindow(false);
-        setShowSettingsWindow(true);
+        setSettingsWindow('settings');
       }
     };
 
@@ -343,8 +342,7 @@ const Settings: React.FC = () => {
       setIsLoading(false);
     }, 100);
     setActiveDropdown(null);
-    setShowSettingsWindow(true);
-    setShowContactWindow(false);
+    setSettingsWindow('settings');
   };
 
   const handleClose = (event: React.MouseEvent) => {
@@ -353,8 +351,7 @@ const Settings: React.FC = () => {
 
     setShowSettings(false);
     setActiveDropdown(null);
-    setShowContactWindow(false);
-    setShowSettingsWindow(true);
+    setSettingsWindow('settings');
   };
 
   const toggleDropdown = (dropdown: DropdownType) => {
@@ -482,19 +479,20 @@ const Settings: React.FC = () => {
     });
   };
 
-  const handleBack = () => {
-    setShowContactWindow(false);
-    setShowSettingsWindow(true);
-  };
-
-  const handleContactWindow = () => {
-    setShowSettingsWindow(false);
+  const handleSettingsWindow = (windowType: WindowType) => {
+    setSettingsWindow(windowType);
     setActiveDropdown(null);
-    setShowContactWindow(true);
   };
 
   const handleSetListYear = (year: number) => {
     setListYear(year);
+  };
+
+  const handleSetGameMode = (mode: string) => {
+    setGameMode(mode);
+    if (mode === 'shift') {
+      setRangeOfQuiz(100);
+    }
   };
 
   return (
@@ -512,7 +510,7 @@ const Settings: React.FC = () => {
             }`}
           >
             <div className='portal-top-toggles'>
-              {showSettingsWindow &&
+              {settingsWindow === 'settings' &&
                 (settingsEraserActive ? (
                   <Tooltip
                     title={
@@ -533,31 +531,47 @@ const Settings: React.FC = () => {
                 ) : (
                   <EraserIcon className='eraser-icon-disabled' />
                 ))}
-              {showContactWindow && (
+              {(settingsWindow === 'contact' || settingsWindow === 'notes') && (
                 <BackArrow
                   className='settings-back-arrow'
-                  onClick={() => handleBack()}
+                  onClick={() => handleSettingsWindow('settings')}
                 />
               )}
-              {showSettingsWindow && (
-                <Tooltip
-                  title={
-                    <>
-                      <p className='tooltip-text'>Message developers</p>
-                    </>
-                  }
-                  enterDelay={400}
-                  placement='right'
-                >
-                  <MailIcon
-                    className='settings-mail-icon'
-                    onClick={() => handleContactWindow()}
-                  />
-                </Tooltip>
+              {settingsWindow === 'settings' && (
+                <>
+                  <Tooltip
+                    title={
+                      <>
+                        <p className='tooltip-text'>Patch notes</p>
+                      </>
+                    }
+                    enterDelay={400}
+                    placement='right'
+                  >
+                    <NotesIcon
+                      className='settings-notes-icon'
+                      onClick={() => handleSettingsWindow('notes')}
+                    />
+                  </Tooltip>
+                  <Tooltip
+                    title={
+                      <>
+                        <p className='tooltip-text'>Message developers</p>
+                      </>
+                    }
+                    enterDelay={400}
+                    placement='right'
+                  >
+                    <MailIcon
+                      className='settings-mail-icon'
+                      onClick={() => handleSettingsWindow('contact')}
+                    />
+                  </Tooltip>
+                </>
               )}
               <XIcon className='x-icon' onClick={(e) => handleClose(e)} />
             </div>
-            {showSettingsWindow && (
+            {settingsWindow === 'settings' && (
               <>
                 <div className='settings-window'>
                   <header className='settings-header'>
@@ -649,6 +663,88 @@ const Settings: React.FC = () => {
                   )}
 
                   <div className='settings-dropdowns'>
+                    <div className='settings-dropdown'>
+                      <div
+                        className='settings-dropdown-header'
+                        onClick={() => toggleDropdown('gameMode')}
+                      >
+                        <div className='settings-dropdown-header-text-container'>
+                          <p className='settings-dropdown-header-text'>
+                            Select quiz mode
+                          </p>
+                        </div>
+                        <div className='settings-header-dropdown-icon'>
+                          {activeDropdown === 'gameMode' ? (
+                            <DropdownIcon className='down-icon' />
+                          ) : (
+                            <DropdownIcon className='up-icon' />
+                          )}
+                        </div>
+                      </div>
+
+                      {activeDropdown === 'gameMode' && (
+                        <div className='settings-dropdown-contents'>
+                          <p className='settings-dropdown-header-subtext'>
+                            Choose a quiz mode
+                          </p>
+                          <div className='settings-dropdown-mode-container'>
+                            <div
+                              className={`settings-year-container ${
+                                gameMode === 'salt'
+                                  ? 'active blue-glow'
+                                  : 'inactive'
+                              }`}
+                              onClick={() => handleSetGameMode('salt')}
+                            >
+                              <p
+                                className={`settings-year ${
+                                  gameMode === 'salt' ? 'active' : 'inactive'
+                                }`}
+                              >
+                                Salt Quiz
+                              </p>
+                            </div>
+                            <div
+                              className={`settings-year-container ${
+                                gameMode === 'shift'
+                                  ? 'active blue-glow'
+                                  : 'inactive'
+                              }`}
+                              onClick={() => handleSetGameMode('shift')}
+                            >
+                              <p
+                                className={`settings-year ${
+                                  gameMode === 'shift' ? 'active' : 'inactive'
+                                }`}
+                              >
+                                Salt Shift
+                              </p>
+                            </div>
+                          </div>
+                          <div className='settings-dropdown-mode-description-container'>
+                            {gameMode === 'salt' ? (
+                              <p className='settings-dropdown-mode-description'>
+                                Salt Quiz challenges players to guess the exact
+                                ranking of cards. Players score points based on
+                                how close their guess is to the actual rank -
+                                the smaller the difference between the guess and
+                                the actual rank, the better the score.
+                              </p>
+                            ) : (
+                              <p className='settings-dropdown-mode-description'>
+                                Salt Shift focuses on year-over-year rank
+                                changes. Players will see a card's rank from the
+                                previous year and must determine if its rank
+                                increased or decreased in the latest list. A
+                                smaller number indicates a greater rank. Points
+                                are awarded for correct guesses.
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
                     {gameMode === 'salt' && (
                       <>
                         <div className='settings-dropdown'>
@@ -1180,7 +1276,7 @@ const Settings: React.FC = () => {
                 </div>
               </>
             )}
-            {showContactWindow && (
+            {settingsWindow === 'contact' && (
               <>
                 <div className='settings-window'>
                   <header className='settings-contact-header'>
@@ -1190,6 +1286,19 @@ const Settings: React.FC = () => {
                     Send a message to the developers
                   </p>
                   <Email />
+                </div>
+              </>
+            )}
+            {settingsWindow === 'notes' && (
+              <>
+                <div className='settings-window'>
+                  <header className='settings-contact-header'>
+                    <p className='settings-header-text'>Patch Notes</p>
+                  </header>
+                  <p className='settings-header-contact-subtext'>
+                    Information on application updates
+                  </p>
+                  <PatchNotes />
                 </div>
               </>
             )}

@@ -1,0 +1,92 @@
+.patch-notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 20px 0px 10px 0px;
+}
+
+.patch-date-card {
+  background: var(--clr-screen);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--clr-screen);
+  border-top: 4px solid var(--clr-accent-orange);
+}
+
+.patch-date {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--clr-accent-orange);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--clr-divider);
+  padding-bottom: 0.5rem;
+}
+
+.patch-notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.patch-note-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.note-header {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.4rem;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--clr-light);
+  margin-bottom: 1rem;
+}
+
+.note-body {
+  padding-left: 1.5rem;
+  list-style-type: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.note-body-text {
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 300;
+  color: var(--clr-text-light);
+  gap: 0.8rem;
+}
+
+.note-point {
+  line-height: 1.6;
+  font-size: 1rem;
+  color: var(--clr-accent-orange);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .patch-notes-container {
+    padding: 1rem;
+  }
+
+  .patch-date-card {
+    padding: 1.5rem;
+  }
+
+  .patch-date {
+    font-size: 1.3rem;
+  }
+
+  .note-header {
+    font-size: 1.1rem;
+  }
+
+  .note-point {
+    font-size: 0.95rem;
+  }
+}

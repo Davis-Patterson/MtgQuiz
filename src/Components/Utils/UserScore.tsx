@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { AppContext } from 'Contexts/AppContext';
+import { AppContext, ScoreDetail } from 'Contexts/AppContext';
+import { getScoreDetails } from 'Components/Tools/ScoreUtils';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from 'Svgs/HomeIcon';
 import BackArrow from 'Svgs/BackArrow';
@@ -13,6 +14,7 @@ const UserScore: React.FC = () => {
     throw new Error('No Context available');
   }
   const {
+    gameMode,
     players,
     setPlayers,
     setCurrentCardGuesses,
@@ -29,10 +31,16 @@ const UserScore: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const calculateTotalScore = (
-    playerScores: Array<{ diff: number }>,
+  const calculateDisplayScore = (
+    playerScores: ScoreDetail[],
     playerOrder: number
   ) => {
+    if (gameMode === 'shift') {
+      const { correct, total } = getScoreDetails(playerScores);
+      return `${correct}/${total}`;
+    }
+
+    // Original salt mode calculation
     const currentRoundDiff = context?.currentCardStats
       ? Math.abs(
           context.currentCardStats.cardRank -
@@ -40,10 +48,16 @@ const UserScore: React.FC = () => {
         )
       : 0;
 
-    return (
+    const totalDiff =
       playerScores.reduce((acc, curr) => acc + curr.diff, 0) +
-      (context?.isSubmitted ? currentRoundDiff : 0)
-    );
+      (context?.isSubmitted ? currentRoundDiff : 0);
+
+    return totalDiff;
+  };
+
+  // New function to get score label based on game mode
+  const getScoreLabel = () => {
+    return gameMode === 'shift' ? 'Correct:' : 'Score:';
   };
 
   const handleConfirm = () => {
@@ -77,9 +91,9 @@ const UserScore: React.FC = () => {
     <div className='user-score-container'>
       {players.length === 1 ? (
         <div className='user-score-score-container'>
-          <span className='score-label'>Score:</span>
+          <span className='score-label'>{getScoreLabel()}</span>
           <span className='score-value'>
-            {calculateTotalScore(players[0].scores, players[0].order)}
+            {calculateDisplayScore(players[0].scores, players[0].order)}
           </span>
         </div>
       ) : (
@@ -119,7 +133,7 @@ const UserScore: React.FC = () => {
                       {player.name.trim() || `Player ${index + 1}`}
                     </span>
                     <span className='multi-player-total'>
-                      {calculateTotalScore(player.scores, player.order)}
+                      {calculateDisplayScore(player.scores, player.order)}
                     </span>
                   </div>
                 );
@@ -138,7 +152,7 @@ const UserScore: React.FC = () => {
                     `Player ${currentPlayerIndex + 1}`}
                 </span>
                 <span className='multi-player-total'>
-                  {calculateTotalScore(
+                  {calculateDisplayScore(
                     players[currentPlayerIndex].scores,
                     players[currentPlayerIndex].order
                   )}

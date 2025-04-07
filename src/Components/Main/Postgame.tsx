@@ -4,12 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
 import 'Styles/Main/Postgame.css';
 
-export interface ScoreDetail {
-  cardRank: number;
-  guess: number;
-  diff: number;
-}
-
 const Postgame: React.FC = () => {
   const context = useContext(AppContext);
   if (!context) {

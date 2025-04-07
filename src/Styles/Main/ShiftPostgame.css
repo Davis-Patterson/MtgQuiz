@@ -1,10 +1,10 @@
-.results-container {
+.shift-results-container {
   position: relative;
   width: 100%;
   min-height: 100vh;
 }
 
-.no-results-container {
+.no-shift-results-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,19 +26,18 @@
   z-index: 7;
 }
 
-.results-score-label,
-.results-score,
-.results-card-name,
-.results-text-label,
-.results-score-text-label,
-.results-score-plus,
-.results-score-text {
-  color: var(--clr-light) !important;
+.shift-results-score-label,
+.shift-results-score,
+.shift-results-card-name,
+.shift-results-text-label,
+.shift-results-score-text-label,
+.shift-results-score-plus,
+.shift-results-score-text {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
-.results-header {
+.shift-results-header {
   margin: 0px 0px 35px 0px;
   display: flex;
   flex-direction: column;
@@ -49,7 +48,7 @@
   padding: 0px 0px 25px 0px;
 }
 
-.results-header-top {
+.shift-results-header-top {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -58,15 +57,15 @@
   margin: 0px 0px 25px 0px;
 }
 
-.results-title-container {
+.shift-results-title-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 55px 0px 0px;
+  margin: 0px 15px 0px 0px;
 }
 
-.results-score-label {
+.shift-results-score-label {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.4em;
   text-align: center;
@@ -76,29 +75,47 @@
   margin: 0px 0px 6px 0px;
 }
 
-.results-score {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 5em;
-  text-align: center;
-  font-weight: 400;
-  line-height: 1;
+.shift-results-score-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 1px solid var(--clr-divider);
-  color: var(--clr-light);
   padding: 9px 8px 0px 8px;
   min-width: 100px;
 }
 
-.results-logo-img {
+.shift-results-score {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 3.5em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-accent-orange);
+  border-bottom: 1px solid var(--clr-divider);
+}
+
+.shift-results-fraction-score {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.9em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 10px 0px 5px 0px;
+}
+
+.shift-results-logo-img {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.results-salt-logo {
+.shift-results-salt-logo {
   width: 150px;
 }
 
-.results-header-bottom {
+.shift-results-header-bottom {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -108,12 +125,12 @@
   transform: scale(95%);
 }
 
-.results-button-container {
+.shift-results-button-container {
   width: 100%;
   max-width: 350px;
 }
 
-.results-content {
+.shift-results-content {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -122,7 +139,7 @@
   gap: 10px;
 }
 
-.results-content-header {
+.shift-results-content-header {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.8em;
   text-align: center;
@@ -131,7 +148,7 @@
   color: var(--clr-light);
 }
 
-.results-card {
+.shift-results-card {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -143,32 +160,33 @@
   border-bottom: 1px solid var(--clr-icon);
 }
 
-.results-image-container {
+.shift-results-image-container {
   display: flex;
 }
 
-.results-card-image {
+.shift-results-card-image {
   width: 100px;
   border-radius: 6px;
   cursor: pointer;
   opacity: 1 !important;
   visibility: visible !important;
 }
-.results-card-image[src] {
+.shift-results-card-image[src] {
   opacity: 0;
 }
-.results-card-image.loaded {
+.shift-results-card-image.loaded {
   opacity: 1;
 }
 
-.results-content-container {
+.shift-results-content-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  gap: 10px;
 }
 
-.results-card-name {
+.shift-results-card-name {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.4em;
   text-align: center;
@@ -186,7 +204,7 @@
   text-overflow: ellipsis;
 }
 
-.results-score-content {
+.shift-results-score-content {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -194,7 +212,7 @@
   width: 100%;
 }
 
-.results-guess-content {
+.shift-results-guess-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,7 +220,7 @@
   width: 70%;
 }
 
-.results-text-label {
+.shift-results-text-label {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.2em;
   text-align: left;
@@ -214,7 +232,7 @@
   margin: 4px 0px 0px 0px;
 }
 
-.results-score-text-label {
+.shift-results-score-text-label {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.2em;
   text-align: left;
@@ -226,13 +244,13 @@
   margin: 0px 0px 2px 0px;
 }
 
-.results-score-plus-container {
+.shift-results-score-plus-container {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.results-score-plus {
+.shift-results-score-plus {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.2em;
   text-align: left;
@@ -242,7 +260,7 @@
   text-align: left;
 }
 
-.results-score-text {
+.shift-results-score-text {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2.2em;
   text-align: left;
@@ -253,7 +271,7 @@
   width: 100%;
 }
 
-.results-score-score-container {
+.shift-results-score-score-container {
   display: flex;
   flex-direction: column;
   margin: 0px 0px 0px 10px;
@@ -261,7 +279,7 @@
   width: 30%;
 }
 
-.multi-results-player-rankings {
+.multi-shift-results-player-rankings {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -308,7 +326,7 @@
   text-align: right;
 }
 
-.player-results-column {
+.player-shift-results-column {
   padding: 15px;
 }
 
@@ -325,7 +343,7 @@
   z-index: 7;
 }
 
-.multi-results-header {
+.multi-shift-results-header {
   margin: 0px 0px 35px 0px;
   display: flex;
   flex-direction: column;
@@ -336,13 +354,13 @@
   padding: 20px 45px 25px 45px;
 }
 
-.multi-results-content-wrapper {
+.multi-shift-results-content-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.multi-results-content {
+.multi-shift-results-content {
   width: auto;
   display: flex;
   justify-content: flex-start;
@@ -351,7 +369,7 @@
   gap: 10px;
 }
 
-.multi-results-header-top {
+.multi-shift-results-header-top {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -391,7 +409,7 @@
   margin: 10px 0px 0px 0px;
 }
 
-.multi-results-avg-text {
+.multi-shift-results-avg-text {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 0.95em;
   text-align: center;
@@ -401,7 +419,7 @@
   margin: 0px 0px 2px 0px;
 }
 
-.multi-results-title-container {
+.multi-shift-results-title-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -409,7 +427,7 @@
   margin: 20px 0px 0px 0px;
 }
 
-.multi-results-score-label {
+.multi-shift-results-score-label {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2em;
   text-align: center;
@@ -419,7 +437,7 @@
   margin: 0px 0px 6px 0px;
 }
 
-.results-player-name {
+.shift-results-player-name {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.4em;
   color: var(--clr-light);
@@ -452,7 +470,7 @@
   line-height: 1;
 }
 
-.multi-results-card {
+.multi-shift-results-card {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -464,14 +482,14 @@
   border-bottom: 1px solid var(--clr-icon);
 }
 
-.multi-results-title-content {
+.multi-shift-results-title-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.multi-results-card-name-container {
+.multi-shift-results-card-name-container {
   margin: 0px 0px 5px 0px;
   width: 200px;
   display: flex;
@@ -479,7 +497,7 @@
   align-items: center;
 }
 
-.multi-results-card-name {
+.multi-shift-results-card-name {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.2em;
   text-align: center;
@@ -497,35 +515,34 @@
   margin: 5px 0px;
 }
 
-.multi-results-main-content {
+.multi-shift-results-main-content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  flex: 1 0 auto;
 }
 
-.multi-results-image-container {
+.multi-shift-results-image-container {
   display: flex;
   width: 50px;
 }
 
-.multi-results-card-image {
+.multi-shift-results-card-image {
   width: 50px;
   border-radius: 6px;
   cursor: pointer;
   opacity: 1 !important;
   visibility: visible !important;
 }
-.multi-results-card-image[src] {
+.multi-shift-results-card-image[src] {
   opacity: 0;
 }
-.multi-results-card-image.loaded {
+.multi-shift-results-card-image.loaded {
   opacity: 1;
 }
 
-.multi-results-guess-content {
+.multi-shift-results-guess-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -536,47 +553,175 @@
   height: 100%;
   gap: 8px;
   margin: 0px 2px;
+  filter: drop-shadow(0 0 1em #cfcfcf88);
 }
 
-.multi-results-text-label,
-.multi-results-avg-label {
+.multi-shift-results-text-label,
+.multi-shift-results-avg-label {
   font-family: 'Beleren Bold', sans-serif;
   text-align: left;
   font-weight: 400;
   line-height: 1;
   color: var(--clr-light);
-  width: 100px;
+  width: 100%;
 }
-.multi-results-text-label {
+.multi-shift-results-text-label {
   font-size: 0.85em;
 }
-.multi-results-avg-label {
+.multi-shift-results-avg-label {
   font-size: 0.8em;
 }
 
-.multi-results-content-container {
+.shift-multi-results-content-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
   height: 100%;
   gap: 2px;
-  margin: 10px 0px 0px 0px;
+  margin: 0px 0px 0px 5px;
 }
 
-.multi-results-score-container {
+.results-year-labels,
+.multi-year-labels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 4px 0px;
+  gap: 2px;
+}
+
+.results-year-label-text,
+.multi-year-label-text {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.2em;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--clr-light);
+  margin: 6px 0px 0px 0px;
+}
+
+.results-year-label-value-container,
+.multi-year-label-value-container {
+  margin: 3px 0px 0px 0px;
+  border: 1px solid var(--clr-icon);
+  background-color: var(--clr-screen);
+  padding: 4px 4px 1px 4px;
+  width: 35px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: help;
+}
+
+.results-year-label-value,
+.multi-year-label-value {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.2em;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--clr-light);
+}
+.results-year-label-value.max,
+.multi-year-label-value.max {
+  transform: scaleX(90%);
+}
+
+.results-year-label-years-container,
+.multi-year-label-years-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 2px;
+  margin: 0px 0px;
+}
+
+.results-revealed-direction,
+.multi-revealed-direction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.results-direction-container,
+.multi-direction-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.chevron-icon {
+  width: 18px;
+  margin: 0px 5px 2px 6px;
+}
+.chevron-icon.increase {
+  transform: scaleY(-1);
+  fill: var(--clr-success);
+}
+.chevron-icon.decrease {
+  fill: var(--clr-error);
+}
+
+.results-result-status-container,
+.multi-result-status-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 5px;
+}
+
+.results-result-status-label,
+.multi-result-status-label {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.1em;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: center;
+  margin-top: -2px;
+}
+
+.results-result-status,
+.multi-result-status {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.2em;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+.results-result-status.correct,
+.multi-result-status.correct {
+  color: var(--clr-success);
+}
+.results-result-status.incorrect,
+.multi-result-status.incorrect {
+  color: var(--clr-error);
+}
+
+.multi-shift-results-score-container {
   display: flex;
   flex-direction: column;
-  padding: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 2px;
 }
 
-.multi-results-score-plus-container {
+.multi-shift-results-score-plus-container {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.multi-results-score-plus {
+.multi-shift-results-score-plus {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.2em;
   text-align: left;
@@ -586,7 +731,7 @@
   text-align: left;
 }
 
-.multi-results-score-text {
+.multi-shift-results-score-text {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2em;
   text-align: left;
@@ -597,7 +742,7 @@
   width: 100%;
 }
 
-.multi-results-score-text-label {
+.multi-shift-results-score-text-label {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 0.9em;
   text-align: left;
@@ -609,7 +754,7 @@
   margin: 0px 0px 2px 0px;
 }
 
-.results-error {
+.shift-results-error {
   font-family: 'Beleren Bold', sans-serif;
   text-align: left;
   font-weight: 400;
@@ -624,20 +769,20 @@
   flex-direction: column;
 }
 
-.results-error h2 {
+.shift-results-error h2 {
   color: var(--clr-light);
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.results-error p {
+.shift-results-error p {
   color: var(--clr-light);
   font-size: 1.1rem;
   opacity: 0.8;
   margin: 0px 0px 180px 0px;
 }
 
-.results-not-found {
+.shift-results-not-found {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -647,7 +792,7 @@
   z-index: 6;
 }
 
-.results-not-found-header-text {
+.shift-results-not-found-header-text {
   font-family: 'Beleren Bold', sans-serif;
   text-align: left;
   font-weight: 400;
@@ -656,7 +801,7 @@
   margin: 0px 0px 25px 0px;
 }
 
-.results-not-found-header-subtext {
+.shift-results-not-found-header-subtext {
   font-family: 'Beleren Bold', sans-serif;
   text-align: left;
   font-weight: 400;

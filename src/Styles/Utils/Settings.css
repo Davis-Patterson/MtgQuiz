@@ -113,10 +113,30 @@
   transform: scale(90%);
 }
 
+.settings-notes-icon {
+  position: absolute;
+  top: 12px;
+  left: 50px;
+  height: 25px;
+  width: 30px;
+  fill: var(--clr-divider);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  margin: 2px 0px 0px 0px;
+  opacity: 0.4;
+}
+.settings-notes-icon:hover {
+  opacity: 1;
+}
+.settings-notes-icon:active {
+  opacity: 1;
+  transform: scale(90%);
+}
+
 .settings-mail-icon {
   position: absolute;
   top: 15px;
-  left: 55px;
+  left: 92px;
   height: 20px;
   width: 30px;
   fill: var(--clr-divider);
@@ -159,7 +179,7 @@
   font-weight: 300;
   color: var(--clr-text-blue);
   cursor: default;
-  margin: -15px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
 }
 
 .settings-header-subtext,
@@ -368,12 +388,35 @@
   user-select: none;
 }
 
+.settings-dropdown-mode-container,
 .settings-dropdown-years-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
   padding: 15px 10px 15px 10px;
+}
+
+.settings-dropdown-mode-description-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0px 10px;
+}
+
+.settings-dropdown-mode-description {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.9rem;
+  color: var(--clr-light);
+  line-height: 1.05;
+  margin: 0px 0px 10px 0px;
+  padding: 12px 10px 10px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-top: 4px solid var(--clr-accent-blue);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .settings-year-container {

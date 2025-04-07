@@ -9,7 +9,7 @@ function Email() {
   if (!context) {
     throw new Error('No Context');
   }
-  const { setShowSettingsWindow, setShowContactWindow } = context;
+  const { setSettingsWindow } = context;
 
   const [form, setForm] = useState({
     firstName: '',
@@ -83,8 +83,7 @@ function Email() {
           email: '',
           message: '',
         });
-        setShowContactWindow(false);
-        setShowSettingsWindow(true);
+        setSettingsWindow('settings');
         setSuccess(false);
       }, 3000);
     } catch (error) {

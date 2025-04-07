@@ -671,7 +671,7 @@ const Quiz: React.FC = () => {
   }, [isTransitioning, nextBackground]);
 
   useEffect(() => {
-    if (cardData && cardData.length > 0) {
+    if (cardData && cardData.length > 0 && selectedCards.length === 0) {
       const randomIndex = Math.floor(Math.random() * cardData.length);
       const artCropUrl = cardData[randomIndex].card.front.imgs.art_crop;
       setBackgroundImage(artCropUrl);
@@ -778,7 +778,7 @@ const Quiz: React.FC = () => {
       setShouldFlip(true);
       setTimeout(() => {
         setShouldFlip(false);
-        setCurrentIndex(currentIndex + 1);
+        setCurrentIndex((prev) => prev + 1);
       }, 300);
     } else {
       const quizRanks = new Set([
@@ -972,6 +972,44 @@ const Quiz: React.FC = () => {
                               return (
                                 <>
                                   {players.length === 2 ? (
+                                    <div
+                                      key={player.id}
+                                      className='duo-stat-card'
+                                    >
+                                      <p className='stat-player-name'>
+                                        {player.name ||
+                                          `Player ${player.order}`}
+                                      </p>
+                                      <div className='duo-stat-container'>
+                                        <div className='duo-guess-container'>
+                                          <p className='stat-player-guess'>
+                                            Guess: {currentGuess ?? 0}
+                                          </p>
+                                          <p className='stat-player-diff'>
+                                            Score: +
+                                            {Math.abs(
+                                              currentCardStats.cardRank -
+                                                currentGuess
+                                            )}
+                                          </p>
+                                        </div>
+                                        {currentCardStats && (
+                                          <div className='duo-total-container'>
+                                            {currentCardStats && (
+                                              <>
+                                                <p className='stat-player-total-label'>
+                                                  Total
+                                                </p>
+                                                <p className='stat-player-total'>
+                                                  {calculateTotalScore(player)}
+                                                </p>
+                                              </>
+                                            )}
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ) : players.length === 3 ? (
                                     <div
                                       key={player.id}
                                       className='duo-stat-card'

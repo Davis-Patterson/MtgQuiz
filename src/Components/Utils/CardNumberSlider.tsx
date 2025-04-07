@@ -13,6 +13,9 @@ const CardNumberSlider: React.FC = () => {
   const { gameMode, numberOfCards, setNumberOfCards, creatorQuiz } = appContext;
   const [resetButtonActive, setResetButtonActive] = useState(false);
 
+  const maxCards = gameMode === 'shift' ? 80 : 100;
+  const defaultCards = 10;
+
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef<boolean>(false);
 
@@ -24,7 +27,7 @@ const CardNumberSlider: React.FC = () => {
     }
 
     const parsedValue = numericValue ? parseInt(numericValue, 10) : 1;
-    const clampedValue = Math.min(100, Math.max(1, parsedValue));
+    const clampedValue = Math.min(maxCards, Math.max(1, parsedValue));
 
     setNumberOfCards(clampedValue);
   };
@@ -32,8 +35,10 @@ const CardNumberSlider: React.FC = () => {
   const updateSliderValue = (clientX: number) => {
     if (sliderRef.current) {
       const rect = sliderRef.current.getBoundingClientRect();
-      let newValue = Math.round(((clientX - rect.left) / rect.width) * 99 + 1);
-      newValue = Math.max(1, Math.min(100, newValue));
+      let newValue = Math.round(
+        ((clientX - rect.left) / rect.width) * (maxCards - 1) + 1
+      );
+      newValue = Math.max(1, Math.min(maxCards, newValue));
       setNumberOfCards(newValue);
     }
   };
@@ -59,14 +64,14 @@ const CardNumberSlider: React.FC = () => {
   };
 
   const handleReset = () => {
-    setNumberOfCards(10);
+    setNumberOfCards(defaultCards);
   };
 
   useEffect(() => {
-    const numberOfCardsDefault = numberOfCards === 10;
+    const numberOfCardsDefault = numberOfCards === defaultCards;
 
     setResetButtonActive(!numberOfCardsDefault);
-  }, [numberOfCards]);
+  }, [numberOfCards, defaultCards]);
 
   useEffect(() => {
     document.addEventListener('mousemove', handleDragMove);
@@ -150,16 +155,19 @@ const CardNumberSlider: React.FC = () => {
             <div className='settings-slider-wrapper inactive' ref={sliderRef}>
               <div
                 className='settings-slider-indicator disabled'
-                style={{ left: `${numberOfCards - 0.5}%` }}
+                style={{
+                  left: `${((numberOfCards - 0.5) / maxCards) * 100}%`,
+                  transform: 'translateX(-50%)',
+                }}
               >
                 <VerticalPin className='card-number-pin-icon-orange disabled' />
               </div>
               <div className='settings-dash-container'>
-                {Array.from({ length: 100 }).map((_, index) => {
+                {Array.from({ length: maxCards }).map((_, index) => {
                   const isTall = (index + 1) % 10 === 0 || index === 0;
                   const currentDash = index === numberOfCards - 1;
                   const shouldLabel =
-                    index === 0 || index === 9 || index === 99;
+                    index === 0 || index === 9 || index === maxCards - 1;
 
                   return (
                     <div key={index} className='settings-dash-item'>
@@ -180,7 +188,7 @@ const CardNumberSlider: React.FC = () => {
                       {shouldLabel && (
                         <div
                           className={`settings-dash-label ${
-                            index === 99 ? 'last' : ''
+                            index === maxCards - 1 ? 'last' : ''
                           }`}
                         >
                           {index === 9 ? 10 : index + 1}
@@ -238,17 +246,21 @@ const CardNumberSlider: React.FC = () => {
           >
             <div
               className='settings-slider-indicator'
-              style={{ left: `${numberOfCards - 0.5}%` }}
+              style={{
+                left: `${((numberOfCards - 0.5) / maxCards) * 100}%`,
+                transform: 'translateX(-50%)',
+              }}
               onMouseDown={handleDragStart}
               onTouchStart={handleDragStart}
             >
               <VerticalPin className='card-number-pin-icon-orange' />
             </div>
             <div className='settings-dash-container'>
-              {Array.from({ length: 100 }).map((_, index) => {
+              {Array.from({ length: maxCards }).map((_, index) => {
                 const isTall = (index + 1) % 10 === 0 || index === 0;
                 const currentDash = index === numberOfCards - 1;
-                const shouldLabel = index === 0 || index === 9 || index === 99;
+                const shouldLabel =
+                  index === 0 || index === 9 || index === maxCards - 1;
 
                 return (
                   <div key={index} className='settings-dash-item'>
@@ -269,7 +281,7 @@ const CardNumberSlider: React.FC = () => {
                     {shouldLabel && (
                       <div
                         className={`settings-dash-label ${
-                          index === 99 ? 'last' : ''
+                          index === maxCards - 1 ? 'last' : ''
                         }`}
                       >
                         {index === 9 ? 10 : index + 1}

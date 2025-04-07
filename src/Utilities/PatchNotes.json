@@ -1,0 +1,64 @@
+[
+  {
+    "date": "3/30/25",
+    "patch_notes": [
+      {
+        "header": "Image Optimization",
+        "body": [
+          "Many users mentioned that card images were too small. While the option to click and enlarge images still exists, the app now dynamically resizes card images to better fill the screen for improved readability."
+        ]
+      },
+      {
+        "header": "Revised Rank Slider",
+        "body": [
+          "The ruler has been inverted to now range from 100 up to 1, placing the saltiest cards at the top.",
+          "Based on community feedback, this layout feels more intuitive.",
+          "The previous '0' entry has been updated to 'Ø' to better indicate a 'no guess' selection rather than a numerical value."
+        ]
+      },
+      {
+        "header": "Improved Touchscreen Support",
+        "body": [
+          "The app should now function more smoothly on touchscreen devices.",
+          "Previously, some users experienced issues with the slider not responding properly to touch inputs. This has been improved to provide better touch recognition and a more seamless experience."
+        ]
+      },
+      {
+        "header": "Updated Shuffling",
+        "body": [
+          "The randomization algorithm has been enhanced to provide a more balanced distribution of card rankings, reducing sequential pairs and large clusters of similar scores."
+        ]
+      }
+    ]
+  },
+  {
+    "date": "4/1/25",
+    "patch_notes": [
+      {
+        "header": "Local Multiplayer",
+        "body": [
+          "The app now supports multiple participants on a single device, allowing players to take turns guessing before the rank is revealed.",
+          "No online multiplayer or inter-device support yet, as the app remains frontend-only."
+        ]
+      },
+      {
+        "header": "2023 Salty Cards List",
+        "body": [
+          "The 2023 Saltiest Cards list has been added, and there are plans to continue updating the app with past and future lists as they’re published."
+        ]
+      }
+    ]
+  },
+  {
+    "date": "4/7/25",
+    "patch_notes": [
+      {
+        "header": "Salt Shift",
+        "body": [
+          "A new quiz mode has been added that challenges players to guess whether a card’s salt ranking increased or decreased between years.",
+          "All cards in this mode have appeared on multiple Salt Lists, adding a layer of meta-awareness to guesses."
+        ]
+      }
+    ]
+  }
+]
