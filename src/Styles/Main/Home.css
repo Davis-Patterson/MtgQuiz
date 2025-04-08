@@ -24,7 +24,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0px 0px 0px 0px;
+  margin: 0px 0px 40px 0px;
 }
 
 .salt-logo {
@@ -67,7 +67,7 @@
 }
 
 .button-gap {
-  height: 30px;
+  height: 60px;
 }
 
 .home-x-container {
@@ -144,38 +144,47 @@
   width: 100%;
 }
 
-.home-patch-notes-link-container {
+.home-bottom-links-container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   max-width: 320px;
   text-align: left;
   margin: 8px 0px 0px 0px;
-  transform: scaleY(90%);
   gap: 5px;
 }
 
-.home-patch-notes-link-text {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 1em;
+.home-patch-notes-link-container,
+.home-settings-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 45%;
+  width: 100%;
   text-align: left;
-  font-style: italic;
+  transform: scaleY(90%);
+  gap: 5px;
+}
+.home-patch-notes-link-container {
+  justify-content: flex-start;
+}
+.home-settings-link-container {
+  justify-content: flex-end;
+}
+
+.home-patch-notes-link-text,
+.home-patch-notes-link {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.85em;
+  text-align: left;
   font-weight: 400;
   line-height: 1;
   color: var(--clr-text-light);
 }
-
 .home-patch-notes-link {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 1em;
-  text-align: left;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1;
   cursor: pointer;
-  color: var(--clr-text-light);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -209,8 +218,5 @@
   }
   .home-text {
     margin: 2px 0px 2px 0px;
-  }
-  .button-gap {
-    height: 10px;
   }
 }

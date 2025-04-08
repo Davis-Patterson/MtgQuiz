@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { AppContext } from 'Contexts/AppContext';
+import { AppContext, WindowType } from 'Contexts/AppContext';
 import { Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
 import GearIcon from 'Svgs/GearIcon';
@@ -81,8 +81,8 @@ const Home: React.FC = () => {
     }
   }, [rangeOfQuiz, context.excludedRanks]);
 
-  const handlePatchNotes = () => {
-    setSettingsWindow('notes');
+  const handlePatchNotes = (window: WindowType) => {
+    setSettingsWindow(window);
     setShowSettings(true);
   };
 
@@ -139,7 +139,6 @@ const Home: React.FC = () => {
                     between your guess and the card's rank. A lower score
                     indicates greater accuracy.
                   </p>
-                  <p className='home-text'>Select a value for X to begin:</p>
                 </>
               ) : (
                 <>
@@ -163,102 +162,6 @@ const Home: React.FC = () => {
                 </>
               )}
               <div className='button-gap' />
-              {creatorQuiz || gameMode === 'shift' ? (
-                <div className='home-x-container'>
-                  <Tooltip
-                    title={
-                      <>
-                        <p className='tooltip-text'>Disabled under</p>
-                        <p className='tooltip-text'>current settings</p>
-                      </>
-                    }
-                    enterDelay={400}
-                    placement='top'
-                  >
-                    <div className='home-x-container-disabled'>
-                      <div className='x-container-disabled unselected'>
-                        <p className='x-value'>25</p>
-                      </div>
-                      <div className='x-container-disabled unselected'>
-                        <p className='x-value'>50</p>
-                      </div>
-                      <div className='x-container-disabled unselected'>
-                        <p className='x-value'>75</p>
-                      </div>
-                      <div className='x-container-disabled selected blue-glow'>
-                        <p className='x-value'>100</p>
-                      </div>
-                    </div>
-                  </Tooltip>
-                  <div
-                    className='gear-container'
-                    onClick={(e) => handleAdvanced(e)}
-                  >
-                    <p className='gear-value'>
-                      <GearIcon className='gear-icon' />
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className='home-x-container'>
-                  <div
-                    className={`x-container ${
-                      rangeOfQuiz === 0
-                        ? ''
-                        : rangeOfQuiz === 25
-                        ? 'selected blue-glow'
-                        : 'unselected'
-                    }`}
-                    onClick={() => handleCardNumber(25)}
-                  >
-                    <p className='x-value'>25</p>
-                  </div>
-                  <div
-                    className={`x-container ${
-                      rangeOfQuiz === 0
-                        ? ''
-                        : rangeOfQuiz === 50
-                        ? 'selected blue-glow'
-                        : 'unselected'
-                    }`}
-                    onClick={() => handleCardNumber(50)}
-                  >
-                    <p className='x-value'>50</p>
-                  </div>
-                  <div
-                    className={`x-container ${
-                      rangeOfQuiz === 0
-                        ? ''
-                        : rangeOfQuiz === 75
-                        ? 'selected blue-glow'
-                        : 'unselected'
-                    }`}
-                    onClick={() => handleCardNumber(75)}
-                  >
-                    <p className='x-value'>75</p>
-                  </div>
-                  <div
-                    className={`x-container ${
-                      rangeOfQuiz === 0
-                        ? ''
-                        : rangeOfQuiz === 100
-                        ? 'selected blue-glow'
-                        : 'unselected'
-                    }`}
-                    onClick={() => handleCardNumber(100)}
-                  >
-                    <p className='x-value'>100</p>
-                  </div>
-                  <div
-                    className='gear-container'
-                    onClick={(e) => handleAdvanced(e)}
-                  >
-                    <p className='gear-value'>
-                      <GearIcon className='gear-icon' />
-                    </p>
-                  </div>
-                </div>
-              )}
               <div className='home-button-container'>
                 {rangeOfQuiz === 0 || !enoughCards ? (
                   <Tooltip
@@ -288,14 +191,23 @@ const Home: React.FC = () => {
                   </Link>
                 )}
               </div>
-              <div className='home-patch-notes-link-container'>
-                <p className='home-patch-notes-link-text'>View</p>
-                <p
-                  className='home-patch-notes-link'
-                  onClick={() => handlePatchNotes()}
-                >
-                  Patch Notes
-                </p>
+              <div className='home-bottom-links-container'>
+                <div className='home-patch-notes-link-container'>
+                  <p
+                    className='home-patch-notes-link'
+                    onClick={() => handlePatchNotes('notes')}
+                  >
+                    Patch Notes
+                  </p>
+                </div>
+                <div className='home-settings-link-container'>
+                  <p
+                    className='home-patch-notes-link'
+                    onClick={() => handlePatchNotes('settings')}
+                  >
+                    Settings
+                  </p>
+                </div>
               </div>
             </div>
           </div>

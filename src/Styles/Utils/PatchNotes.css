@@ -1,8 +1,9 @@
 .patch-notes-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  margin: 20px 0px 10px 0px;
+  gap: 15px;
+  margin: 0px 0px 10px 0px;
+  padding: 5px;
 }
 
 .patch-date-card {
@@ -20,15 +21,15 @@
   line-height: 1;
   font-weight: 300;
   color: var(--clr-accent-orange);
-  margin-bottom: 1.5rem;
+  margin-bottom: 15px;
   border-bottom: 2px solid var(--clr-divider);
-  padding-bottom: 0.5rem;
+  padding-bottom: 2px;
 }
 
 .patch-notes-list {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 20px;
 }
 
 .patch-note-container {
@@ -42,7 +43,7 @@
   line-height: 1;
   font-weight: 300;
   color: var(--clr-light);
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 }
 
 .note-body {
@@ -70,10 +71,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .patch-notes-container {
-    padding: 1rem;
-  }
-
   .patch-date-card {
     padding: 1.5rem;
   }
