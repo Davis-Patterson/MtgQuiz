@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AppContext, WindowType } from 'Contexts/AppContext';
 import { Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
-import GearIcon from 'Svgs/GearIcon';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Main/Home.css';
 
@@ -17,8 +16,6 @@ const Home: React.FC = () => {
     setPlayers,
     setCurrentIndex,
     rangeOfQuiz,
-    setRangeOfQuiz,
-    creatorQuiz,
     setCurrentCardGuesses,
     setRevealedRanks,
     setStarted,
@@ -44,21 +41,6 @@ const Home: React.FC = () => {
     setCurrentCardGuesses({});
     setRevealedRanks([]);
     setCanScroll(true);
-  };
-
-  const handleCardNumber = (value: number) => {
-    if (rangeOfQuiz === value) {
-      setRangeOfQuiz(0);
-    } else {
-      setRangeOfQuiz(value);
-    }
-  };
-
-  const handleAdvanced = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setShowSettings(true);
   };
 
   useEffect(() => {
