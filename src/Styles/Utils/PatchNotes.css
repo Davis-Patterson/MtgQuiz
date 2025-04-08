@@ -6,13 +6,52 @@
   padding: 5px;
 }
 
+.patch-notes-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.patch-date-selector {
+  background: var(--clr-accent-blue);
+  color: var(--clr-light);
+  border: 1px solid var(--clr-accent-blue);
+  border-radius: 8px;
+  padding: 8px 10px 6px 10px;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  margin: 0px 0px 10px 0px;
+}
+.patch-date-selector option {
+  background: var(--clr-platinum);
+  color: var(--clr-dark);
+  padding: 0.5rem;
+}
+.patch-date-selector:hover {
+  border: 1px solid var(--clr-accent-blue-hover);
+  background-color: var(--clr-accent-blue-hover);
+}
+.patch-date-selector:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--clr-accent-blue);
+}
+
 .patch-date-card {
   background: var(--clr-screen);
   border-radius: 12px;
-  padding: 1.5rem 1rem;
+  padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   border: 1px solid var(--clr-screen);
-  border-top: 4px solid var(--clr-accent-orange);
+  border-top: 4px solid var(--clr-accent-blue-hover);
 }
 
 .patch-date {
@@ -20,9 +59,9 @@
   font-size: 1.2rem;
   line-height: 1;
   font-weight: 300;
-  color: var(--clr-accent-orange);
-  margin-bottom: 15px;
-  border-bottom: 2px solid var(--clr-divider);
+  color: var(--clr-light);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--clr-accent-blue-hover);
   padding-bottom: 2px;
 }
 
@@ -39,7 +78,7 @@
 
 .note-header {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   line-height: 1;
   font-weight: 300;
   color: var(--clr-light);
@@ -66,24 +105,5 @@
 .note-point {
   line-height: 1.6;
   font-size: 1rem;
-  color: var(--clr-accent-orange);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .patch-date-card {
-    padding: 1.5rem;
-  }
-
-  .patch-date {
-    font-size: 1.3rem;
-  }
-
-  .note-header {
-    font-size: 1.1rem;
-  }
-
-  .note-point {
-    font-size: 0.95rem;
-  }
+  color: var(--clr-accent-blue-hover);
 }
