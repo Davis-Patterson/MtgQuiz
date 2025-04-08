@@ -174,7 +174,7 @@
   font-weight: 300;
   color: var(--clr-text-blue);
   cursor: default;
-  margin: 0px 0px 0px 0px;
+  margin: 10px 0px 0px 0px;
 }
 
 .settings-header-subtext,
