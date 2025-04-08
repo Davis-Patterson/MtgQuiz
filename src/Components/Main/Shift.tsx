@@ -51,6 +51,8 @@ const Shift: React.FC = () => {
 
   const [actualDirection, setActualDirection] = useState<number>(0);
 
+  const showStats = false;
+
   const currentPlayer = players[currentPlayerIndex];
   const currentCard = selectedCards[currentIndex];
   const navigate = useNavigate();
@@ -185,33 +187,37 @@ const Shift: React.FC = () => {
           }
         });
 
-        console.log('=== Card Statistics ===');
-        console.log(`Total common cards: ${totalCommon}`);
-        console.log(`Total new additions: ${newAdditions}`);
-        console.log(`Common card changes:`);
-        console.log(
-          `Increased: ${increased} (${((increased / totalCommon) * 100).toFixed(
-            1
-          )}%)`
-        );
-        console.log(
-          `Decreased: ${decreased} (${((decreased / totalCommon) * 100).toFixed(
-            1
-          )}%)`
-        );
-        console.log(
-          `Same rank: ${same} (${((same / totalCommon) * 100).toFixed(1)}%)`
-        );
-        console.log(`\nQuiz Card Selection (${selected.length} cards):`);
-        console.log(`Increased: ${selectedIncreased}`);
-        console.log(`Decreased: ${selectedDecreased}`);
-        console.log(`Same rank: ${selectedSame}`);
-        console.log(
-          `Ratio: ${(
-            (selectedIncreasedCount / finalSelected.length) *
-            100
-          ).toFixed(1)}%`
-        );
+        if (showStats) {
+          console.log('=== Card Statistics ===');
+          console.log(`Total common cards: ${totalCommon}`);
+          console.log(`Total new additions: ${newAdditions}`);
+          console.log(`Common card changes:`);
+          console.log(
+            `Increased: ${increased} (${(
+              (increased / totalCommon) *
+              100
+            ).toFixed(1)}%)`
+          );
+          console.log(
+            `Decreased: ${decreased} (${(
+              (decreased / totalCommon) *
+              100
+            ).toFixed(1)}%)`
+          );
+          console.log(
+            `Same rank: ${same} (${((same / totalCommon) * 100).toFixed(1)}%)`
+          );
+          console.log(`\nQuiz Card Selection (${selected.length} cards):`);
+          console.log(`Increased: ${selectedIncreased}`);
+          console.log(`Decreased: ${selectedDecreased}`);
+          console.log(`Same rank: ${selectedSame}`);
+          console.log(
+            `Ratio: ${(
+              (selectedIncreasedCount / finalSelected.length) *
+              100
+            ).toFixed(1)}%`
+          );
+        }
 
         setSelectedCards(finalSelected);
         setStarted(true);

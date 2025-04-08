@@ -76,7 +76,7 @@
   left: 15px;
   width: 22px;
   height: 22px;
-  fill: var(--clr-break);
+  fill: var(--clr-divider);
   transition: all 0.15s ease-in-out;
 }
 .eraser-icon {
@@ -88,11 +88,10 @@
   cursor: default;
 }
 .eraser-icon:hover {
-  fill: var(--clr-accent-blue);
+  fill: var(--clr-text-grey);
 }
 .eraser-icon:active {
-  fill: var(--clr-accent-blue-hover);
-  transform: scale(95%);
+  transform: scale(90%);
 }
 
 .settings-back-arrow {
@@ -123,13 +122,11 @@
   cursor: pointer;
   transition: all 0.15s ease-in-out;
   margin: 2px 0px 0px 0px;
-  opacity: 0.4;
 }
 .settings-notes-icon:hover {
-  opacity: 1;
+  fill: var(--clr-text-grey);
 }
 .settings-notes-icon:active {
-  opacity: 1;
   transform: scale(90%);
 }
 
@@ -143,13 +140,11 @@
   cursor: pointer;
   transition: all 0.15s ease-in-out;
   margin: 2px 0px 0px 0px;
-  opacity: 0.4;
 }
 .settings-mail-icon:hover {
-  opacity: 1;
+  fill: var(--clr-text-grey);
 }
 .settings-mail-icon:active {
-  opacity: 1;
   transform: scale(90%);
 }
 

@@ -124,6 +124,7 @@
   font-weight: 400;
   color: var(--clr-light);
   margin: 6px 0px 0px 0px;
+  user-select: none;
 }
 
 .shift-year-label-value-container {
@@ -145,6 +146,7 @@
   line-height: 1;
   font-weight: 400;
   color: var(--clr-light);
+  user-select: none;
 }
 .shift-year-label-value.max {
   transform: scaleX(90%);
@@ -241,6 +243,7 @@
   color: var(--clr-light);
   font-size: 0.8em;
   margin: 2px 0px 0px 0px;
+  user-select: none;
 }
 
 .option-indicator-container {
@@ -271,6 +274,7 @@
   font-weight: 400;
   color: var(--clr-icon);
   margin: 2px 0px 0px 0px;
+  user-select: none;
 }
 
 .option-indicator-decrease,

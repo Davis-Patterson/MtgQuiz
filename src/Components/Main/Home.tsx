@@ -288,7 +288,7 @@ const Home: React.FC = () => {
                   </Link>
                 )}
               </div>
-              <p className='home-patch-notes-link-container'>
+              <div className='home-patch-notes-link-container'>
                 <p className='home-patch-notes-link-text'>View</p>
                 <p
                   className='home-patch-notes-link'
@@ -296,7 +296,7 @@ const Home: React.FC = () => {
                 >
                   Patch Notes
                 </p>
-              </p>
+              </div>
             </div>
           </div>
         </div>

@@ -85,6 +85,7 @@
   text-align: center;
   margin: 0px 0px 5px 0px;
   transition: all 0.3s ease-in-out;
+  user-select: none;
 }
 .quiz-current-player-guess {
   font-family: 'Beleren Bold', sans-serif;

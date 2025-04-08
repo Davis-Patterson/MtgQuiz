@@ -518,7 +518,7 @@ const Settings: React.FC = () => {
                         <p className='tooltip-text'>Reset settings</p>
                       </>
                     }
-                    enterDelay={400}
+                    enterDelay={600}
                     placement='right'
                   >
                     <EraserIcon
@@ -545,7 +545,7 @@ const Settings: React.FC = () => {
                         <p className='tooltip-text'>Patch notes</p>
                       </>
                     }
-                    enterDelay={400}
+                    enterDelay={600}
                     placement='right'
                   >
                     <NotesIcon
@@ -559,7 +559,7 @@ const Settings: React.FC = () => {
                         <p className='tooltip-text'>Message developers</p>
                       </>
                     }
-                    enterDelay={400}
+                    enterDelay={600}
                     placement='right'
                   >
                     <MailIcon
