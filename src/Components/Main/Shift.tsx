@@ -490,10 +490,12 @@ const Shift: React.FC = () => {
                     <Tooltip
                       title={
                         <>
-                          <p className='tooltip-text'>
-                            {currentCard?.previousYear}
-                          </p>
-                          <p className='tooltip-text'>Card Rank</p>
+                          <div className='tooltip-text-container'>
+                            <p className='tooltip-text'>
+                              {currentCard?.previousYear}
+                            </p>
+                            <p className='tooltip-text'>Card Rank</p>
+                          </div>
                         </>
                       }
                       enterDelay={400}
@@ -521,10 +523,12 @@ const Shift: React.FC = () => {
                     <Tooltip
                       title={
                         <>
-                          <p className='tooltip-text'>
-                            {currentCard?.currentYear}
-                          </p>
-                          <p className='tooltip-text'>Card Rank</p>
+                          <div className='tooltip-text-container'>
+                            <p className='tooltip-text'>
+                              {currentCard?.currentYear}
+                            </p>
+                            <p className='tooltip-text'>Card Rank</p>
+                          </div>
                         </>
                       }
                       enterDelay={400}
@@ -647,10 +651,12 @@ const Shift: React.FC = () => {
                   <Tooltip
                     title={
                       <>
-                        <p className='tooltip-text'>
-                          {currentCard?.previousYear}
-                        </p>
-                        <p className='tooltip-text'>Card Rank</p>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>
+                            {currentCard?.previousYear}
+                          </p>
+                          <p className='tooltip-text'>Card Rank</p>
+                        </div>
                       </>
                     }
                     enterDelay={400}
@@ -678,10 +684,12 @@ const Shift: React.FC = () => {
                   <Tooltip
                     title={
                       <>
-                        <p className='tooltip-text'>
-                          Was this rank increased, decreased,
-                        </p>
-                        <p className='tooltip-text'>{`or stayed the same since ${currentCard?.previousYear}?`}</p>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>
+                            Was this rank increased, decreased,
+                          </p>
+                          <p className='tooltip-text'>{`or stayed the same since ${currentCard?.previousYear}?`}</p>
+                        </div>
                       </>
                     }
                     enterDelay={400}
@@ -702,12 +710,14 @@ const Shift: React.FC = () => {
                   <Tooltip
                     title={
                       <>
-                        <p className='tooltip-text'>
-                          {`Card ranking was decreased since ${currentCard?.previousYear}`}
-                        </p>
-                        <p className='tooltip-text'>
-                          (Larger number represents lower ranking)
-                        </p>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>
+                            {`Card ranking was decreased since ${currentCard?.previousYear}`}
+                          </p>
+                          <p className='tooltip-text'>
+                            (Larger number represents lower ranking)
+                          </p>
+                        </div>
                       </>
                     }
                     enterDelay={800}
@@ -757,12 +767,14 @@ const Shift: React.FC = () => {
                   <Tooltip
                     title={
                       <>
-                        <p className='tooltip-text'>
-                          {`Card ranking was increased since ${currentCard?.previousYear}`}
-                        </p>
-                        <p className='tooltip-text'>
-                          (Smaller number represents higher ranking)
-                        </p>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>
+                            {`Card ranking was increased since ${currentCard?.previousYear}`}
+                          </p>
+                          <p className='tooltip-text'>
+                            (Smaller number represents higher ranking)
+                          </p>
+                        </div>
                       </>
                     }
                     enterDelay={800}

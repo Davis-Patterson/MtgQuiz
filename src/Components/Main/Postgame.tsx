@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext } from 'Contexts/AppContext';
 import { useNavigate, Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
+import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Main/Postgame.css';
 
 const Postgame: React.FC = () => {
@@ -13,6 +14,7 @@ const Postgame: React.FC = () => {
     players,
     cardData,
     cardStats,
+    rangeOfQuiz,
     selectedCards,
     setCurrentIndex,
     setCurrentCardGuesses,
@@ -63,6 +65,19 @@ const Postgame: React.FC = () => {
       p.scores.reduce((sum, score) => sum + score.diff, 0)
     );
     return totalScores.reduce((a, b) => a + b, 0) / (players.length || 1);
+  };
+
+  const centerValue = Math.ceil(rangeOfQuiz / 2);
+
+  const calculateMedianScore = () => {
+    const medianScore =
+      players.length > 0 && selectedCards.length > 0
+        ? selectedCards.reduce((sum, _, index) => {
+            const cardRank = players[0].scores[index].cardRank;
+            return sum + Math.abs(centerValue - cardRank);
+          }, 0)
+        : 0;
+    return medianScore;
   };
 
   const calculateGlobalAveragePerCard = (players: typeof context.players) => {
@@ -132,12 +147,64 @@ const Postgame: React.FC = () => {
             <div className='results-header-top'>
               <div className='results-title-container'>
                 <p className='results-score-label'>Final Score:</p>
-                <p className='results-score'>
-                  {players[0].scores.reduce(
-                    (sum, score) => sum + score.diff,
-                    0
-                  )}
-                </p>
+                <div className='results-score-container'>
+                  <p className='results-score'>
+                    {players[0].scores.reduce(
+                      (sum, score) => sum + score.diff,
+                      0
+                    )}
+                  </p>
+                  <div className='results-bottom-container'>
+                    <Tooltip
+                      title={
+                        <>
+                          <div className='tooltip-text-container'>
+                            <p className='tooltip-text'>
+                              Hypothetical median score
+                            </p>
+                            <p className='tooltip-text'>
+                              if each guess was {centerValue}
+                            </p>
+                          </div>
+                        </>
+                      }
+                      enterDelay={600}
+                      leaveDelay={200}
+                      placement='top'
+                    >
+                      <div className='results-median-score-container'>
+                        <p className='results-median-score-label'>
+                          Median Score:
+                        </p>
+                        <p className='results-median-score'>
+                          {calculateMedianScore()}
+                        </p>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      title={
+                        <>
+                          <div className='tooltip-text-container'>
+                            <p className='tooltip-text'>Your average</p>
+                            <p className='tooltip-text'>score per card</p>
+                          </div>
+                        </>
+                      }
+                      enterDelay={600}
+                      leaveDelay={200}
+                      placement='top'
+                    >
+                      <div className='results-median-score-container'>
+                        <p className='results-avg-score-label'>
+                          Your Avg/Card:{' '}
+                        </p>
+                        <p className='results-median-score'>
+                          {calculatePlayerAverage(players[0]).toFixed(1)}
+                        </p>
+                      </div>
+                    </Tooltip>
+                  </div>
+                </div>
               </div>
               <Link to='/' className='results-logo-img'>
                 <img
@@ -280,16 +347,85 @@ const Postgame: React.FC = () => {
                       </div>
                       <div className='multi-player-header-bottom'>
                         <div className='avg-stats-container'>
-                          <p className='multi-results-avg-text'>
-                            Avg Score: {globalAvgTotal.toFixed(1)}
-                          </p>
-                          <p className='multi-results-avg-text'>
-                            Avg Score/Card: {globalAvgPerCard.toFixed(1)}
-                          </p>
-                          <p className='multi-results-avg-text'>
-                            Your Avg/Card:{' '}
-                            {calculatePlayerAverage(player).toFixed(1)}
-                          </p>
+                          <Tooltip
+                            title={
+                              <>
+                                <div className='tooltip-text-container'>
+                                  <p className='tooltip-text'>Average score</p>
+                                  <p className='tooltip-text'>
+                                    for all players
+                                  </p>
+                                </div>
+                              </>
+                            }
+                            enterDelay={600}
+                            leaveDelay={200}
+                            placement='top'
+                          >
+                            <p className='multi-results-avg-text'>
+                              Avg Score: {globalAvgTotal.toFixed(1)}
+                            </p>
+                          </Tooltip>
+                          <Tooltip
+                            title={
+                              <>
+                                <div className='tooltip-text-container'>
+                                  <p className='tooltip-text'>
+                                    Hypothetical median score
+                                  </p>
+                                  <p className='tooltip-text'>
+                                    if each guess was {centerValue}
+                                  </p>
+                                </div>
+                              </>
+                            }
+                            enterDelay={600}
+                            leaveDelay={200}
+                            placement='top'
+                          >
+                            <p className='multi-results-avg-text'>
+                              Median Score: {calculateMedianScore()}
+                            </p>
+                          </Tooltip>
+                          <Tooltip
+                            title={
+                              <>
+                                <div className='tooltip-text-container'>
+                                  <p className='tooltip-text'>
+                                    Average score per card
+                                  </p>
+                                  <p className='tooltip-text'>
+                                    for all players
+                                  </p>
+                                </div>
+                              </>
+                            }
+                            enterDelay={600}
+                            leaveDelay={200}
+                            placement='top'
+                          >
+                            <p className='multi-results-avg-text'>
+                              Avg Score/Card: {globalAvgPerCard.toFixed(1)}
+                            </p>
+                          </Tooltip>
+                          <Tooltip
+                            title={
+                              <>
+                                <div className='tooltip-text-container'>
+                                  <p className='tooltip-text'>Your average</p>
+                                  <p className='tooltip-text'>score per card</p>
+                                </div>
+                              </>
+                            }
+                            enterDelay={600}
+                            leaveDelay={200}
+                            placement='top'
+                          >
+                            <p className='multi-results-avg-text'>
+                              Your Avg/Card:{' '}
+                              {calculatePlayerAverage(player).toFixed(1)}
+                            </p>
+                          </Tooltip>
                         </div>
                       </div>
                     </div>

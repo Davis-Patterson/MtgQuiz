@@ -167,7 +167,13 @@ const UserScore: React.FC = () => {
         <div className='home-icons'>
           {confirm ? (
             <Tooltip
-              title={<p className='tooltip-text'>Confirm</p>}
+              title={
+                <>
+                  <div className='tooltip-text-container'>
+                    <p className='tooltip-text'>Confirm</p>
+                  </div>
+                </>
+              }
               enterDelay={600}
               leaveDelay={200}
               placement='bottom'
@@ -176,7 +182,13 @@ const UserScore: React.FC = () => {
             </Tooltip>
           ) : (
             <Tooltip
-              title={<p className='tooltip-text'>Home</p>}
+              title={
+                <>
+                  <div className='tooltip-text-container'>
+                    <p className='tooltip-text'>Home</p>
+                  </div>
+                </>
+              }
               enterDelay={600}
               leaveDelay={100}
               placement='bottom'

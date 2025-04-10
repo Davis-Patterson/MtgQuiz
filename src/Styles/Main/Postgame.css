@@ -27,7 +27,6 @@
 }
 
 .results-score-label,
-.results-score,
 .results-card-name,
 .results-text-label,
 .results-score-text-label,
@@ -63,7 +62,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 55px 0px 0px;
+  margin: 0px 30px 0px 0px;
 }
 
 .results-score-label {
@@ -76,16 +75,69 @@
   margin: 0px 0px 6px 0px;
 }
 
+.results-score-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--clr-divider);
+  padding: 9px 8px 0px 8px;
+  min-width: 150px;
+  background-color: var(--clr-screen);
+}
+
 .results-score {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 5em;
+  font-size: 4.5em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 0.8;
+  padding: 6px 0px 2px 0px;
+  color: var(--clr-accent-orange);
+  border-bottom: 1px solid var(--clr-divider);
+  width: 100%;
+}
+
+.results-bottom-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  margin: 8px 0px 5px 0px;
+}
+
+.results-median-score-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: help;
+  gap: 5px;
+}
+
+.results-median-score-label,
+.results-avg-score-label {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 0.8em;
   text-align: center;
   font-weight: 400;
   line-height: 1;
-  border: 1px solid var(--clr-divider);
-  color: var(--clr-light);
-  padding: 9px 8px 0px 8px;
-  min-width: 100px;
+}
+.results-median-score-label {
+  margin: 0px 0px 0px 0px;
+}
+.results-avg-score-label {
+  margin: 2px 0px 0px 0px;
+}
+
+.results-median-score {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  transform: scaleY(90%);
 }
 
 .results-logo-img {
@@ -96,6 +148,7 @@
 
 .results-salt-logo {
   width: 150px;
+  margin: 10px 0px 0px 0px;
 }
 
 .results-header-bottom {
@@ -399,6 +452,7 @@
   line-height: 1;
   color: var(--clr-light);
   margin: 0px 0px 2px 0px;
+  cursor: help;
 }
 
 .multi-results-title-container {

@@ -97,13 +97,17 @@ const CardNumberSlider: React.FC = () => {
               title={
                 creatorQuiz ? (
                   <>
-                    <p className='tooltip-text'>Disabled while creator</p>
-                    <p className='tooltip-text'>quiz is selected</p>
+                    <div className='tooltip-text-container'>
+                      <p className='tooltip-text'>Disabled while creator</p>
+                      <p className='tooltip-text'>quiz is selected</p>
+                    </div>
                   </>
                 ) : (
                   <>
-                    <p className='tooltip-text'>Reset quiz length to</p>
-                    <p className='tooltip-text'>the default of 10</p>
+                    <div className='tooltip-text-container'>
+                      <p className='tooltip-text'>Reset quiz length to</p>
+                      <p className='tooltip-text'>the default of 10</p>
+                    </div>
                   </>
                 )
               }
@@ -121,8 +125,10 @@ const CardNumberSlider: React.FC = () => {
             <Tooltip
               title={
                 <>
-                  <p className='tooltip-text'>Reset quiz length to</p>
-                  <p className='tooltip-text'>the default of 10</p>
+                  <div className='tooltip-text-container'>
+                    <p className='tooltip-text'>Reset quiz length to</p>
+                    <p className='tooltip-text'>the default of 10</p>
+                  </div>
                 </>
               }
               enterDelay={400}
@@ -139,13 +145,17 @@ const CardNumberSlider: React.FC = () => {
             title={
               creatorQuiz ? (
                 <>
-                  <p className='tooltip-text'>Disabled while creator</p>
-                  <p className='tooltip-text'>quiz is selected</p>
+                  <div className='tooltip-text-container'>
+                    <p className='tooltip-text'>Disabled while creator</p>
+                    <p className='tooltip-text'>quiz is selected</p>
+                  </div>
                 </>
               ) : (
                 <>
-                  <p className='tooltip-text'>Reset quiz length to</p>
-                  <p className='tooltip-text'>the default of 10</p>
+                  <div className='tooltip-text-container'>
+                    <p className='tooltip-text'>Reset quiz length to</p>
+                    <p className='tooltip-text'>the default of 10</p>
+                  </div>
                 </>
               )
             }
@@ -216,8 +226,10 @@ const CardNumberSlider: React.FC = () => {
             <Tooltip
               title={
                 <>
-                  <p className='tooltip-text'>Reset quiz length to</p>
-                  <p className='tooltip-text'>the default of 10</p>
+                  <div className='tooltip-text-container'>
+                    <p className='tooltip-text'>Reset quiz length to</p>
+                    <p className='tooltip-text'>the default of 10</p>
+                  </div>
                 </>
               }
               enterDelay={400}

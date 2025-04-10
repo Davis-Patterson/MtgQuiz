@@ -221,7 +221,15 @@ const ShiftPostgame: React.FC = () => {
 
                     <div className='results-year-labels'>
                       <Tooltip
-                        title={<>{card.previousYear} Card Rank</>}
+                        title={
+                          <>
+                            <div className='tooltip-text-container'>
+                              <p className='tooltip-text'>
+                                {card.previousYear} Card Rank
+                              </p>
+                            </div>
+                          </>
+                        }
                         enterDelay={400}
                         placement='top'
                       >
@@ -247,7 +255,15 @@ const ShiftPostgame: React.FC = () => {
                       </div>
 
                       <Tooltip
-                        title={<>{card.currentYear} Card Rank</>}
+                        title={
+                          <>
+                            <div className='tooltip-text-container'>
+                              <p className='tooltip-text'>
+                                {card.currentYear} Card Rank
+                              </p>
+                            </div>
+                          </>
+                        }
                         enterDelay={400}
                         placement='top'
                       >
@@ -433,7 +449,15 @@ const ShiftPostgame: React.FC = () => {
 
                                 <div className='multi-year-labels'>
                                   <Tooltip
-                                    title={<>{card.previousYear} Card Rank</>}
+                                    title={
+                                      <>
+                                        <div className='tooltip-text-container'>
+                                          <p className='tooltip-text'>
+                                            {card.previousYear} Card Rank
+                                          </p>
+                                        </div>
+                                      </>
+                                    }
                                     enterDelay={400}
                                     placement='top'
                                   >
@@ -459,7 +483,15 @@ const ShiftPostgame: React.FC = () => {
                                   </div>
 
                                   <Tooltip
-                                    title={<>{card.currentYear} Card Rank</>}
+                                    title={
+                                      <>
+                                        <div className='tooltip-text-container'>
+                                          <p className='tooltip-text'>
+                                            {card.currentYear} Card Rank
+                                          </p>
+                                        </div>
+                                      </>
+                                    }
                                     enterDelay={400}
                                     placement='top'
                                   >

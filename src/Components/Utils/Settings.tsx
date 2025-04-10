@@ -515,7 +515,9 @@ const Settings: React.FC = () => {
                   <Tooltip
                     title={
                       <>
-                        <p className='tooltip-text'>Reset settings</p>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>Reset settings</p>
+                        </div>
                       </>
                     }
                     enterDelay={600}
@@ -542,7 +544,9 @@ const Settings: React.FC = () => {
                   <Tooltip
                     title={
                       <>
-                        <p className='tooltip-text'>Patch notes</p>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>Patch notes</p>
+                        </div>
                       </>
                     }
                     enterDelay={600}
@@ -556,7 +560,9 @@ const Settings: React.FC = () => {
                   <Tooltip
                     title={
                       <>
-                        <p className='tooltip-text'>Message developers</p>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>Message developers</p>
+                        </div>
                       </>
                     }
                     enterDelay={600}
@@ -587,8 +593,10 @@ const Settings: React.FC = () => {
                     <Tooltip
                       title={
                         <>
-                          <p className='tooltip-text'>Disabled under</p>
-                          <p className='tooltip-text'>current settings</p>
+                          <div className='tooltip-text-container'>
+                            <p className='tooltip-text'>Disabled under</p>
+                            <p className='tooltip-text'>current settings</p>
+                          </div>
                         </>
                       }
                       enterDelay={400}
@@ -871,12 +879,14 @@ const Settings: React.FC = () => {
                                   <Tooltip
                                     title={
                                       <>
-                                        <p className='tooltip-text'>
-                                          Disabled while creator
-                                        </p>
-                                        <p className='tooltip-text'>
-                                          quiz is selected
-                                        </p>
+                                        <div className='tooltip-text-container'>
+                                          <p className='tooltip-text'>
+                                            Disabled while creator
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            quiz is selected
+                                          </p>
+                                        </div>
                                       </>
                                     }
                                     enterDelay={400}
@@ -895,15 +905,17 @@ const Settings: React.FC = () => {
                                   <Tooltip
                                     title={
                                       <>
-                                        <p className='tooltip-text'>
-                                          Select cards seen in
-                                        </p>
-                                        <p className='tooltip-text'>
-                                          previous quiz, when
-                                        </p>
-                                        <p className='tooltip-text'>
-                                          applicable
-                                        </p>
+                                        <div className='tooltip-text-container'>
+                                          <p className='tooltip-text'>
+                                            Select cards seen in
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            previous quiz, when
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            applicable
+                                          </p>
+                                        </div>
                                       </>
                                     }
                                     enterDelay={400}
@@ -923,9 +935,11 @@ const Settings: React.FC = () => {
                                 <Tooltip
                                   title={
                                     <>
-                                      <p className='tooltip-text'>
-                                        Clear selections
-                                      </p>
+                                      <div className='tooltip-text-container'>
+                                        <p className='tooltip-text'>
+                                          Clear selections
+                                        </p>
+                                      </div>
                                     </>
                                   }
                                   enterDelay={400}
@@ -957,12 +971,14 @@ const Settings: React.FC = () => {
                                       key={card.rank}
                                       title={
                                         <>
-                                          <p className='tooltip-text'>
-                                            Disabled while creator
-                                          </p>
-                                          <p className='tooltip-text'>
-                                            quiz is selected
-                                          </p>
+                                          <div className='tooltip-text-container'>
+                                            <p className='tooltip-text'>
+                                              Disabled while creator
+                                            </p>
+                                            <p className='tooltip-text'>
+                                              quiz is selected
+                                            </p>
+                                          </div>
                                         </>
                                       }
                                       enterDelay={400}
@@ -1032,12 +1048,14 @@ const Settings: React.FC = () => {
                                 <Tooltip
                                   title={
                                     <>
-                                      <p className='tooltip-text'>
-                                        Recreate past quizzes
-                                      </p>
-                                      <p className='tooltip-text'>
-                                        taken by creators
-                                      </p>
+                                      <div className='tooltip-text-container'>
+                                        <p className='tooltip-text'>
+                                          Recreate past quizzes
+                                        </p>
+                                        <p className='tooltip-text'>
+                                          taken by creators
+                                        </p>
+                                      </div>
                                     </>
                                   }
                                   enterDelay={400}
@@ -1075,9 +1093,11 @@ const Settings: React.FC = () => {
                                 <Tooltip
                                   title={
                                     <>
-                                      <p className='tooltip-text'>
-                                        Clear selections
-                                      </p>
+                                      <div className='tooltip-text-container'>
+                                        <p className='tooltip-text'>
+                                          Clear selections
+                                        </p>
+                                      </div>
                                     </>
                                   }
                                   enterDelay={400}
@@ -1108,12 +1128,14 @@ const Settings: React.FC = () => {
                                       key={card.rank}
                                       title={
                                         <>
-                                          <p className='tooltip-text'>
-                                            Disabled while creator
-                                          </p>
-                                          <p className='tooltip-text'>
-                                            quiz is selected
-                                          </p>
+                                          <div className='tooltip-text-container'>
+                                            <p className='tooltip-text'>
+                                              Disabled while creator
+                                            </p>
+                                            <p className='tooltip-text'>
+                                              quiz is selected
+                                            </p>
+                                          </div>
                                         </>
                                       }
                                       enterDelay={400}
@@ -1182,13 +1204,16 @@ const Settings: React.FC = () => {
                               <Tooltip
                                 title={
                                   <>
-                                    <p className='tooltip-text'>
-                                      Multiplayer is limited to a single device.
-                                    </p>
-                                    <p className='tooltip-text'>
-                                      No online or cross-device play available
-                                      at this time.
-                                    </p>
+                                    <div className='tooltip-text-container'>
+                                      <p className='tooltip-text'>
+                                        Multiplayer is limited to a single
+                                        device.
+                                      </p>
+                                      <p className='tooltip-text'>
+                                        No online or cross-device play available
+                                        at this time.
+                                      </p>
+                                    </div>
                                   </>
                                 }
                                 enterDelay={400}
