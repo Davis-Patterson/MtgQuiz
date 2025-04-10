@@ -183,10 +183,14 @@ const SlideBar: React.FC = () => {
                                 setFullScreenImage(revealedCard.imageUrl)
                               }
                             />
-                            <p className='tooltip-text'>{revealedCard.name}</p>
-                            <p className='tooltip-text'>
-                              Rank: {revealedCard.rank}
-                            </p>
+                            <div className='tooltip-image-text-container'>
+                              <p className='tooltip-image-text'>
+                                {revealedCard.name}
+                              </p>
+                              <p className='tooltip-text'>
+                                Rank: {revealedCard.rank}
+                              </p>
+                            </div>
                           </>
                         }
                         enterDelay={200}

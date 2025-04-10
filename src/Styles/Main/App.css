@@ -247,6 +247,31 @@
   cursor: pointer;
 }
 
+.tooltip-image-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 4px 0px 0px 0px;
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tooltip-image-text {
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.25em;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  text-align: center;
+  width: 100%;
+}
+
 .MuiTooltip-tooltip {
   background: var(--clr-screen-blue) !important;
   border: 1px solid var(--clr-dark) !important;
