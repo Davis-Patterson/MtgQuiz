@@ -298,7 +298,7 @@
   box-shadow: 0px 1px 5px #0000004b;
 }
 .settings-dropdown-header:hover {
-  background-color: var(--clr-screen-blue);
+  background-color: var(--clr-screen-blue-menu);
 }
 
 .settings-dropdown-header-text-container {
