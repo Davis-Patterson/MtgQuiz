@@ -57,6 +57,13 @@
           "A new quiz mode has been added that challenges players to guess whether a card’s salt ranking increased or decreased between years.",
           "All cards in this mode have appeared on multiple Salt Lists, adding a layer of meta-awareness to guesses."
         ]
+      },
+      {
+        "header": "Median Score",
+        "body": [
+          "A new Median Score metric has been added, representing the hypothetical score if every guess was in the middle of the ranking range.",
+          "Included in both singleplayer and multiplayer results."
+        ]
       }
     ]
   }
