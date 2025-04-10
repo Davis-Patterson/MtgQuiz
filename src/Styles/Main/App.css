@@ -254,12 +254,6 @@
   align-items: center;
   width: 100%;
   margin: 4px 0px 0px 0px;
-  display: -webkit-box;
-  line-clamp: 1;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .tooltip-image-text {
@@ -270,6 +264,12 @@
   color: var(--clr-light);
   text-align: center;
   width: 100%;
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .MuiTooltip-tooltip {
