@@ -1,7 +1,7 @@
 .patch-notes-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
   margin: 0px 0px 0px 0px;
   padding: 5px;
 }
