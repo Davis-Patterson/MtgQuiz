@@ -66,5 +66,17 @@
         ]
       }
     ]
+  },
+  {
+    "date": "4/25/25",
+    "patch_notes": [
+      {
+        "header": "Saffron Olive",
+        "body": [
+          "Added Saffron Olive's Salt Quiz to the Creator Quizzes list.",
+          "Allows players to take the same quiz."
+        ]
+      }
+    ]
   }
 ]
