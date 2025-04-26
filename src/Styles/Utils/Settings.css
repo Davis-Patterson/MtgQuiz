@@ -112,10 +112,28 @@
   transform: scale(90%);
 }
 
+.settings-trophy-icon {
+  position: absolute;
+  top: 14.5px;
+  left: 50px;
+  height: 24px;
+  width: 30px;
+  fill: var(--clr-divider);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  margin: 0px 0px 0px 0px;
+}
+.settings-trophy-icon:hover {
+  fill: var(--clr-text-grey);
+}
+.settings-trophy-icon:active {
+  transform: scale(90%);
+}
+
 .settings-notes-icon {
   position: absolute;
   top: 12px;
-  left: 50px;
+  left: 92px;
   height: 25px;
   width: 30px;
   fill: var(--clr-divider);
@@ -133,7 +151,7 @@
 .settings-mail-icon {
   position: absolute;
   top: 15px;
-  left: 92px;
+  left: 134px;
   height: 20px;
   width: 30px;
   fill: var(--clr-divider);
@@ -167,14 +185,20 @@
   margin: 10px 0px 10px 0px;
 }
 
-.settings-header-text {
+.settings-header-text,
+.settings-alt-header-text {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 2.5em;
   line-height: 1;
   font-weight: 300;
   color: var(--clr-text-blue);
   cursor: default;
+}
+.settings-header-text {
   margin: 10px 0px 0px 0px;
+}
+.settings-alt-header-text {
+  margin: -20px 0px 0px 0px;
 }
 
 .settings-header-subtext,
@@ -488,6 +512,16 @@
 .settings-participants-header-container:hover .info-icon {
   fill: var(--clr-accent-blue);
   opacity: 1;
+}
+
+.settings-creator-quiz-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 5px 5px 10px 5px;
 }
 
 .settings-known-cards-header {

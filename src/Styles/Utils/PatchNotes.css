@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 0px 0px;
   padding: 5px;
 }
 
@@ -48,7 +48,7 @@
 .patch-date-card {
   background: var(--clr-screen);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 0.8rem 0.8rem 1rem 0.8rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   border: 1px solid var(--clr-screen);
   border-top: 4px solid var(--clr-accent-blue-hover);
@@ -60,7 +60,7 @@
   line-height: 1;
   font-weight: 300;
   color: var(--clr-light);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-bottom: 2px solid var(--clr-accent-blue-hover);
   padding-bottom: 2px;
 }
@@ -68,12 +68,21 @@
 .patch-notes-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .patch-note-container {
+  background: var(--clr-screen);
   display: flex;
   flex-direction: column;
+  padding: 0.5rem 0.4rem 0.6rem 0.4rem;
+  border-radius: 8px;
+}
+
+.note-header-container {
+  margin: 0px 0px 5px 5px;
+  display: inline-block;
+  position: relative;
 }
 
 .note-header {
@@ -81,8 +90,12 @@
   font-size: 1.1rem;
   line-height: 1;
   font-weight: 300;
+  margin: 0px 0px 0px 0px;
   color: var(--clr-light);
-  margin-bottom: 10px;
+  display: inline-block;
+  position: relative;
+  border-bottom: 2px solid var(--clr-accent-blue);
+  padding-bottom: 1px;
 }
 
 .note-body {

@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AppContext, WindowType } from 'Contexts/AppContext';
 import { Link } from 'react-router-dom';
 import SaltLogo from 'Assets/Images/salt-logo.webp';
+import NotesIcon from 'Svgs/NotesIcon';
+import TrophyIcon from 'Svgs/TrophyIcon';
+import GearIcon from 'Svgs/GearIcon';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Main/Home.css';
 
@@ -100,7 +103,7 @@ const Home: React.FC = () => {
                 >
                   CovertGoSalt
                 </a>
-                . Now featured in the latest episode!
+                . Now featured in the latest episodes!
               </p>
               {gameMode === 'salt' ? (
                 <>
@@ -145,6 +148,71 @@ const Home: React.FC = () => {
               )}
               <div className='button-gap' />
               <div className='home-button-container'>
+                <div className='home-bottom-links-container'>
+                  <Tooltip
+                    title={
+                      <>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>Patch Notes</p>
+                        </div>
+                      </>
+                    }
+                    enterDelay={600}
+                    leaveDelay={200}
+                    placement='top'
+                  >
+                    <div
+                      className='home-settings-link-container dark-blue-glow'
+                      onClick={() => handlePatchNotes('notes')}
+                    >
+                      <div className='home-patch-notes-link'>
+                        <NotesIcon className='home-notes-icon' />
+                      </div>
+                    </div>
+                  </Tooltip>
+                  <Tooltip
+                    title={
+                      <>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>Creator Leaderboard</p>
+                        </div>
+                      </>
+                    }
+                    enterDelay={600}
+                    leaveDelay={200}
+                    placement='top'
+                  >
+                    <div
+                      className='home-settings-link-container dark-blue-glow'
+                      onClick={() => handlePatchNotes('leaderboard')}
+                    >
+                      <p className='home-patch-notes-link'>
+                        <TrophyIcon className='home-trophy-icon' />
+                      </p>
+                    </div>
+                  </Tooltip>
+                  <Tooltip
+                    title={
+                      <>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>Settings</p>
+                        </div>
+                      </>
+                    }
+                    enterDelay={600}
+                    leaveDelay={200}
+                    placement='top'
+                  >
+                    <div
+                      className='home-settings-link-container dark-blue-glow'
+                      onClick={() => handlePatchNotes('settings')}
+                    >
+                      <p className='home-patch-notes-link'>
+                        <GearIcon className='home-gear-icon' />
+                      </p>
+                    </div>
+                  </Tooltip>
+                </div>
                 {rangeOfQuiz === 0 || !enoughCards ? (
                   <Tooltip
                     title={
@@ -174,24 +242,6 @@ const Home: React.FC = () => {
                     {gameMode === 'salt' ? 'Start Quiz' : 'Start Salt Shift'}
                   </Link>
                 )}
-              </div>
-              <div className='home-bottom-links-container'>
-                <div className='home-patch-notes-link-container'>
-                  <p
-                    className='home-patch-notes-link'
-                    onClick={() => handlePatchNotes('notes')}
-                  >
-                    Patch Notes
-                  </p>
-                </div>
-                <div className='home-settings-link-container'>
-                  <p
-                    className='home-patch-notes-link'
-                    onClick={() => handlePatchNotes('settings')}
-                  >
-                    Settings
-                  </p>
-                </div>
               </div>
             </div>
           </div>

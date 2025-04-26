@@ -72,9 +72,20 @@
     "patch_notes": [
       {
         "header": "Saffron Olive",
+        "body": ["Added Saffron Olive's Salt Quiz to the Creator Quizzes list."]
+      },
+      {
+        "header": "Creator Quizzes Update",
         "body": [
-          "Added Saffron Olive's Salt Quiz to the Creator Quizzes list.",
-          "Allows players to take the same quiz."
+          "The Creator Quizzes have been moved into their own dropdown section in the Settings menu.",
+          "This section allows players to replay quizzes taken by creators featured on the CovertGoSalt series."
+        ]
+      },
+      {
+        "header": "Creator Leaderboard",
+        "body": [
+          "A new Leaderboard section has been added, showcasing the scores of creators featured on the CovertGoSalt series.",
+          "The Homepage has been updated with a new button to view the Leaderboard, alongside refreshed buttons for Patch Notes and Settings to match the new layout for a more cohesive look."
         ]
       }
     ]

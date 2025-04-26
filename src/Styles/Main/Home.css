@@ -152,26 +152,36 @@
   width: 100%;
   max-width: 320px;
   text-align: left;
-  margin: 8px 0px 0px 0px;
+  margin: 0px 0px 8px 0px;
   gap: 5px;
 }
 
-.home-patch-notes-link-container,
+.home-notes-icon,
+.home-trophy-icon,
+.home-gear-icon {
+  width: 20px;
+  fill: var(--clr-light);
+}
+
 .home-settings-link-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  max-width: 45%;
+  justify-content: center;
+  max-width: 33%;
+  height: 33px;
   width: 100%;
   text-align: left;
   transform: scaleY(90%);
   gap: 5px;
+  border: 1px solid var(--clr-text-blue);
+  background: var(--clr-text-blue);
+  padding: 0.25rem;
+  cursor: pointer;
 }
-.home-patch-notes-link-container {
-  justify-content: flex-start;
-}
-.home-settings-link-container {
-  justify-content: flex-end;
+.home-settings-link-container:hover {
+  border: 1px solid var(--clr-text-blue-hover);
+  background: var(--clr-text-blue-hover);
 }
 
 .home-patch-notes-link-text,
@@ -182,14 +192,6 @@
   font-weight: 400;
   line-height: 1;
   color: var(--clr-text-light);
-}
-.home-patch-notes-link {
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.home-patch-notes-link:hover {
-  color: var(--clr-accent-blue-hover);
 }
 
 @media screen and (max-width: 500px) {

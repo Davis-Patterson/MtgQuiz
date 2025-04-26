@@ -44,11 +44,15 @@ function PatchNotes() {
 
       {filteredNotes.map((release) => (
         <div key={release.date} className='patch-date-card'>
-          <h3 className='patch-date'>{release.date}</h3>
+          {selectedDate === 'all' && (
+            <h3 className='patch-date'>{release.date}</h3>
+          )}
           <div className='patch-notes-list'>
             {release.patch_notes.map((note, index) => (
               <div className='patch-note-container' key={index}>
-                <h4 className='note-header'>{note.header}</h4>
+                <div className='note-header-container'>
+                  <h4 className='note-header'>{note.header}</h4>
+                </div>
                 <ul className='note-body'>
                   {note.body.map((point, idx) => (
                     <li key={idx} className='note-point'>

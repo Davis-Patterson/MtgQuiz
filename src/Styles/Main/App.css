@@ -182,6 +182,13 @@
   margin: 2px 0px 0px 0px;
 }
 
+.dark-blue-glow {
+  filter: drop-shadow(0 0 1em #2a3a8988);
+}
+.dark-blue-glow:hover {
+  filter: drop-shadow(0 0 1em #5478e688);
+  transition: filter 0.15s ease-in-out;
+}
 .blue-glow {
   filter: drop-shadow(0 0 1em #64c6ff88);
 }

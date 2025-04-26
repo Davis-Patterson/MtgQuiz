@@ -19,17 +19,20 @@ import LinearProgress from '@mui/material/LinearProgress';
 import DropdownIcon from 'Svgs/DropdownIcon';
 import BackArrow from 'Svgs/BackArrow';
 import NotesIcon from 'Svgs/NotesIcon';
+import TrophyIcon from 'Svgs/TrophyIcon';
 import MailIcon from 'Svgs/MailIcon';
 import Email from 'Components/Utils/Email';
 import PatchNotes from 'Components/Utils/PatchNotes';
 import InfoIcon from 'Svgs/InfoIcon';
-import creatorQuizzes from 'Utilities/CGB-Quizzes.json';
+import creatorQuizzes from 'Utilities/CGB-Quizzes-Season-1.json';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Utils/Settings.css';
+import CreatorLeaderboard from './CreatorLeaderboard';
 
 type DropdownType =
   | 'gameMode'
   | 'listYear'
+  | 'creators'
   | 'cardNumber'
   | 'excludeCards'
   | 'includeCards'
@@ -422,6 +425,14 @@ const Settings: React.FC = () => {
     });
   };
 
+  const handleIncludePreviousQuiz = () => {
+    setToBeIncludedRanks((prev) => {
+      const mergedRanks = new Set(prev);
+      previousQuizRanks.forEach((rank) => mergedRanks.add(rank));
+      return mergedRanks;
+    });
+  };
+
   const handleCreatorQuiz = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIsCreatorLoading(true);
     const selectedCreator = e.target.value;
@@ -533,7 +544,9 @@ const Settings: React.FC = () => {
                 ) : (
                   <EraserIcon className='eraser-icon-disabled' />
                 ))}
-              {(settingsWindow === 'contact' || settingsWindow === 'notes') && (
+              {(settingsWindow === 'contact' ||
+                settingsWindow === 'notes' ||
+                settingsWindow === 'leaderboard') && (
                 <BackArrow
                   className='settings-back-arrow'
                   onClick={() => handleSettingsWindow('settings')}
@@ -571,6 +584,22 @@ const Settings: React.FC = () => {
                     <MailIcon
                       className='settings-mail-icon'
                       onClick={() => handleSettingsWindow('contact')}
+                    />
+                  </Tooltip>
+                  <Tooltip
+                    title={
+                      <>
+                        <div className='tooltip-text-container'>
+                          <p className='tooltip-text'>Creator Leaderboard</p>
+                        </div>
+                      </>
+                    }
+                    enterDelay={600}
+                    placement='right'
+                  >
+                    <TrophyIcon
+                      className='settings-trophy-icon'
+                      onClick={() => handleSettingsWindow('leaderboard')}
                     />
                   </Tooltip>
                 </>
@@ -820,6 +849,95 @@ const Settings: React.FC = () => {
                       </>
                     )}
 
+                    {gameMode === 'salt' && (
+                      <>
+                        <div className='settings-dropdown'>
+                          <div
+                            className='settings-dropdown-header'
+                            onClick={() => toggleDropdown('creators')}
+                          >
+                            <div className='settings-dropdown-header-text-container'>
+                              <p className='settings-dropdown-header-text'>
+                                Creator quizzes
+                              </p>
+                            </div>
+                            <div className='settings-header-dropdown-icon'>
+                              {activeDropdown === 'creators' ? (
+                                <DropdownIcon className='down-icon' />
+                              ) : (
+                                <DropdownIcon className='up-icon' />
+                              )}
+                            </div>
+                          </div>
+
+                          {activeDropdown === 'creators' && (
+                            <div className='settings-dropdown-contents'>
+                              <p className='settings-dropdown-header-subtext'>
+                                Recreate past quizzes taken by creators
+                              </p>
+                              <div className='settings-creator-quiz-header '>
+                                {isCreatorLoading ? (
+                                  <div className='creator-dropdown'>
+                                    <LinearProgress
+                                      className='linear-progress'
+                                      color='inherit'
+                                    />
+                                  </div>
+                                ) : (
+                                  <select
+                                    className='creator-dropdown'
+                                    value={creatorQuiz}
+                                    onChange={(e) => handleCreatorQuiz(e)}
+                                  >
+                                    <option value=''>
+                                      {toBeIncludedRanks.size > 0
+                                        ? 'Custom'
+                                        : 'Select a creator quiz'}
+                                    </option>
+                                    {creatorQuizzes.map((quiz) => (
+                                      <option
+                                        key={quiz.creator}
+                                        value={quiz.creator}
+                                      >
+                                        {quiz.creator}
+                                      </option>
+                                    ))}
+                                  </select>
+                                )}
+                                <Tooltip
+                                  title={
+                                    <>
+                                      <div className='tooltip-text-container'>
+                                        <p className='tooltip-text'>
+                                          Clear selections
+                                        </p>
+                                      </div>
+                                    </>
+                                  }
+                                  enterDelay={400}
+                                  placement='top'
+                                >
+                                  <span>
+                                    <button
+                                      className='eraser-button'
+                                      disabled={!includeCardsEraserActive}
+                                      onClick={
+                                        includeCardsEraserActive
+                                          ? handleInclusionErase
+                                          : undefined
+                                      }
+                                    >
+                                      <EraserIcon className='eraser-button-icon' />
+                                    </button>
+                                  </span>
+                                </Tooltip>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+
                     <>
                       <div className='settings-dropdown'>
                         <div
@@ -1045,51 +1163,63 @@ const Settings: React.FC = () => {
                           {activeDropdown === 'includeCards' && (
                             <div className='settings-dropdown-contents'>
                               <div className='settings-known-cards-header '>
-                                <Tooltip
-                                  title={
-                                    <>
-                                      <div className='tooltip-text-container'>
-                                        <p className='tooltip-text'>
-                                          Recreate past quizzes
-                                        </p>
-                                        <p className='tooltip-text'>
-                                          taken by creators
-                                        </p>
-                                      </div>
-                                    </>
-                                  }
-                                  enterDelay={400}
-                                  placement='top'
-                                >
-                                  {isCreatorLoading ? (
-                                    <div className='creator-dropdown'>
-                                      <LinearProgress
-                                        className='linear-progress'
-                                        color='inherit'
-                                      />
-                                    </div>
-                                  ) : (
-                                    <select
-                                      className='creator-dropdown'
-                                      value={creatorQuiz}
-                                      onChange={(e) => handleCreatorQuiz(e)}
-                                    >
-                                      <option value=''>
-                                        {toBeIncludedRanks.size > 0
-                                          ? 'Custom'
-                                          : 'Select a creator quiz'}
-                                      </option>
-                                      {creatorQuizzes.map((quiz) => (
-                                        <option
-                                          key={quiz.creator}
-                                          value={quiz.creator}
-                                        >
-                                          {quiz.creator}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  )}
-                                </Tooltip>
+                                {creatorQuiz ? (
+                                  <Tooltip
+                                    title={
+                                      <>
+                                        <div className='tooltip-text-container'>
+                                          <p className='tooltip-text'>
+                                            Disabled while creator
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            quiz is selected
+                                          </p>
+                                        </div>
+                                      </>
+                                    }
+                                    enterDelay={400}
+                                    placement='top'
+                                  >
+                                    <span>
+                                      <button
+                                        disabled={true}
+                                        className='exclude-cards-button-disabled'
+                                      >
+                                        Retake Previous Quiz
+                                      </button>
+                                    </span>
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip
+                                    title={
+                                      <>
+                                        <div className='tooltip-text-container'>
+                                          <p className='tooltip-text'>
+                                            Select cards seen in
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            previous quiz, when
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            applicable
+                                          </p>
+                                        </div>
+                                      </>
+                                    }
+                                    enterDelay={400}
+                                    placement='top'
+                                  >
+                                    <span>
+                                      <button
+                                        onClick={handleIncludePreviousQuiz}
+                                        disabled={previousQuizRanks.size === 0}
+                                        className='exclude-cards-button'
+                                      >
+                                        Retake Previous Quiz
+                                      </button>
+                                    </span>
+                                  </Tooltip>
+                                )}
                                 <Tooltip
                                   title={
                                     <>
@@ -1301,16 +1431,16 @@ const Settings: React.FC = () => {
                 </div>
               </>
             )}
-            {settingsWindow === 'contact' && (
+            {settingsWindow === 'leaderboard' && (
               <>
                 <div className='settings-window'>
                   <header className='settings-contact-header'>
-                    <p className='settings-header-text'>Contact</p>
+                    <p className='settings-alt-header-text'>Leaderboard</p>
                   </header>
                   <p className='settings-header-contact-subtext'>
-                    Send a message to the developers
+                    Current CovertGoSalt leaderboards
                   </p>
-                  <Email />
+                  <CreatorLeaderboard />
                 </div>
               </>
             )}
@@ -1318,12 +1448,25 @@ const Settings: React.FC = () => {
               <>
                 <div className='settings-window'>
                   <header className='settings-contact-header'>
-                    <p className='settings-header-text'>Patch Notes</p>
+                    <p className='settings-alt-header-text'>Patch Notes</p>
                   </header>
                   <p className='settings-header-contact-subtext'>
                     Information on application updates
                   </p>
                   <PatchNotes />
+                </div>
+              </>
+            )}
+            {settingsWindow === 'contact' && (
+              <>
+                <div className='settings-window'>
+                  <header className='settings-contact-header'>
+                    <p className='settings-alt-header-text'>Contact</p>
+                  </header>
+                  <p className='settings-header-contact-subtext'>
+                    Send a message to the developers
+                  </p>
+                  <Email />
                 </div>
               </>
             )}

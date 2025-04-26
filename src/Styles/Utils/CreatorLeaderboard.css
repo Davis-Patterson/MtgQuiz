@@ -1,0 +1,89 @@
+.creator-leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.creator-leaderboard-rankings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--clr-screen);
+  border-radius: 8px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.creator-leaderboard-selector {
+  background: var(--clr-accent-blue);
+  color: var(--clr-light);
+  border: 1px solid var(--clr-accent-blue);
+  border-radius: 8px;
+  padding: 8px 10px 6px 10px;
+  font-family: 'Beleren Bold', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  margin: 0px 0px 10px 0px;
+}
+.creator-leaderboard-selector option {
+  background: var(--clr-platinum);
+  color: var(--clr-dark);
+  padding: 0.5rem;
+}
+.creator-leaderboard-selector:hover {
+  border: 1px solid var(--clr-accent-blue-hover);
+  background-color: var(--clr-accent-blue-hover);
+}
+.creator-leaderboard-selector:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--clr-accent-blue);
+}
+
+.creator-ranking {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background: var(--clr-screen);
+  border-radius: 4px;
+}
+
+.ranking-position {
+  font-family: 'Beleren Bold', sans-serif;
+  color: var(--clr-accent-orange);
+  min-width: 40px;
+}
+
+.ranking-name {
+  flex: 1;
+  font-family: 'Beleren Bold', sans-serif;
+  color: var(--clr-light);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.ranking-score {
+  font-family: 'Beleren Bold', sans-serif;
+  color: var(--clr-light);
+  min-width: 50px;
+  text-align: right;
+}

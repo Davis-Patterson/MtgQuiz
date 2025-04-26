@@ -59,7 +59,7 @@ export interface RevealedCard {
   imageUrl: string;
 }
 
-export type WindowType = 'settings' | 'notes' | 'contact';
+export type WindowType = 'settings' | 'notes' | 'leaderboard' | 'contact';
 
 interface AppContextType {
   defaultListYear: number;
