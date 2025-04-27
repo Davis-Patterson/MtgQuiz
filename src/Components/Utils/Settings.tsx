@@ -26,7 +26,6 @@ import PatchNotes from 'Components/Utils/PatchNotes';
 import CreatorLeaderboard from 'Components/Utils/CreatorLeaderboard';
 import InfoIcon from 'Svgs/InfoIcon';
 import quizDataSeason1 from 'Utilities/CGB-Quizzes-Season-1.json';
-import quizDataSeason2 from 'Utilities/CGB-Quizzes-Season-2.json';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Utils/Settings.css';
 

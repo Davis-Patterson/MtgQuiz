@@ -675,14 +675,13 @@
   justify-content: flex-start;
   align-items: center;
   user-select: none;
+  background-position: right 0.5rem center;
 }
 .season-dropdown {
-  background-position: right 0.5rem center;
   width: 100px;
   padding: 0.5rem 0.2rem 0.5rem 0.6rem;
 }
 .creator-dropdown {
-  background-position: right 1rem center;
   width: 190px;
   padding: 0.5rem 2rem 0.5rem 1rem;
 }
