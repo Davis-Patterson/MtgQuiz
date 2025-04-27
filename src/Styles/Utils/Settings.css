@@ -520,8 +520,9 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  gap: 10px;
+  gap: 5px;
   padding: 5px 5px 10px 5px;
+  margin: 2px 0px 0px 0px;
 }
 
 .settings-known-cards-header {
@@ -650,12 +651,12 @@
   width: 100%;
 }
 
+.season-dropdown,
 .creator-dropdown {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   width: 100%;
-  padding: 0.5rem 2rem 0.5rem 1rem;
   background: var(--clr-accent-blue);
   color: var(--clr-light);
   border: none;
@@ -667,25 +668,37 @@
   background-color: var(--clr-accent-blue);
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 1rem center;
   background-size: 1em;
   height: 30px;
-  width: 250px;
+  width: 190px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   user-select: none;
 }
+.season-dropdown {
+  background-position: right 0.5rem center;
+  width: 100px;
+  padding: 0.5rem 0.2rem 0.5rem 0.6rem;
+}
+.creator-dropdown {
+  background-position: right 1rem center;
+  width: 190px;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+}
 
+.season-dropdown:hover,
 .creator-dropdown:hover {
   background-color: var(--clr-accent-blue-hover);
 }
 
+.season-dropdown:focus,
 .creator-dropdown:focus {
   outline: none;
   box-shadow: 0 0 0 2px var(--clr-accent-blue);
 }
 
+.season-dropdown option,
 .creator-dropdown option {
   background: var(--clr-platinum);
   color: var(--clr-dark);
@@ -693,6 +706,7 @@
 }
 
 @-moz-document url-prefix() {
+  .season-dropdown,
   .creator-dropdown {
     padding-right: 1rem;
     background-image: none;

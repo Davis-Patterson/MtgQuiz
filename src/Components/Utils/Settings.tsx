@@ -23,11 +23,12 @@ import TrophyIcon from 'Svgs/TrophyIcon';
 import MailIcon from 'Svgs/MailIcon';
 import Email from 'Components/Utils/Email';
 import PatchNotes from 'Components/Utils/PatchNotes';
+import CreatorLeaderboard from 'Components/Utils/CreatorLeaderboard';
 import InfoIcon from 'Svgs/InfoIcon';
-import creatorQuizzes from 'Utilities/CGB-Quizzes-Season-1.json';
+import quizDataSeason1 from 'Utilities/CGB-Quizzes-Season-1.json';
+import quizDataSeason2 from 'Utilities/CGB-Quizzes-Season-2.json';
 import Tooltip from '@mui/material/Tooltip';
 import 'Styles/Utils/Settings.css';
-import CreatorLeaderboard from './CreatorLeaderboard';
 
 type DropdownType =
   | 'gameMode'
@@ -107,6 +108,9 @@ const Settings: React.FC = () => {
     new Set()
   );
 
+  const [selectedSeason, setSelectedSeason] = useState<'season1' | 'season2'>(
+    'season1'
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatorLoading, setIsCreatorLoading] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownType>(null);
@@ -439,7 +443,9 @@ const Settings: React.FC = () => {
     setCreatorQuiz(selectedCreator);
 
     if (selectedCreator) {
-      const creator = creatorQuizzes.find((c) => c.creator === selectedCreator);
+      const creator = quizDataSeason1.find(
+        (c) => c.creator === selectedCreator
+      );
       if (creator) {
         setGameMode('salt');
         setCreatorRanks(new Set(creator.cards));
@@ -454,6 +460,11 @@ const Settings: React.FC = () => {
     setTimeout(() => {
       setIsCreatorLoading(false);
     }, 500);
+  };
+
+  const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSeason(e.target.value as 'season1' | 'season2');
+    setCreatorQuiz('');
   };
 
   const addPlayer = () => {
@@ -875,7 +886,14 @@ const Settings: React.FC = () => {
                               <p className='settings-dropdown-header-subtext'>
                                 Recreate past quizzes taken by creators
                               </p>
-                              <div className='settings-creator-quiz-header '>
+                              <div className='settings-creator-quiz-header'>
+                                <select
+                                  className='season-dropdown'
+                                  value={selectedSeason}
+                                  onChange={handleSeasonChange}
+                                >
+                                  <option value='season1'>Season 1</option>
+                                </select>
                                 {isCreatorLoading ? (
                                   <div className='creator-dropdown'>
                                     <LinearProgress
@@ -894,7 +912,7 @@ const Settings: React.FC = () => {
                                         ? 'Custom'
                                         : 'Select a creator quiz'}
                                     </option>
-                                    {creatorQuizzes
+                                    {quizDataSeason1
                                       .slice()
                                       .sort((a, b) =>
                                         a.creator.localeCompare(b.creator)
