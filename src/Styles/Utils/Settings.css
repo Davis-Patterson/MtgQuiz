@@ -112,28 +112,10 @@
   transform: scale(90%);
 }
 
-.settings-trophy-icon {
-  position: absolute;
-  top: 14.5px;
-  left: 50px;
-  height: 24px;
-  width: 30px;
-  fill: var(--clr-divider);
-  cursor: pointer;
-  transition: all 0.15s ease-in-out;
-  margin: 0px 0px 0px 0px;
-}
-.settings-trophy-icon:hover {
-  fill: var(--clr-text-grey);
-}
-.settings-trophy-icon:active {
-  transform: scale(90%);
-}
-
 .settings-notes-icon {
   position: absolute;
   top: 12px;
-  left: 92px;
+  left: 50px;
   height: 25px;
   width: 30px;
   fill: var(--clr-divider);
@@ -148,10 +130,28 @@
   transform: scale(90%);
 }
 
+.settings-trophy-icon {
+  position: absolute;
+  top: 14.5px;
+  left: 90px;
+  height: 24px;
+  width: 30px;
+  fill: var(--clr-divider);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  margin: 0px 0px 0px 0px;
+}
+.settings-trophy-icon:hover {
+  fill: var(--clr-text-grey);
+}
+.settings-trophy-icon:active {
+  transform: scale(90%);
+}
+
 .settings-mail-icon {
   position: absolute;
   top: 15px;
-  left: 134px;
+  left: 132px;
   height: 20px;
   width: 30px;
   fill: var(--clr-divider);
