@@ -75,7 +75,7 @@
   background: var(--clr-screen);
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0.4rem 0.6rem 0.4rem;
+  padding: 0.5rem 0.6rem 0.6rem 0.4rem;
   border-radius: 8px;
 }
 
