@@ -894,14 +894,19 @@ const Settings: React.FC = () => {
                                         ? 'Custom'
                                         : 'Select a creator quiz'}
                                     </option>
-                                    {creatorQuizzes.map((quiz) => (
-                                      <option
-                                        key={quiz.creator}
-                                        value={quiz.creator}
-                                      >
-                                        {quiz.creator}
-                                      </option>
-                                    ))}
+                                    {creatorQuizzes
+                                      .slice()
+                                      .sort((a, b) =>
+                                        a.creator.localeCompare(b.creator)
+                                      )
+                                      .map((quiz) => (
+                                        <option
+                                          key={quiz.creator}
+                                          value={quiz.creator}
+                                        >
+                                          {quiz.creator}
+                                        </option>
+                                      ))}
                                   </select>
                                 )}
                                 <Tooltip
