@@ -118,7 +118,6 @@
 }
 .thumb:hover .pin-icon-orange {
   fill: var(--clr-accent-orange-hover);
-  scale: 110%;
 }
 .pin-icon-zero {
   fill: var(--clr-divider);
@@ -126,7 +125,6 @@
 }
 .thumb:hover .pin-icon-zero {
   fill: var(--clr-accent-orange-hover);
-  scale: 110%;
 }
 
 .revealed-dash {
