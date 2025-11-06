@@ -32,7 +32,7 @@
 .results-score-text-label,
 .results-score-plus,
 .results-score-text {
-  color: var(--clr-light) !important;
+  color: var(--clr-light);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
@@ -78,33 +78,41 @@
 .results-score-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid var(--clr-divider);
-  padding: 9px 8px 0px 8px;
-  min-width: 150px;
-  background-color: var(--clr-screen);
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
 }
 
 .results-score {
+  color: var(--clr-accent-orange);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+.results-score-span {
   font-family: 'Beleren Bold', sans-serif;
-  font-size: 4.5em;
+  font-size: 3.5em;
   text-align: center;
   font-weight: 400;
   line-height: 0.8;
-  padding: 6px 0px 2px 0px;
-  color: var(--clr-accent-orange);
-  border-bottom: 1px solid var(--clr-divider);
-  width: 100%;
+  padding: 8px 0px 0px 0px;
 }
 
 .results-bottom-container {
+  margin: 0px 0px 5px 0px;
+  gap: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0px;
-  margin: 8px 0px 5px 0px;
+  padding: 0.6rem 0.5rem 0.5rem 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
 
 .results-median-score-container {
@@ -118,7 +126,7 @@
 
 .results-median-score-label,
 .results-avg-score-label {
-  font-family: 'Beleren Bold', sans-serif;
+  font-family: 'MPlantin', sans-serif;
   font-size: 0.8em;
   text-align: center;
   font-weight: 400;
@@ -132,7 +140,8 @@
 }
 
 .results-median-score {
-  font-family: 'Beleren Bold', sans-serif;
+  font-family: 'MPlantin', sans-serif;
+  color: var(--clr-accent-orange);
   font-size: 1.2em;
   text-align: center;
   font-weight: 400;
@@ -256,8 +265,8 @@
 }
 
 .results-text-label {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 1.2em;
+  font-family: 'MPlantin', sans-serif;
+  font-size: 1.25em;
   text-align: left;
   font-weight: 400;
   line-height: 1;
@@ -291,7 +300,7 @@
   text-align: left;
   font-weight: 400;
   line-height: 1;
-  color: var(--clr-light);
+  color: var(--clr-accent-orange);
   text-align: left;
 }
 
@@ -301,7 +310,7 @@
   text-align: left;
   font-weight: 400;
   line-height: 1;
-  color: var(--clr-light);
+  color: var(--clr-accent-orange);
   text-align: left;
   width: 100%;
 }
@@ -354,9 +363,9 @@
   text-overflow: ellipsis;
 }
 
-.ranking-score {
+.multi-ranking-score {
   font-family: 'Beleren Bold', sans-serif;
-  color: var(--clr-light);
+  color: var(--clr-accent-orange);
   min-width: 50px;
   text-align: right;
 }
@@ -445,8 +454,8 @@
 }
 
 .multi-results-avg-text {
-  font-family: 'Beleren Bold', sans-serif;
-  font-size: 0.95em;
+  font-family: 'MPlantin', sans-serif;
+  font-size: 01em;
   text-align: center;
   font-weight: 400;
   line-height: 1;
@@ -454,13 +463,16 @@
   margin: 0px 0px 2px 0px;
   cursor: help;
 }
+.avg-text-accent {
+  color: var(--clr-accent-orange);
+}
 
 .multi-results-title-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 20px 0px 0px 0px;
+  margin: 20px 0px 8px 0px;
 }
 
 .multi-results-score-label {
@@ -470,7 +482,17 @@
   font-weight: 400;
   line-height: 1;
   color: var(--clr-light);
-  margin: 0px 0px 6px 0px;
+  margin: 0px 0px 0px 0px;
+}
+.multi-results-list-year {
+  font-family: 'MPlantin', sans-serif;
+  font-size: 1.4em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 0px 0px 2px 0px;
+  transform: scaleY(90%);
 }
 
 .results-player-name {
@@ -594,7 +616,7 @@
 
 .multi-results-text-label,
 .multi-results-avg-label {
-  font-family: 'Beleren Bold', sans-serif;
+  font-family: 'MPlantin', sans-serif;
   text-align: left;
   font-weight: 400;
   line-height: 1;
@@ -624,6 +646,32 @@
   padding: 0px 0px 0px 0px;
 }
 
+.results-divider-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+}
+
+.results-divider-line {
+  color: var(--clr-accent-orange);
+  display: block;
+  width: 90%;
+}
+
+.multi-results-bottom-container {
+  margin: 0px 0px 5px 0px;
+  gap: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 0.5rem 0.5rem 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
 .multi-results-score-plus-container {
   display: flex;
   flex-direction: row;
@@ -636,7 +684,7 @@
   text-align: left;
   font-weight: 400;
   line-height: 1;
-  color: var(--clr-light);
+  color: var(--clr-accent-orange);
   text-align: left;
 }
 
@@ -646,7 +694,7 @@
   text-align: left;
   font-weight: 400;
   line-height: 1;
-  color: var(--clr-light);
+  color: var(--clr-accent-orange);
   text-align: left;
   width: 100%;
 }

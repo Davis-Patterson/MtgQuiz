@@ -21,6 +21,7 @@ const Quiz: React.FC = () => {
     currentCardStats,
     setCurrentCardStats,
     cardData,
+    listYear,
     setCardStats,
     selectedCards,
     setSelectedCards,
@@ -878,6 +879,7 @@ const Quiz: React.FC = () => {
         <div className='quiz-container'>
           <SlideBar />
           <div className='quiz-content'>
+            <p className='list-year'>{listYear} Salt List</p>
             <p className='card-count'>
               Card {currentIndex + 1} of {numberOfCards}
             </p>

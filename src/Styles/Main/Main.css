@@ -18,6 +18,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
+/* MPlantin Regular */
+@font-face {
+  font-family: 'MPlantin';
+  src: url('/src/Assets/Fonts/mplantin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* MPlantin Italic */
+@font-face {
+  font-family: 'MPlantin';
+  src: url('/src/Assets/Fonts/mplantinit.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
