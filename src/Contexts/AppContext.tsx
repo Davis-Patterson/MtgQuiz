@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import SaltData2025 from 'Utilities/SaltData2025.json';
 import SaltData2024 from 'Utilities/SaltData2024.json';
 import SaltData2023 from 'Utilities/SaltData2023.json';
 
@@ -123,6 +124,8 @@ interface AppContextType {
   fullScreenImage: string | null;
   setFullScreenImage: React.Dispatch<React.SetStateAction<string | null>>;
 
+  shiftData2025: Card[];
+  setShiftData2025: React.Dispatch<React.SetStateAction<Card[]>>;
   shiftData2024: Card[];
   setShiftData2024: React.Dispatch<React.SetStateAction<Card[]>>;
   shiftData2023: Card[];
@@ -141,7 +144,7 @@ interface AppProviderProps {
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  const defaultListYear = 2024;
+  const defaultListYear = 2025;
   const [gameMode, setGameMode] = useState<string>('salt');
 
   const [players, setPlayers] = useState<Player[]>([
@@ -161,7 +164,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   );
 
   const [cardData, setCardData] = useState<Card[]>([]);
-  const [listYear, setListYear] = useState<number>(2024);
+  const [listYear, setListYear] = useState<number>(2025);
   const [cardStats, setCardStats] = useState<CardStat[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [numberOfCards, setNumberOfCards] = useState<number>(10);
@@ -187,6 +190,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
 
+  const [shiftData2025, setShiftData2025] = useState<Card[]>(SaltData2025);
   const [shiftData2024, setShiftData2024] = useState<Card[]>(SaltData2024);
   const [shiftData2023, setShiftData2023] = useState<Card[]>(SaltData2023);
 
@@ -196,6 +200,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   useEffect(() => {
     const yearsMapping: { [key: number]: Card[] } = {
+      2025: SaltData2025 as Card[],
       2024: SaltData2024 as Card[],
       2023: SaltData2023 as Card[],
     };
@@ -267,6 +272,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         fullScreenImage,
         setFullScreenImage,
 
+        shiftData2025,
+        setShiftData2025,
         shiftData2024,
         setShiftData2024,
         shiftData2023,

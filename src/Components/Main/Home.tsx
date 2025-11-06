@@ -108,7 +108,7 @@ const Home: React.FC = () => {
               {gameMode === 'salt' ? (
                 <>
                   <p className='home-text'>
-                    SaltQuiz features MTG cards from the 2024{' '}
+                    SaltQuiz features MTG cards from the 2025{' '}
                     <a
                       className='home-text-link'
                       href='https://edhrec.com/top/salt'
@@ -128,7 +128,7 @@ const Home: React.FC = () => {
               ) : (
                 <>
                   <p className='home-text'>
-                    The Salt Shift quiz features MTG cards from the 2024{' '}
+                    The Salt Shift quiz features MTG cards from the 2025{' '}
                     <a
                       className='home-text-link'
                       href='https://edhrec.com/top/salt'

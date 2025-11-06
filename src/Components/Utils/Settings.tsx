@@ -822,6 +822,22 @@ const Settings: React.FC = () => {
                               <div className='settings-dropdown-years-container'>
                                 <div
                                   className={`settings-year-container ${
+                                    listYear === 2025
+                                      ? 'active blue-glow'
+                                      : 'inactive'
+                                  }`}
+                                  onClick={() => handleSetListYear(2025)}
+                                >
+                                  <p
+                                    className={`settings-year ${
+                                      listYear === 2025 ? 'active' : 'inactive'
+                                    }`}
+                                  >
+                                    2025
+                                  </p>
+                                </div>
+                                <div
+                                  className={`settings-year-container ${
                                     listYear === 2024
                                       ? 'active blue-glow'
                                       : 'inactive'

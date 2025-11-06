@@ -89,5 +89,23 @@
         ]
       }
     ]
+  },
+  {
+    "date": "11/6/25",
+    "patch_notes": [
+      {
+        "header": "2025 Salty Cards List",
+        "body": [
+          "The brand new 2025 Saltiest Cards list has been added to the quiz!",
+          "Players can now test their knowledge against the most current community rankings and see how the salt levels have shifted this year."
+        ]
+      },
+      {
+        "header": "Expanded Quiz Library",
+        "body": [
+          "With the addition of the 2025 list, the app now features three years of salt rankings, providing a more comprehensive library for players to explore."
+        ]
+      }
+    ]
   }
 ]

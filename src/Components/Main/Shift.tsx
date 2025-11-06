@@ -36,6 +36,7 @@ const Shift: React.FC = () => {
     setShouldFlip,
     shiftData2023,
     shiftData2024,
+    shiftData2025,
     currentShiftGuesses,
     setCurrentShiftGuesses,
   } = context;
@@ -71,6 +72,7 @@ const Shift: React.FC = () => {
       const years: number[] = [];
       if (shiftData2023?.length) years.push(2023);
       if (shiftData2024?.length) years.push(2024);
+      if (shiftData2025?.length) years.push(2025);
 
       if (years.length < 2) {
         console.error('Not enough years with data');
@@ -81,6 +83,7 @@ const Shift: React.FC = () => {
       const allCards = [
         ...shiftData2023.map((c) => ({ ...c, year: 2023 })),
         ...shiftData2024.map((c) => ({ ...c, year: 2024 })),
+        ...shiftData2025.map((c) => ({ ...c, year: 2025 })),
       ];
 
       const cardsByName = allCards.reduce((acc, card) => {
@@ -160,8 +163,10 @@ const Shift: React.FC = () => {
 
         const totalCards2023 = shiftData2023.length;
         const totalCards2024 = shiftData2024.length;
+        const totalCards2025 = shiftData2025.length;
         const totalCommon = commonCards.length;
-        const newAdditions = totalCards2023 + totalCards2024 - totalCommon * 2;
+        const newAdditions =
+          totalCards2023 + totalCards2024 + totalCards2025 - totalCommon * 2;
 
         let increased = 0,
           decreased = 0,
