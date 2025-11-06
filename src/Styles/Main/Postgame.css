@@ -65,6 +65,17 @@
   margin: 0px 30px 0px 0px;
 }
 
+.results-list-year {
+  font-family: 'MPlantin', sans-serif;
+  font-size: 1em;
+  text-align: center;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--clr-light);
+  margin: 0px 0px 2px 0px;
+  transform: scaleY(90%);
+}
+
 .results-score-label {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.4em;
@@ -157,7 +168,7 @@
 
 .results-salt-logo {
   width: 150px;
-  margin: 10px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
 }
 
 .results-header-bottom {

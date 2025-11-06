@@ -147,6 +147,7 @@ const Postgame: React.FC = () => {
           <header className='results-header'>
             <div className='results-header-top'>
               <div className='results-title-container'>
+                <p className='results-list-year'>{listYear} Salt List</p>
                 <p className='results-score-label'>Final Score:</p>
                 <div className='results-score-container'>
                   <div className='results-score'>
