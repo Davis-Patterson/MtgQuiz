@@ -107,5 +107,17 @@
         ]
       }
     ]
+  },
+  {
+    "date": "3/5/26",
+    "patch_notes": [
+      {
+        "header": "Creator Quiz Bug Fix",
+        "body": [
+          "Fixed an issue where Creator Quizzes could load cards from the most recent Salt List by default.",
+          "Creator Quizzes are now locked to the correct Salt List year they were originally played on."
+        ]
+      }
+    ]
   }
 ]

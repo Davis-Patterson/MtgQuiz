@@ -103,8 +103,8 @@ interface AppContextType {
   setIncludedRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
   creatorRanks: Set<number>;
   setCreatorRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
-  creatorYear: number | null;
-  setCreatorYear: React.Dispatch<React.SetStateAction<number | null>>;
+  creatorQuizYear: number | null;
+  setCreatorQuizYear: React.Dispatch<React.SetStateAction<number | null>>;
   previousQuizRanks: Set<number>;
   setPreviousQuizRanks: React.Dispatch<React.SetStateAction<Set<number>>>;
 
@@ -178,7 +178,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [excludedRanks, setExcludedRanks] = useState<Set<number>>(new Set());
   const [includedRanks, setIncludedRanks] = useState<Set<number>>(new Set());
   const [creatorRanks, setCreatorRanks] = useState<Set<number>>(new Set());
-  const [creatorYear, setCreatorYear] = useState<number | null>(null);
+  const [creatorQuizYear, setCreatorQuizYear] = useState<number | null>(null);
   const [previousQuizRanks, setPreviousQuizRanks] = useState<Set<number>>(
     new Set()
   );
@@ -254,8 +254,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setIncludedRanks,
         creatorRanks,
         setCreatorRanks,
-        creatorYear,
-        setCreatorYear,
+        creatorQuizYear,
+        setCreatorQuizYear,
         previousQuizRanks,
         setPreviousQuizRanks,
 
