@@ -67,8 +67,9 @@ const Settings: React.FC = () => {
     setExcludedRanks,
     includedRanks,
     setIncludedRanks,
-    setCreatorRanks,
     creatorRanks,
+    setCreatorRanks,
+    setCreatorYear,
     previousQuizRanks,
   } = appContext;
 
@@ -379,6 +380,7 @@ const Settings: React.FC = () => {
     setExcludedRanks(new Set());
     setIncludedRanks(new Set());
     setCreatorRanks(new Set());
+    setCreatorYear(null);
     setCreatorQuiz('');
     setPlayers([
       {
@@ -448,6 +450,8 @@ const Settings: React.FC = () => {
       if (creator) {
         setGameMode('salt');
         setCreatorRanks(new Set(creator.cards));
+        setCreatorYear(creator.year);
+        setListYear(creator.year);
         setToBeIncludedRanks(new Set());
         setToBeExcludedRanks(new Set());
         setRangeOfQuiz(100);
