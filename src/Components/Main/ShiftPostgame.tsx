@@ -55,14 +55,14 @@ const ShiftPostgame: React.FC = () => {
       players.map((player) => ({
         ...player,
         scores: [],
-      }))
+      })),
     );
     setRevealedRanks([]);
     setFinished(false);
   };
 
   const calculatePlayerPercentage = (
-    playerScores: (typeof players)[0]['scores']
+    playerScores: (typeof players)[0]['scores'],
   ) => {
     const correctAnswers = calculateShiftScore(playerScores);
     return numberOfCards > 0
@@ -73,7 +73,7 @@ const ShiftPostgame: React.FC = () => {
   const calculateGlobalAverageTotal = (players: typeof context.players) => {
     const totalCorrect = players.reduce(
       (sum, player) => sum + calculateShiftScore(player.scores),
-      0
+      0,
     );
     return totalCorrect / (players.length || 1);
   };
@@ -136,7 +136,7 @@ const ShiftPostgame: React.FC = () => {
                     {`${calculatePlayerPercentage(players[0].scores)}%`}
                   </p>
                   <p className='shift-results-fraction-score'>{`Total: ${calculateShiftScore(
-                    players[0].scores
+                    players[0].scores,
                   )}/${numberOfCards}`}</p>
                 </div>
               </div>
@@ -167,8 +167,8 @@ const ShiftPostgame: React.FC = () => {
                 (card.rank ?? 0) < (card.previousRank ?? 0)
                   ? 1
                   : (card.rank ?? 0) > (card.previousRank ?? 0)
-                  ? -1
-                  : 0;
+                    ? -1
+                    : 0;
 
               return (
                 <div key={index} className='shift-results-card'>
@@ -185,17 +185,17 @@ const ShiftPostgame: React.FC = () => {
                   <div className='shift-results-content-container'>
                     <h4
                       className={`results-revealed-direction ${
-                        actualDirection === 1 ? 'increased' : 'decreased'
+                        actualDirection === 1 ? 'decreased' : 'increased'
                       }`}
                     >
                       {card.previousRank !== undefined && card.rank !== null ? (
                         <div className='results-direction-container'>
                           <p>
                             {actualDirection === 1
-                              ? 'Increased'
-                              : actualDirection === -1
                               ? 'Decreased'
-                              : 'Same'}
+                              : actualDirection === -1
+                                ? 'Increased'
+                                : 'Same'}
                           </p>
                           <ChevronIcon
                             className={`chevron-icon ${
@@ -204,11 +204,11 @@ const ShiftPostgame: React.FC = () => {
                           />
                           <p>
                             {Math.abs(
-                              (card.previousRank ?? 0) - (card.rank ?? 0)
+                              (card.previousRank ?? 0) - (card.rank ?? 0),
                             )}{' '}
                             rank
                             {Math.abs(
-                              (card.previousRank ?? 0) - (card.rank ?? 0)
+                              (card.previousRank ?? 0) - (card.rank ?? 0),
                             ) !== 1
                               ? 's'
                               : ''}
@@ -313,7 +313,7 @@ const ShiftPostgame: React.FC = () => {
                   .sort(
                     (a, b) =>
                       calculateShiftScore(b.scores) -
-                      calculateShiftScore(a.scores)
+                      calculateShiftScore(a.scores),
                   )
                   .map((player, index) => (
                     <div key={player.id} className='player-ranking'>
@@ -323,7 +323,7 @@ const ShiftPostgame: React.FC = () => {
                       </span>
                       <span className='ranking-score'>
                         {`${calculateShiftScore(
-                          player.scores
+                          player.scores,
                         )}/${numberOfCards}`}
                       </span>
                     </div>
@@ -376,8 +376,8 @@ const ShiftPostgame: React.FC = () => {
                         (card.rank ?? 0) < (card.previousRank ?? 0)
                           ? 1
                           : (card.rank ?? 0) > (card.previousRank ?? 0)
-                          ? -1
-                          : 0;
+                            ? -1
+                            : 0;
 
                       return (
                         <div
@@ -398,7 +398,7 @@ const ShiftPostgame: React.FC = () => {
                                   className='multi-shift-results-card-image'
                                   onClick={() =>
                                     setFullScreenImage(
-                                      card.card.front.imgs.large
+                                      card.card.front.imgs.large,
                                     )
                                   }
                                 />
@@ -407,8 +407,8 @@ const ShiftPostgame: React.FC = () => {
                                 <h4
                                   className={`multi-revealed-direction ${
                                     actualDirection === 1
-                                      ? 'increased'
-                                      : 'decreased'
+                                      ? 'decreased'
+                                      : 'increased'
                                   }`}
                                 >
                                   {card.previousRank !== undefined &&
@@ -416,10 +416,10 @@ const ShiftPostgame: React.FC = () => {
                                     <div className='multi-direction-container'>
                                       <p>
                                         {actualDirection === 1
-                                          ? 'Increased'
-                                          : actualDirection === -1
                                           ? 'Decreased'
-                                          : 'Same'}
+                                          : actualDirection === -1
+                                            ? 'Increased'
+                                            : 'Same'}
                                       </p>
                                       <ChevronIcon
                                         className={`chevron-icon ${
@@ -431,12 +431,12 @@ const ShiftPostgame: React.FC = () => {
                                       <p>
                                         {Math.abs(
                                           (card.previousRank ?? 0) -
-                                            (card.rank ?? 0)
+                                            (card.rank ?? 0),
                                         )}{' '}
                                         rank
                                         {Math.abs(
                                           (card.previousRank ?? 0) -
-                                            (card.rank ?? 0)
+                                            (card.rank ?? 0),
                                         ) !== 1
                                           ? 's'
                                           : ''}

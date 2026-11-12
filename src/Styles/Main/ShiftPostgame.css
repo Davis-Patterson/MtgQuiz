@@ -662,10 +662,10 @@
   margin: 0px 5px 2px 6px;
 }
 .chevron-icon.increase {
-  transform: scaleY(-1);
   fill: var(--clr-success);
 }
 .chevron-icon.decrease {
+  transform: scaleY(-1);
   fill: var(--clr-error);
 }
 

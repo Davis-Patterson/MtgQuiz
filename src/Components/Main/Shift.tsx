@@ -119,37 +119,37 @@ const Shift: React.FC = () => {
         }
       });
 
-      const increased = commonCards.filter(
+      const decreased = commonCards.filter(
         (card) => card.rank! < card.previousRank!,
       );
-      const decreased = commonCards.filter(
+      const increased = commonCards.filter(
         (card) => card.rank! > card.previousRank!,
       );
 
-      const shuffledIncreased = shuffleCards([...increased]);
       const shuffledDecreased = shuffleCards([...decreased]);
+      const shuffledIncreased = shuffleCards([...increased]);
 
       const maxBalanced = Math.min(
-        shuffledIncreased.length,
         shuffledDecreased.length,
+        shuffledIncreased.length,
         Math.floor(numberOfCards / 2),
       );
 
-      const selectedIncreased = shuffledIncreased.slice(0, maxBalanced);
       const selectedDecreased = shuffledDecreased.slice(0, maxBalanced);
+      const selectedIncreased = shuffledIncreased.slice(0, maxBalanced);
 
-      let selected = [...selectedIncreased, ...selectedDecreased];
+      let selected = [...selectedDecreased, ...selectedIncreased];
       let remaining = numberOfCards - selected.length;
 
       if (remaining > 0) {
-        const remainingIncreased = shuffledIncreased.slice(maxBalanced);
         const remainingDecreased = shuffledDecreased.slice(maxBalanced);
+        const remainingIncreased = shuffledIncreased.slice(maxBalanced);
 
         let remainingPool;
-        if (remainingIncreased.length >= remainingDecreased.length) {
-          remainingPool = [...remainingIncreased, ...remainingDecreased];
-        } else {
+        if (remainingDecreased.length >= remainingIncreased.length) {
           remainingPool = [...remainingDecreased, ...remainingIncreased];
+        } else {
+          remainingPool = [...remainingIncreased, ...remainingDecreased];
         }
 
         selected.push(...remainingPool.slice(0, remaining));
@@ -160,11 +160,11 @@ const Shift: React.FC = () => {
       if (shuffledSelected.length >= numberOfCards) {
         const finalSelected = shuffledSelected.slice(0, numberOfCards);
 
-        let selectedIncreasedCount = 0,
-          selectedDecreasedCount = 0;
+        let selectedDecreasedCount = 0,
+          selectedIncreasedCount = 0;
         finalSelected.forEach((card) => {
-          if (card.rank! < card.previousRank!) selectedIncreasedCount++;
-          else selectedDecreasedCount++;
+          if (card.rank! < card.previousRank!) selectedDecreasedCount++;
+          else selectedIncreasedCount++;
         });
 
         const totalCards2023 = shiftData2023.length;
@@ -179,26 +179,26 @@ const Shift: React.FC = () => {
           totalCards2026 -
           totalCommon * 2;
 
-        let increased = 0,
-          decreased = 0,
+        let decreased = 0,
+          increased = 0,
           same = 0;
         commonCards.forEach((card) => {
           if (card.previousRank && card.rank) {
             const diff = card.previousRank - card.rank;
-            if (diff > 0) increased++;
-            else if (diff < 0) decreased++;
+            if (diff > 0) decreased++;
+            else if (diff < 0) increased++;
             else same++;
           }
         });
 
-        let selectedIncreased = 0,
-          selectedDecreased = 0,
+        let selectedDecreased = 0,
+          selectedIncreased = 0,
           selectedSame = 0;
         selected.forEach((card) => {
           if (card.previousRank && card.rank) {
             const diff = card.previousRank - card.rank;
-            if (diff > 0) selectedIncreased++;
-            else if (diff < 0) selectedDecreased++;
+            if (diff > 0) selectedDecreased++;
+            else if (diff < 0) selectedIncreased++;
             else selectedSame++;
           }
         });
@@ -209,14 +209,14 @@ const Shift: React.FC = () => {
           console.log(`Total new additions: ${newAdditions}`);
           console.log(`Common card changes:`);
           console.log(
-            `Increased: ${increased} (${(
-              (increased / totalCommon) *
+            `Decreased: ${decreased} (${(
+              (decreased / totalCommon) *
               100
             ).toFixed(1)}%)`,
           );
           console.log(
-            `Decreased: ${decreased} (${(
-              (decreased / totalCommon) *
+            `Increased: ${increased} (${(
+              (increased / totalCommon) *
               100
             ).toFixed(1)}%)`,
           );
@@ -224,12 +224,12 @@ const Shift: React.FC = () => {
             `Same rank: ${same} (${((same / totalCommon) * 100).toFixed(1)}%)`,
           );
           console.log(`\nQuiz Card Selection (${selected.length} cards):`);
-          console.log(`Increased: ${selectedIncreased}`);
           console.log(`Decreased: ${selectedDecreased}`);
+          console.log(`Increased: ${selectedIncreased}`);
           console.log(`Same rank: ${selectedSame}`);
           console.log(
             `Ratio: ${(
-              (selectedIncreasedCount / finalSelected.length) *
+              (selectedDecreasedCount / finalSelected.length) *
               100
             ).toFixed(1)}%`,
           );
@@ -473,7 +473,7 @@ const Shift: React.FC = () => {
                 <div className='shift-breakdown-container'>
                   <h3
                     className={`shift-revealed-direction ${
-                      actualDirection === 1 ? 'increased' : 'decreased'
+                      actualDirection === 1 ? 'decreased' : 'increased'
                     }`}
                   >
                     {currentCard?.previousRank !== undefined &&
@@ -488,7 +488,7 @@ const Shift: React.FC = () => {
                           return (
                             <div className='shift-direction-container'>
                               <p>
-                                {difference > 0 ? 'Increased' : 'Decreased'}
+                                {difference > 0 ? 'Decreased' : 'Increased'}
                               </p>
                               <ChevronIcon
                                 className={`chevron-icon ${
@@ -704,9 +704,9 @@ const Shift: React.FC = () => {
                       <>
                         <div className='tooltip-text-container'>
                           <p className='tooltip-text'>
-                            Was this rank increased, decreased,
+                            Was this rank increased
                           </p>
-                          <p className='tooltip-text'>{`or stayed the same since ${currentCard?.previousYear}?`}</p>
+                          <p className='tooltip-text'>{`or decreased since ${currentCard?.previousYear}?`}</p>
                         </div>
                       </>
                     }
@@ -730,10 +730,10 @@ const Shift: React.FC = () => {
                       <>
                         <div className='tooltip-text-container'>
                           <p className='tooltip-text'>
-                            {`Card ranking was decreased since ${currentCard?.previousYear}`}
+                            {`Card got less salty since ${currentCard?.previousYear}`}
                           </p>
                           <p className='tooltip-text'>
-                            (Larger number represents lower ranking)
+                            (Larger number represents less salt)
                           </p>
                         </div>
                       </>
@@ -760,7 +760,7 @@ const Shift: React.FC = () => {
                               : 'unselected'
                         }`}
                       />
-                      <p className='option-button-text'>Decreased</p>
+                      <p className='option-button-text'>Increased</p>
                     </button>
                   </Tooltip>
                   <div
@@ -787,10 +787,10 @@ const Shift: React.FC = () => {
                       <>
                         <div className='tooltip-text-container'>
                           <p className='tooltip-text'>
-                            {`Card ranking was increased since ${currentCard?.previousYear}`}
+                            {`Card got more salty since ${currentCard?.previousYear}`}
                           </p>
                           <p className='tooltip-text'>
-                            (Smaller number represents higher ranking)
+                            (Smaller number represents more salt)
                           </p>
                         </div>
                       </>
@@ -808,7 +808,7 @@ const Shift: React.FC = () => {
                             : 'unselected'
                       }`}
                     >
-                      <p className='option-button-text'>Increased</p>
+                      <p className='option-button-text'>Decreased</p>
                       <DoubleIcon
                         className={`increase-icon ${
                           currentShiftGuesses[currentPlayer.id] === undefined

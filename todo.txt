@@ -1,0 +1,6 @@
+TODO
+
+‼️map salt years instead of manually adding salt year options to settings 
+
+Salt shift: add setting to choose which years get included/setting for only most recent years 
+

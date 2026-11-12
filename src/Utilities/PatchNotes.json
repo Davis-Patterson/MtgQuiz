@@ -129,6 +129,13 @@
           "The 2026 Saltiest Cards list has now been added to the quiz!",
           "Players can now test their knowledge against the most current community rankings and see how the salt levels have shifted this year."
         ]
+      },
+      {
+        "header": "Improved Salt Shift Clarity",
+        "body": [
+          "Updated the wording and visual indicators in Salt Shift for improved understanding.",
+          "Clarified how 'increased' and 'decreased' card saltiness are displayed."
+        ]
       }
     ]
   }
