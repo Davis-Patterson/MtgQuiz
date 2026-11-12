@@ -37,12 +37,13 @@ const Shift: React.FC = () => {
     shiftData2023,
     shiftData2024,
     shiftData2025,
+    shiftData2026,
     currentShiftGuesses,
     setCurrentShiftGuesses,
   } = context;
 
   const [currentBackground, setCurrentBackground] = useState<string | null>(
-    null
+    null,
   );
   const [nextBackground, setNextBackground] = useState<string | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
@@ -73,6 +74,7 @@ const Shift: React.FC = () => {
       if (shiftData2023?.length) years.push(2023);
       if (shiftData2024?.length) years.push(2024);
       if (shiftData2025?.length) years.push(2025);
+      if (shiftData2026?.length) years.push(2026);
 
       if (years.length < 2) {
         console.error('Not enough years with data');
@@ -84,14 +86,18 @@ const Shift: React.FC = () => {
         ...shiftData2023.map((c) => ({ ...c, year: 2023 })),
         ...shiftData2024.map((c) => ({ ...c, year: 2024 })),
         ...shiftData2025.map((c) => ({ ...c, year: 2025 })),
+        ...shiftData2026.map((c) => ({ ...c, year: 2026 })),
       ];
 
-      const cardsByName = allCards.reduce((acc, card) => {
-        const key = card.card.front.name;
-        if (!acc[key]) acc[key] = [];
-        acc[key].push(card);
-        return acc;
-      }, {} as Record<string, typeof allCards>);
+      const cardsByName = allCards.reduce(
+        (acc, card) => {
+          const key = card.card.front.name;
+          if (!acc[key]) acc[key] = [];
+          acc[key].push(card);
+          return acc;
+        },
+        {} as Record<string, typeof allCards>,
+      );
 
       const commonCards: Card[] = [];
 
@@ -114,10 +120,10 @@ const Shift: React.FC = () => {
       });
 
       const increased = commonCards.filter(
-        (card) => card.rank! < card.previousRank!
+        (card) => card.rank! < card.previousRank!,
       );
       const decreased = commonCards.filter(
-        (card) => card.rank! > card.previousRank!
+        (card) => card.rank! > card.previousRank!,
       );
 
       const shuffledIncreased = shuffleCards([...increased]);
@@ -126,7 +132,7 @@ const Shift: React.FC = () => {
       const maxBalanced = Math.min(
         shuffledIncreased.length,
         shuffledDecreased.length,
-        Math.floor(numberOfCards / 2)
+        Math.floor(numberOfCards / 2),
       );
 
       const selectedIncreased = shuffledIncreased.slice(0, maxBalanced);
@@ -164,9 +170,14 @@ const Shift: React.FC = () => {
         const totalCards2023 = shiftData2023.length;
         const totalCards2024 = shiftData2024.length;
         const totalCards2025 = shiftData2025.length;
+        const totalCards2026 = shiftData2026.length;
         const totalCommon = commonCards.length;
         const newAdditions =
-          totalCards2023 + totalCards2024 + totalCards2025 - totalCommon * 2;
+          totalCards2023 +
+          totalCards2024 +
+          totalCards2025 +
+          totalCards2026 -
+          totalCommon * 2;
 
         let increased = 0,
           decreased = 0,
@@ -201,16 +212,16 @@ const Shift: React.FC = () => {
             `Increased: ${increased} (${(
               (increased / totalCommon) *
               100
-            ).toFixed(1)}%)`
+            ).toFixed(1)}%)`,
           );
           console.log(
             `Decreased: ${decreased} (${(
               (decreased / totalCommon) *
               100
-            ).toFixed(1)}%)`
+            ).toFixed(1)}%)`,
           );
           console.log(
-            `Same rank: ${same} (${((same / totalCommon) * 100).toFixed(1)}%)`
+            `Same rank: ${same} (${((same / totalCommon) * 100).toFixed(1)}%)`,
           );
           console.log(`\nQuiz Card Selection (${selected.length} cards):`);
           console.log(`Increased: ${selectedIncreased}`);
@@ -220,7 +231,7 @@ const Shift: React.FC = () => {
             `Ratio: ${(
               (selectedIncreasedCount / finalSelected.length) *
               100
-            ).toFixed(1)}%`
+            ).toFixed(1)}%`,
           );
         }
 
@@ -239,6 +250,8 @@ const Shift: React.FC = () => {
     gameMode,
     shiftData2023,
     shiftData2024,
+    shiftData2025,
+    shiftData2026,
     numberOfCards,
     setSelectedCards,
     setStarted,
@@ -269,8 +282,8 @@ const Shift: React.FC = () => {
         currentCard.rank < currentCard.previousRank
           ? 1
           : currentCard.rank > currentCard.previousRank
-          ? -1
-          : 0;
+            ? -1
+            : 0;
 
       setActualDirection(calculatedDirection);
 
@@ -734,8 +747,8 @@ const Shift: React.FC = () => {
                         currentShiftGuesses[currentPlayer.id] === undefined
                           ? ''
                           : currentShiftGuesses[currentPlayer.id] === -1
-                          ? 'selected red-glow'
-                          : 'unselected'
+                            ? 'selected red-glow'
+                            : 'unselected'
                       }`}
                     >
                       <DoubleIcon
@@ -743,8 +756,8 @@ const Shift: React.FC = () => {
                           currentShiftGuesses[currentPlayer.id] === undefined
                             ? ''
                             : currentShiftGuesses[currentPlayer.id] === -1
-                            ? 'selected'
-                            : 'unselected'
+                              ? 'selected'
+                              : 'unselected'
                         }`}
                       />
                       <p className='option-button-text'>Decreased</p>
@@ -755,8 +768,8 @@ const Shift: React.FC = () => {
                       currentShiftGuesses[currentPlayer.id] === undefined
                         ? ''
                         : currentShiftGuesses[currentPlayer.id] === -1
-                        ? 'decrease'
-                        : 'increase'
+                          ? 'decrease'
+                          : 'increase'
                     }`}
                   >
                     <p className='option-indicator-text'>
@@ -791,8 +804,8 @@ const Shift: React.FC = () => {
                         currentShiftGuesses[currentPlayer.id] === undefined
                           ? ''
                           : currentShiftGuesses[currentPlayer.id] === 1
-                          ? 'selected green-glow'
-                          : 'unselected'
+                            ? 'selected green-glow'
+                            : 'unselected'
                       }`}
                     >
                       <p className='option-button-text'>Increased</p>
@@ -801,8 +814,8 @@ const Shift: React.FC = () => {
                           currentShiftGuesses[currentPlayer.id] === undefined
                             ? ''
                             : currentShiftGuesses[currentPlayer.id] === 1
-                            ? 'selected'
-                            : 'unselected'
+                              ? 'selected'
+                              : 'unselected'
                         }`}
                       />
                     </button>

@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import SaltData2026 from 'Utilities/SaltData2026.json';
 import SaltData2025 from 'Utilities/SaltData2025.json';
 import SaltData2024 from 'Utilities/SaltData2024.json';
 import SaltData2023 from 'Utilities/SaltData2023.json';
@@ -126,6 +127,8 @@ interface AppContextType {
   fullScreenImage: string | null;
   setFullScreenImage: React.Dispatch<React.SetStateAction<string | null>>;
 
+  shiftData2026: Card[];
+  setShiftData2026: React.Dispatch<React.SetStateAction<Card[]>>;
   shiftData2025: Card[];
   setShiftData2025: React.Dispatch<React.SetStateAction<Card[]>>;
   shiftData2024: Card[];
@@ -146,7 +149,7 @@ interface AppProviderProps {
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  const defaultListYear = 2025;
+  const defaultListYear = 2026;
   const [gameMode, setGameMode] = useState<string>('salt');
 
   const [players, setPlayers] = useState<Player[]>([
@@ -162,11 +165,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     Record<string, number>
   >({});
   const [currentCardStats, setCurrentCardStats] = useState<CardStat | null>(
-    null
+    null,
   );
 
   const [cardData, setCardData] = useState<Card[]>([]);
-  const [listYear, setListYear] = useState<number>(2025);
+  const [listYear, setListYear] = useState<number>(2026);
   const [cardStats, setCardStats] = useState<CardStat[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [numberOfCards, setNumberOfCards] = useState<number>(10);
@@ -180,7 +183,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [creatorRanks, setCreatorRanks] = useState<Set<number>>(new Set());
   const [creatorQuizYear, setCreatorQuizYear] = useState<number | null>(null);
   const [previousQuizRanks, setPreviousQuizRanks] = useState<Set<number>>(
-    new Set()
+    new Set(),
   );
 
   const [started, setStarted] = useState<boolean>(false);
@@ -193,6 +196,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [shouldFlip, setShouldFlip] = useState<boolean>(false);
   const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
 
+  const [shiftData2026, setShiftData2026] = useState<Card[]>(SaltData2026);
   const [shiftData2025, setShiftData2025] = useState<Card[]>(SaltData2025);
   const [shiftData2024, setShiftData2024] = useState<Card[]>(SaltData2024);
   const [shiftData2023, setShiftData2023] = useState<Card[]>(SaltData2023);
@@ -203,6 +207,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   useEffect(() => {
     const yearsMapping: { [key: number]: Card[] } = {
+      2026: SaltData2026 as Card[],
       2025: SaltData2025 as Card[],
       2024: SaltData2024 as Card[],
       2023: SaltData2023 as Card[],
@@ -277,6 +282,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         fullScreenImage,
         setFullScreenImage,
 
+        shiftData2026,
+        setShiftData2026,
         shiftData2025,
         setShiftData2025,
         shiftData2024,

@@ -36,7 +36,7 @@ const Home: React.FC = () => {
       prevPlayers.map((player) => ({
         ...player,
         scores: [],
-      }))
+      })),
     );
     setStarted(false);
     setIsSubmitted(false);
@@ -57,7 +57,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (rangeOfQuiz > 0) {
       const validSelected = Array.from(context.excludedRanks).filter(
-        (rank) => rank <= rangeOfQuiz
+        (rank) => rank <= rangeOfQuiz,
       ).length;
       const availableCards = rangeOfQuiz - validSelected;
       setEnoughCards(availableCards >= 10);
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
               {gameMode === 'salt' ? (
                 <>
                   <p className='home-text'>
-                    SaltQuiz features MTG cards from the 2025{' '}
+                    SaltQuiz features MTG cards from the{' '}
                     <a
                       className='home-text-link'
                       href='https://edhrec.com/top/salt'

@@ -24,14 +24,13 @@
 
     /* Path aliases */
     "types": ["node"],
-    "baseUrl": "./",
     "paths": {
-      "Components/*": ["src/Components/*"],
-      "Assets/*": ["src/assets/*"],
-      "Contexts/*": ["src/Contexts/*"],
-      "Utilities/*": ["src/Utilities/*"],
-      "Styles/*": ["src/Styles/*"],
-      "Svgs/*": ["src/Assets/Svgs/*"]
+      "Components/*": ["./src/Components/*"],
+      "Assets/*": ["./src/assets/*"],
+      "Contexts/*": ["./src/Contexts/*"],
+      "Utilities/*": ["./src/Utilities/*"],
+      "Styles/*": ["./src/Styles/*"],
+      "Svgs/*": ["./src/Assets/Svgs/*"]
     }
   },
   "include": ["src"]

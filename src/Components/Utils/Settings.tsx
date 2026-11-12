@@ -83,33 +83,33 @@ const Settings: React.FC = () => {
   const [includeCardsEraserActive, setIncludeCardsEraserActive] =
     useState<boolean>(false);
   const [alreadyExcludedRanks, setAlreadyExcludedRanks] = useState<Set<number>>(
-    new Set(excludedRanks)
+    new Set(excludedRanks),
   );
   const [toBeExcludedRanks, setToBeExcludedRanks] = useState<Set<number>>(
-    new Set(excludedRanks)
+    new Set(excludedRanks),
   );
   const [alreadyIncludedRanks, setAlreadyIncludedRanks] = useState<Set<number>>(
-    new Set(includedRanks)
+    new Set(includedRanks),
   );
   const [toBeIncludedRanks, setToBeIncludedRanks] = useState<Set<number>>(
-    new Set(includedRanks)
+    new Set(includedRanks),
   );
   const [initialGameMode, setInitialGameMode] = useState<string>('');
   const [initialListYear, setInitialListYear] =
     useState<number>(defaultListYear);
   const [initialPlayers, setInitialPlayers] = useState<Player[]>([]);
   const [initialRangeOfQuiz, setInitialRangeOfQuiz] = useState<number | null>(
-    null
+    null,
   );
   const [initialNumberOfCards, setInitialNumberOfCards] = useState<
     number | null
   >(null);
   const [initialCreatorRanks, setInitialCreatorRanks] = useState<Set<number>>(
-    new Set()
+    new Set(),
   );
 
   const [selectedSeason, setSelectedSeason] = useState<'season1' | 'season2'>(
-    'season1'
+    'season1',
   );
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatorLoading, setIsCreatorLoading] = useState(false);
@@ -220,14 +220,14 @@ const Settings: React.FC = () => {
 
   useEffect(() => {
     const validSelected = Array.from(toBeExcludedRanks).filter(
-      (rank) => rank <= rangeOfQuiz
+      (rank) => rank <= rangeOfQuiz,
     ).length;
     const availableCards = rangeOfQuiz - validSelected;
     const hasEnoughCards =
       availableCards >= numberOfCards &&
       toBeIncludedRanks.size <= numberOfCards;
     const hasOverlap = Array.from(toBeExcludedRanks).some((rank) =>
-      toBeIncludedRanks.has(rank)
+      toBeIncludedRanks.has(rank),
     );
 
     const hasValidChanges = hasChanges();
@@ -445,7 +445,7 @@ const Settings: React.FC = () => {
 
     if (selectedCreator) {
       const creator = quizDataSeason1.find(
-        (c) => c.creator === selectedCreator
+        (c) => c.creator === selectedCreator,
       );
       if (creator) {
         setGameMode('salt');
@@ -490,7 +490,7 @@ const Settings: React.FC = () => {
 
     setPlayers((currentPlayers) => {
       const sortedPlayers = [...currentPlayers].sort(
-        (a, b) => a.order - b.order
+        (a, b) => a.order - b.order,
       );
 
       const oldIndex = sortedPlayers.findIndex((p) => p.id === active.id);
@@ -668,8 +668,8 @@ const Settings: React.FC = () => {
                           rangeOfQuiz === 0
                             ? ''
                             : rangeOfQuiz === 25
-                            ? 'selected blue-glow'
-                            : 'unselected'
+                              ? 'selected blue-glow'
+                              : 'unselected'
                         }`}
                         onClick={() => handleCardNumber(25)}
                       >
@@ -680,8 +680,8 @@ const Settings: React.FC = () => {
                           rangeOfQuiz === 0
                             ? ''
                             : rangeOfQuiz === 50
-                            ? 'selected blue-glow'
-                            : 'unselected'
+                              ? 'selected blue-glow'
+                              : 'unselected'
                         }`}
                         onClick={() => handleCardNumber(50)}
                       >
@@ -692,8 +692,8 @@ const Settings: React.FC = () => {
                           rangeOfQuiz === 0
                             ? ''
                             : rangeOfQuiz === 75
-                            ? 'selected blue-glow'
-                            : 'unselected'
+                              ? 'selected blue-glow'
+                              : 'unselected'
                         }`}
                         onClick={() => handleCardNumber(75)}
                       >
@@ -704,8 +704,8 @@ const Settings: React.FC = () => {
                           rangeOfQuiz === 0
                             ? ''
                             : rangeOfQuiz === 100
-                            ? 'selected blue-glow'
-                            : 'unselected'
+                              ? 'selected blue-glow'
+                              : 'unselected'
                         }`}
                         onClick={() => handleCardNumber(100)}
                       >
@@ -827,6 +827,22 @@ const Settings: React.FC = () => {
                               <div className='settings-dropdown-years-container'>
                                 <div
                                   className={`settings-year-container ${
+                                    listYear === 2026
+                                      ? 'active blue-glow'
+                                      : 'inactive'
+                                  }`}
+                                  onClick={() => handleSetListYear(2026)}
+                                >
+                                  <p
+                                    className={`settings-year ${
+                                      listYear === 2026 ? 'active' : 'inactive'
+                                    }`}
+                                  >
+                                    2026
+                                  </p>
+                                </div>
+                                <div
+                                  className={`settings-year-container ${
                                     listYear === 2025
                                       ? 'active blue-glow'
                                       : 'inactive'
@@ -935,7 +951,7 @@ const Settings: React.FC = () => {
                                     {quizDataSeason1
                                       .slice()
                                       .sort((a, b) =>
-                                        a.creator.localeCompare(b.creator)
+                                        a.creator.localeCompare(b.creator),
                                       )
                                       .map((quiz) => (
                                         <option
@@ -1160,11 +1176,11 @@ const Settings: React.FC = () => {
                                     >
                                       <div
                                         className={getExcludedRankClass(
-                                          card.rank!
+                                          card.rank!,
                                         )}
                                         onClick={() =>
                                           handleRankExclusionSelection(
-                                            card.rank!
+                                            card.rank!,
                                           )
                                         }
                                       >
@@ -1173,7 +1189,7 @@ const Settings: React.FC = () => {
                                         </span>
                                       </div>
                                     </div>
-                                  )
+                                  ),
                                 )}
                               </div>
                             </div>
@@ -1329,11 +1345,11 @@ const Settings: React.FC = () => {
                                     >
                                       <div
                                         className={getIncludedRankClass(
-                                          card.rank!
+                                          card.rank!,
                                         )}
                                         onClick={() =>
                                           handleRankInclusionSelection(
-                                            card.rank!
+                                            card.rank!,
                                           )
                                         }
                                       >
@@ -1342,7 +1358,7 @@ const Settings: React.FC = () => {
                                         </span>
                                       </div>
                                     </div>
-                                  )
+                                  ),
                                 )}
                               </div>
                             </div>

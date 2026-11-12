@@ -119,5 +119,17 @@
         ]
       }
     ]
+  },
+  {
+    "date": "11/12/26",
+    "patch_notes": [
+      {
+        "header": "2026 Salty Cards List",
+        "body": [
+          "The 2026 Saltiest Cards list has now been added to the quiz!",
+          "Players can now test their knowledge against the most current community rankings and see how the salt levels have shifted this year."
+        ]
+      }
+    ]
   }
 ]
