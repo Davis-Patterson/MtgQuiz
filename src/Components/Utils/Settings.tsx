@@ -654,7 +654,7 @@ const Settings: React.FC = () => {
                         <div className='settings-x-container-disabled unselected'>
                           <p className='settings-x-value'>75</p>
                         </div>
-                        <div className='settings-x-container-disabled selected blue-glow'>
+                        <div className='settings-x-container-disabled creator'>
                           <p className='settings-x-value'>100</p>
                         </div>
                       </div>
@@ -733,65 +733,138 @@ const Settings: React.FC = () => {
                       </div>
 
                       {activeDropdown === 'gameMode' && (
-                        <div className='settings-dropdown-contents'>
-                          <p className='settings-dropdown-header-subtext'>
-                            Choose a quiz mode
-                          </p>
-                          <div className='settings-dropdown-mode-container'>
-                            <div
-                              className={`settings-year-container ${
-                                gameMode === 'salt'
-                                  ? 'active blue-glow'
-                                  : 'inactive'
-                              }`}
-                              onClick={() => handleSetGameMode('salt')}
-                            >
-                              <p
-                                className={`settings-year ${
-                                  gameMode === 'salt' ? 'active' : 'inactive'
-                                }`}
+                        <>
+                          {creatorQuiz ? (
+                            <>
+                              <Tooltip
+                                title={
+                                  <>
+                                    <div className='tooltip-text-container'>
+                                      <p className='tooltip-text'>
+                                        Disabled while creator
+                                      </p>
+                                      <p className='tooltip-text'>
+                                        quiz is selected
+                                      </p>
+                                    </div>
+                                  </>
+                                }
+                                enterDelay={400}
+                                placement='top'
                               >
-                                Salt Quiz
-                              </p>
-                            </div>
-                            <div
-                              className={`settings-year-container ${
-                                gameMode === 'shift'
-                                  ? 'active blue-glow'
-                                  : 'inactive'
-                              }`}
-                              onClick={() => handleSetGameMode('shift')}
-                            >
-                              <p
-                                className={`settings-year ${
-                                  gameMode === 'shift' ? 'active' : 'inactive'
-                                }`}
-                              >
-                                Salt Shift
-                              </p>
-                            </div>
-                          </div>
-                          <div className='settings-dropdown-mode-description-container'>
-                            {gameMode === 'salt' ? (
-                              <p className='settings-dropdown-mode-description'>
-                                Salt Quiz challenges players to guess the exact
-                                ranking of cards. Players score points based on
-                                how close their guess is to the actual rank -
-                                the smaller the difference between the guess and
-                                the actual rank, the better the score.
-                              </p>
-                            ) : (
-                              <p className='settings-dropdown-mode-description'>
-                                Salt Shift focuses on year-over-year rank
-                                changes. Players will see a card's rank from the
-                                previous year and must determine if its rank
-                                increased or decreased in the latest list. A
-                                smaller number indicates a greater rank. Points
-                                are awarded for correct guesses.
-                              </p>
-                            )}
-                          </div>
-                        </div>
+                                <div className='settings-dropdown-contents'>
+                                  <p className='settings-dropdown-header-subtext'>
+                                    Choose a quiz mode
+                                  </p>
+                                  <div className='settings-dropdown-mode-container'>
+                                    <div
+                                      className={`settings-year-container-creator ${
+                                        gameMode === 'salt'
+                                          ? 'active'
+                                          : 'inactive'
+                                      }`}
+                                    >
+                                      <p
+                                        className={`settings-year ${
+                                          gameMode === 'salt'
+                                            ? 'active'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        Salt Quiz
+                                      </p>
+                                    </div>
+                                    <div
+                                      className={`settings-year-container-creator ${
+                                        gameMode === 'shift'
+                                          ? 'active'
+                                          : 'inactive'
+                                      }`}
+                                    >
+                                      <p
+                                        className={`settings-year ${
+                                          gameMode === 'shift'
+                                            ? 'active'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        Salt Shift
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </Tooltip>
+                            </>
+                          ) : (
+                            <>
+                              <div className='settings-dropdown-contents'>
+                                <p className='settings-dropdown-header-subtext'>
+                                  Choose a quiz mode
+                                </p>
+                                <div className='settings-dropdown-mode-container'>
+                                  <div
+                                    className={`settings-year-container ${
+                                      gameMode === 'salt'
+                                        ? 'active blue-glow'
+                                        : 'inactive'
+                                    }`}
+                                    onClick={() => handleSetGameMode('salt')}
+                                  >
+                                    <p
+                                      className={`settings-year ${
+                                        gameMode === 'salt'
+                                          ? 'active'
+                                          : 'inactive'
+                                      }`}
+                                    >
+                                      Salt Quiz
+                                    </p>
+                                  </div>
+                                  <div
+                                    className={`settings-year-container ${
+                                      gameMode === 'shift'
+                                        ? 'active blue-glow'
+                                        : 'inactive'
+                                    }`}
+                                    onClick={() => handleSetGameMode('shift')}
+                                  >
+                                    <p
+                                      className={`settings-year ${
+                                        gameMode === 'shift'
+                                          ? 'active'
+                                          : 'inactive'
+                                      }`}
+                                    >
+                                      Salt Shift
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className='settings-dropdown-mode-description-container'>
+                                  {gameMode === 'salt' ? (
+                                    <p className='settings-dropdown-mode-description'>
+                                      Salt Quiz challenges players to guess the
+                                      exact ranking of cards. Players score
+                                      points based on how close their guess is
+                                      to the actual rank - the smaller the
+                                      difference between the guess and the
+                                      actual rank, the better the score.
+                                    </p>
+                                  ) : (
+                                    <p className='settings-dropdown-mode-description'>
+                                      Salt Shift focuses on year-over-year rank
+                                      changes. Players will see a card's rank
+                                      from the previous year and must determine
+                                      if its rank increased or decreased in the
+                                      latest list. A smaller number indicates a
+                                      greater rank. Points are awarded for
+                                      correct guesses.
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </>
                       )}
                     </div>
 
@@ -844,7 +917,7 @@ const Settings: React.FC = () => {
                                       <div
                                         className={`settings-year-container-creator ${
                                           listYear === 2026
-                                            ? 'active grey-glow'
+                                            ? 'active'
                                             : 'inactive'
                                         }`}
                                       >
@@ -861,7 +934,7 @@ const Settings: React.FC = () => {
                                       <div
                                         className={`settings-year-container-creator ${
                                           listYear === 2025
-                                            ? 'active grey-glow'
+                                            ? 'active'
                                             : 'inactive'
                                         }`}
                                       >
@@ -878,7 +951,7 @@ const Settings: React.FC = () => {
                                       <div
                                         className={`settings-year-container-creator ${
                                           listYear === 2024
-                                            ? 'active grey-glow'
+                                            ? 'active'
                                             : 'inactive'
                                         }`}
                                       >
@@ -895,7 +968,7 @@ const Settings: React.FC = () => {
                                       <div
                                         className={`settings-year-container-creator ${
                                           listYear === 2023
-                                            ? 'active grey-glow'
+                                            ? 'active'
                                             : 'inactive'
                                         }`}
                                       >
