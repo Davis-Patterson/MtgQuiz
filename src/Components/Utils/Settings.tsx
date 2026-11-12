@@ -631,7 +631,7 @@ const Settings: React.FC = () => {
                     Select a value for X
                   </p>
                   <p className='settings-header-sub-subtext'>
-                    The range of cards from which your quiz will be drawn from
+                    The range of cards from which your quiz will be drawn
                   </p>
                   {creatorQuiz || gameMode === 'shift' ? (
                     <Tooltip
