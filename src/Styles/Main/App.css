@@ -189,6 +189,9 @@
   filter: drop-shadow(0 0 1em #5478e688);
   transition: filter 0.15s ease-in-out;
 }
+.grey-glow {
+  filter: drop-shadow(0 0 1em #7e7e7e88);
+}
 .blue-glow {
   filter: drop-shadow(0 0 1em #64c6ff88);
 }

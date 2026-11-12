@@ -462,6 +462,26 @@
   opacity: 0.4;
 }
 
+.settings-year-container-creator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--clr-icon);
+  padding: 2px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--clr-transparent);
+  transition: all 0.15s ease-in-out;
+  cursor: default;
+}
+.settings-year-container-creator.active {
+  background-color: var(--clr-accent-grey);
+  border: 2px solid var(--clr-accent-grey);
+  opacity: 1;
+}
+.settings-year-container-creator.inactive {
+  opacity: 0.4;
+}
+
 .settings-year {
   font-family: 'Beleren Bold', sans-serif;
   font-size: 1.2em;

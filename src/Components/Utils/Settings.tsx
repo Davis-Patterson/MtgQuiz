@@ -108,9 +108,7 @@ const Settings: React.FC = () => {
     new Set(),
   );
 
-  const [selectedSeason, setSelectedSeason] = useState<'season1' | 'season2'>(
-    'season1',
-  );
+  const [selectedSeason, setSelectedSeason] = useState<'2024'>('2024');
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatorLoading, setIsCreatorLoading] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownType>(null);
@@ -467,7 +465,7 @@ const Settings: React.FC = () => {
   };
 
   const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSeason(e.target.value as 'season1' | 'season2');
+    setSelectedSeason(e.target.value as '2024');
     setCreatorQuiz('');
   };
 
@@ -824,72 +822,174 @@ const Settings: React.FC = () => {
                                 Choose which year's saltiest cards list to use
                                 for your quiz
                               </p>
-                              <div className='settings-dropdown-years-container'>
-                                <div
-                                  className={`settings-year-container ${
-                                    listYear === 2026
-                                      ? 'active blue-glow'
-                                      : 'inactive'
-                                  }`}
-                                  onClick={() => handleSetListYear(2026)}
-                                >
-                                  <p
-                                    className={`settings-year ${
-                                      listYear === 2026 ? 'active' : 'inactive'
-                                    }`}
+                              {creatorQuiz ? (
+                                <>
+                                  <Tooltip
+                                    title={
+                                      <>
+                                        <div className='tooltip-text-container'>
+                                          <p className='tooltip-text'>
+                                            Disabled while creator
+                                          </p>
+                                          <p className='tooltip-text'>
+                                            quiz is selected
+                                          </p>
+                                        </div>
+                                      </>
+                                    }
+                                    enterDelay={400}
+                                    placement='top'
                                   >
-                                    2026
-                                  </p>
-                                </div>
-                                <div
-                                  className={`settings-year-container ${
-                                    listYear === 2025
-                                      ? 'active blue-glow'
-                                      : 'inactive'
-                                  }`}
-                                  onClick={() => handleSetListYear(2025)}
-                                >
-                                  <p
-                                    className={`settings-year ${
-                                      listYear === 2025 ? 'active' : 'inactive'
-                                    }`}
-                                  >
-                                    2025
-                                  </p>
-                                </div>
-                                <div
-                                  className={`settings-year-container ${
-                                    listYear === 2024
-                                      ? 'active blue-glow'
-                                      : 'inactive'
-                                  }`}
-                                  onClick={() => handleSetListYear(2024)}
-                                >
-                                  <p
-                                    className={`settings-year ${
-                                      listYear === 2024 ? 'active' : 'inactive'
-                                    }`}
-                                  >
-                                    2024
-                                  </p>
-                                </div>
-                                <div
-                                  className={`settings-year-container ${
-                                    listYear === 2023
-                                      ? 'active blue-glow'
-                                      : 'inactive'
-                                  }`}
-                                  onClick={() => handleSetListYear(2023)}
-                                >
-                                  <p
-                                    className={`settings-year ${
-                                      listYear === 2023 ? 'active' : 'inactive'
-                                    }`}
-                                  >
-                                    2023
-                                  </p>
-                                </div>
-                              </div>
+                                    <div className='settings-dropdown-years-container'>
+                                      <div
+                                        className={`settings-year-container-creator ${
+                                          listYear === 2026
+                                            ? 'active grey-glow'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        <p
+                                          className={`settings-year ${
+                                            listYear === 2026
+                                              ? 'active'
+                                              : 'inactive'
+                                          }`}
+                                        >
+                                          2026
+                                        </p>
+                                      </div>
+                                      <div
+                                        className={`settings-year-container-creator ${
+                                          listYear === 2025
+                                            ? 'active grey-glow'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        <p
+                                          className={`settings-year ${
+                                            listYear === 2025
+                                              ? 'active'
+                                              : 'inactive'
+                                          }`}
+                                        >
+                                          2025
+                                        </p>
+                                      </div>
+                                      <div
+                                        className={`settings-year-container-creator ${
+                                          listYear === 2024
+                                            ? 'active grey-glow'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        <p
+                                          className={`settings-year ${
+                                            listYear === 2024
+                                              ? 'active'
+                                              : 'inactive'
+                                          }`}
+                                        >
+                                          2024
+                                        </p>
+                                      </div>
+                                      <div
+                                        className={`settings-year-container-creator ${
+                                          listYear === 2023
+                                            ? 'active grey-glow'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        <p
+                                          className={`settings-year ${
+                                            listYear === 2023
+                                              ? 'active'
+                                              : 'inactive'
+                                          }`}
+                                        >
+                                          2023
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </Tooltip>
+                                </>
+                              ) : (
+                                <>
+                                  <div className='settings-dropdown-years-container'>
+                                    <div
+                                      className={`settings-year-container ${
+                                        listYear === 2026
+                                          ? 'active blue-glow'
+                                          : 'inactive'
+                                      }`}
+                                      onClick={() => handleSetListYear(2026)}
+                                    >
+                                      <p
+                                        className={`settings-year ${
+                                          listYear === 2026
+                                            ? 'active'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        2026
+                                      </p>
+                                    </div>
+                                    <div
+                                      className={`settings-year-container ${
+                                        listYear === 2025
+                                          ? 'active blue-glow'
+                                          : 'inactive'
+                                      }`}
+                                      onClick={() => handleSetListYear(2025)}
+                                    >
+                                      <p
+                                        className={`settings-year ${
+                                          listYear === 2025
+                                            ? 'active'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        2025
+                                      </p>
+                                    </div>
+                                    <div
+                                      className={`settings-year-container ${
+                                        listYear === 2024
+                                          ? 'active blue-glow'
+                                          : 'inactive'
+                                      }`}
+                                      onClick={() => handleSetListYear(2024)}
+                                    >
+                                      <p
+                                        className={`settings-year ${
+                                          listYear === 2024
+                                            ? 'active'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        2024
+                                      </p>
+                                    </div>
+                                    <div
+                                      className={`settings-year-container ${
+                                        listYear === 2023
+                                          ? 'active blue-glow'
+                                          : 'inactive'
+                                      }`}
+                                      onClick={() => handleSetListYear(2023)}
+                                    >
+                                      <p
+                                        className={`settings-year ${
+                                          listYear === 2023
+                                            ? 'active'
+                                            : 'inactive'
+                                        }`}
+                                      >
+                                        2023
+                                      </p>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
                             </div>
                           )}
                         </div>
@@ -928,7 +1028,7 @@ const Settings: React.FC = () => {
                                   value={selectedSeason}
                                   onChange={handleSeasonChange}
                                 >
-                                  <option value='season1'>Season 1</option>
+                                  <option value='2024'>2024</option>
                                 </select>
                                 {isCreatorLoading ? (
                                   <div className='creator-dropdown'>
